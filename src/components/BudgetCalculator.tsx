@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Calculator, Wallet } from "lucide-react";
 import FormInput from "./FormInput";
@@ -52,17 +51,14 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     }
     
     const numericValue = parseInt(value, 10);
-    // Menghilangkan "Rp" di awal untuk menghindari duplikasi dengan prefix di FormInput
     setBudgetAmount(numericValue.toLocaleString('id-ID'));
   };
 
-  // Fungsi untuk mencari DP percentage yang menghasilkan total DP atau angsuran yang mendekati budget
   const findClosestDpPercentage = (targetAmount: number, forInstallment: boolean): number => {
     let closestDp = 20; // Start from minimum DP
     let smallestDiff = Number.MAX_VALUE;
     
-    // Coba berbagai persentase DP dari 20% sampai 90%
-    for (let testDp = 20; testDp <= 90; testDp += 0.1) {
+    for (let testDp = 20; testDp <= 90; testDp += 0.001) {
       const dpAmount = otrPrice * (testDp / 100);
       const loanPrincipal = otrPrice - dpAmount;
       const provisionFee = loanPrincipal * (provisionRate / 100);
@@ -71,7 +67,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
       const interestRate = getInterestRateFromTable(tenor);
       const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
       const totalLoanAmount = loanWithProvision + interestAmount;
-      const monthlyInstallment = totalLoanAmount / (tenor * 12);
+      const monthlyInstallment = Math.round(totalLoanAmount / (tenor * 12));
       
       const insuranceRate = getInsuranceRateFromTable(otrPrice, insuranceType, tenor);
       const insuranceAmount = otrPrice * (insuranceRate / 100);
@@ -81,19 +77,22 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
       
       const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
       
-      const totalDp = dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection;
+      const totalDp = Math.round(dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection);
       
-      const diff = forInstallment 
-        ? Math.abs(monthlyInstallment - targetAmount)
-        : Math.abs(totalDp - targetAmount);
+      const currentAmount = forInstallment ? monthlyInstallment : totalDp;
+      const diff = Math.abs(currentAmount - targetAmount);
       
       if (diff < smallestDiff) {
         smallestDiff = diff;
         closestDp = testDp;
+        
+        if (diff < 100) {
+          break;
+        }
       }
     }
     
-    return closestDp;
+    return Number(closestDp.toFixed(3));
   };
 
   useEffect(() => {
@@ -103,7 +102,6 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     }
 
     setIsCalculating(true);
-    // Parse the number without any formatting
     const numericBudget = parseInt(budgetAmount.replace(/[^\d]/g, ''), 10);
 
     if (isNaN(numericBudget) || numericBudget <= 0) {
@@ -112,7 +110,6 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
       return;
     }
 
-    // Gunakan setTimeout untuk tidak memblokir UI
     setTimeout(() => {
       try {
         const dpPercentage = findClosestDpPercentage(
@@ -128,7 +125,6 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     }, 100);
   }, [budgetAmount, budgetType, otrPrice, tenor, insuranceType]);
 
-  // Hitung hasil berdasarkan DP yang ditemukan
   const calculateResults = () => {
     if (calculatedDpPercent === null) return null;
 
@@ -140,7 +136,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     const interestRate = getInterestRateFromTable(tenor);
     const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
     const totalLoanAmount = loanWithProvision + interestAmount;
-    const monthlyInstallment = totalLoanAmount / (tenor * 12);
+    const monthlyInstallment = Math.round(totalLoanAmount / (tenor * 12));
     
     const insuranceRate = getInsuranceRateFromTable(otrPrice, insuranceType, tenor);
     const insuranceAmount = otrPrice * (insuranceRate / 100);
@@ -150,7 +146,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     
     const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
     
-    const totalDp = dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection;
+    const totalDp = Math.round(dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection);
 
     return {
       dpPercentage: calculatedDpPercent,
@@ -165,7 +161,6 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
 
   const results = calculatedDpPercent !== null ? calculateResults() : null;
 
-  // Format jenis asuransi untuk tampilan
   const getInsuranceTypeDisplay = () => {
     switch(insuranceType) {
       case 'kombinasi': return 'Kombinasi';
@@ -289,7 +284,6 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           </div>
         ) : results ? (
           <div className="space-y-4 mt-6">
-            {/* Ringkasan (Summarize) untuk user */}
             <div className="bg-primary/20 dark:bg-primary/10 rounded-lg p-4 border border-primary/30">
               <h3 className="text-lg font-semibold text-center mb-3">Ringkasan Simulasi Kredit</h3>
               <div className="grid grid-cols-2 gap-4">
