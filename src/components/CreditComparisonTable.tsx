@@ -2,11 +2,13 @@
 import React from "react";
 import { formatRupiah } from "@/lib/calculations";
 import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
-import { useSettings } from "@/context/SettingsContext";
 
 interface CreditComparisonTableProps {
-  tenor: number;
-  monthlyInstallment: number;
+  otrPrice: number;
+  dpPercent: number;
+  insuranceType: 'kombinasi' | 'allrisk' | 'allriskPerluasan';
+  provisionRate: number;
+  additionalAdminFee: number;
 }
 
 interface TenorData {
@@ -19,55 +21,58 @@ interface TenorData {
 }
 
 const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
-  tenor,
-  monthlyInstallment
+  otrPrice,
+  dpPercent,
+  insuranceType,
+  provisionRate,
+  additionalAdminFee
 }) => {
-  const { provisionRate, additionalAdminFee } = useSettings();
-  // Set a default OTR price for comparison
-  const otrPrice = 300000000; // 300 million as default
-  const dpPercent = 30; // 30% as default
-  const insuranceType = 'kombinasi'; // kombinasi as default
-  
   // Calculate data for each tenor
   const tenorData: TenorData[] = [];
   
   // Generate data for tenors 1-7 years
-  for (let t = 1; t <= 7; t++) {
+  for (let tenor = 1; tenor <= 7; tenor++) {
     // Basic calculations
     const dpAmount = otrPrice * (dpPercent / 100);
     const loanPrincipal = otrPrice - dpAmount;
-    const provisionFeeAmount = loanPrincipal * (provisionRate / 100);
-    const loanWithProvision = loanPrincipal + provisionFeeAmount;
+    const provisionFee = loanPrincipal * (provisionRate / 100);
+    const loanWithProvision = loanPrincipal + provisionFee;
     
-    const interestRate = getInterestRateFromTable(t);
-    const interestAmount = loanWithProvision * (interestRate / 100) * t;
+    const interestRate = getInterestRateFromTable(tenor);
+    const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
     
     const totalLoanAmount = loanWithProvision + interestAmount;
-    const tenorMonths = t * 12;
-    const monthlyInstall = Math.round(totalLoanAmount / tenorMonths);
+    const tenorMonths = tenor * 12;
+    const monthlyInstallment = totalLoanAmount / tenorMonths;
     
-    const insuranceRate = getInsuranceRateFromTable(otrPrice, insuranceType, t);
+    const insuranceRate = getInsuranceRateFromTable(otrPrice, insuranceType, tenor);
     const insuranceAmount = otrPrice * (insuranceRate / 100);
     
-    const adminFee = getAdminFee(t);
+    const adminFee = getAdminFee(tenor);
     const totalAdminFee = adminFee + additionalAdminFee;
     
+    const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
+    
     // Total DP calculation
-    const totalDp = dpAmount + monthlyInstall + insuranceAmount + totalAdminFee + fees.tpiFee;
+    const totalDp = dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection;
     
     // Add to data array
     tenorData.push({
-      tenor: t,
+      tenor,
       totalDp,
-      monthlyInstallment: monthlyInstall,
+      monthlyInstallment,
       interestRate,
       insuranceRate,
       adminFee: totalAdminFee
     });
   }
 
-  // Find the active tenor data
-  const activeTenorData = tenorData.find(data => data.tenor === tenor) || tenorData[0];
+  // Transform insurance type for display
+  const insuranceTypeDisplay = {
+    'kombinasi': 'Kombinasi',
+    'allrisk': 'All Risk',
+    'allriskPerluasan': 'All Risk Perluasan'
+  }[insuranceType];
   
   return (
     <div className="my-6">
@@ -92,12 +97,10 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {tenorData.map((data) => (
+                {tenorData.map((data, index) => (
                   <tr 
                     key={data.tenor}
-                    className={`border-b border-gray-100 dark:border-gray-800 transition-all duration-200 ${
-                      data.tenor === tenor ? 'bg-primary/10' : 'hover:bg-primary/5'
-                    }`}
+                    className="border-b border-gray-100 dark:border-gray-800 transition-all duration-200 hover:bg-primary/5"
                   >
                     <td className="py-3.5 pl-4">
                       <div className="font-medium text-sm">
@@ -110,7 +113,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                       </span>
                     </td>
                     <td className="py-3.5 text-right pr-4">
-                      <span className={`font-medium text-sm ${data.tenor === tenor ? 'text-accent' : 'text-gray-700 dark:text-gray-300'}`}>
+                      <span className="text-accent font-medium text-sm">
                         {formatRupiah(data.monthlyInstallment)}
                       </span>
                     </td>
@@ -124,37 +127,37 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         {/* Info cards di sebelah kanan - 50% width pada desktop */}
         <div className="lg:w-1/2 w-full">
           <div className="space-y-3">
-            {/* Tenor Card */}
+            {/* Harga OTR Card */}
             <div className="gradient-card card-shine rounded-xl p-5">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
                   <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <div className="text-sm font-medium">Tenor Terpilih</div>
+                  <div className="text-sm font-medium">Harga OTR</div>
                 </div>
-                <div className="text-lg font-bold">{tenor} tahun</div>
+                <div className="text-lg font-bold">{formatRupiah(otrPrice)}</div>
               </div>
             </div>
             
-            {/* Monthly Installment Card */}
+            {/* Asuransi Card */}
             <div className="gradient-card-secondary card-shine rounded-xl p-5">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
                   <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                   </div>
-                  <div className="text-sm font-medium">Angsuran Bulanan</div>
+                  <div className="text-sm font-medium">Jenis Asuransi</div>
                 </div>
-                <div className="text-lg font-bold">{formatRupiah(monthlyInstallment)}</div>
+                <div className="text-lg font-bold">{insuranceTypeDisplay}</div>
               </div>
             </div>
             
-            {/* Interest Rate Card */}
+            {/* DP Percentage Card */}
             <div className="gradient-card-success card-shine rounded-xl p-5">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
@@ -163,11 +166,9 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                     </svg>
                   </div>
-                  <div className="text-sm font-medium">Bunga</div>
+                  <div className="text-sm font-medium">DP Calculated</div>
                 </div>
-                <div className="text-lg font-bold">
-                  {activeTenorData.interestRate.toFixed(2)}%
-                </div>
+                <div className="text-lg font-bold">{dpPercent}%</div>
               </div>
             </div>
           </div>

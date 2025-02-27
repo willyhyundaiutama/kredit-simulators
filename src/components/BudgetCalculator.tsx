@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Calculator, Wallet, Car, CreditCard, Calendar, ArrowRight } from "lucide-react";
+import { Calculator, Wallet } from "lucide-react";
 import FormInput from "./FormInput";
 import { formatRupiah } from "@/lib/calculations";
 import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
@@ -305,50 +305,30 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           </div>
         ) : results ? (
           <div className="space-y-4 mt-4 sm:mt-6">
-            {/* Hasil Simulasi - Card Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Card 1 - Harga OTR */}
-              <div className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                <div className="flex items-center text-gray-500 dark:text-gray-400 mb-2">
-                  <Car className="h-4 w-4 mr-2" />
-                  <span className="text-xs">Harga OTR</span>
+            <div className="bg-primary/20 dark:bg-primary/10 rounded-lg p-3 sm:p-4 border border-primary/30">
+              <h3 className="text-base sm:text-lg font-semibold text-center mb-2 sm:mb-3">Ringkasan Simulasi Kredit</h3>
+              <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
+                  <p className="text-gray-500 dark:text-gray-400 text-xs">Total DP</p>
+                  <p className="text-sm sm:text-lg font-semibold">{formatRupiah(results.totalDp)}</p>
                 </div>
-                <p className="text-lg sm:text-xl font-semibold">Rp {formatRupiah(otrPrice, false)}</p>
-              </div>
-              
-              {/* Card 2 - Total DP */}
-              <div className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                <div className="flex items-center text-gray-500 dark:text-gray-400 mb-2">
-                  <Wallet className="h-4 w-4 mr-2" />
-                  <span className="text-xs">Total DP</span>
+                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
+                  <p className="text-gray-500 dark:text-gray-400 text-xs">Angsuran</p>
+                  <p className="text-sm sm:text-lg font-semibold">{formatRupiah(results.monthlyInstallment)}</p>
                 </div>
-                <p className="text-lg sm:text-xl font-semibold">Rp {formatRupiah(results.totalDp, false)}</p>
-              </div>
-              
-              {/* Card 3 - Angsuran */}
-              <div className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                <div className="flex items-center text-gray-500 dark:text-gray-400 mb-2">
-                  <CreditCard className="h-4 w-4 mr-2" />
-                  <span className="text-xs">Angsuran per Bulan</span>
+                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
+                  <p className="text-gray-500 dark:text-gray-400 text-xs">Tenor</p>
+                  <p className="text-sm sm:text-lg font-semibold">{tenor} tahun</p>
                 </div>
-                <p className="text-lg sm:text-xl font-semibold text-blue-600">Rp {formatRupiah(results.monthlyInstallment, false)}</p>
-              </div>
-              
-              {/* Card 4 - Tenor */}
-              <div className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                <div className="flex items-center text-gray-500 dark:text-gray-400 mb-2">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  <span className="text-xs">Tenor</span>
-                </div>
-                <div className="flex items-end">
-                  <p className="text-lg sm:text-xl font-semibold">{tenor} tahun</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 ml-2 mb-1">({tenor * 12} bulan)</p>
+                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
+                  <p className="text-gray-500 dark:text-gray-400 text-xs">Asuransi</p>
+                  <p className="text-sm sm:text-lg font-semibold">{getInsuranceTypeDisplay()}</p>
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-primary/5 rounded-lg p-3 sm:p-4 border border-primary/20">
-              <h3 className="text-base sm:text-lg font-semibold text-primary mb-2">Detail Simulasi</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-primary mb-2">Hasil Simulasi</h3>
               <div className="space-y-1.5 sm:space-y-2">
                 <div className="flex justify-between items-center">
                   <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>

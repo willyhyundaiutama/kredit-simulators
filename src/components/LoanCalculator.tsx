@@ -306,10 +306,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             </div>
             
             <div className="mt-6">
-              <CreditComparisonTable 
-                tenor={tenor} 
-                monthlyInstallment={results.monthlyInstallment} 
-              />
+              <CreditComparisonTable tenor={tenor} monthlyInstallment={results.monthlyInstallment} />
             </div>
           </>
         ) : null}
