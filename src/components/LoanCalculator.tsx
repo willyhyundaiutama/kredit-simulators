@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Calendar, Shield } from "lucide-react";
 import FormInput from "./FormInput";
