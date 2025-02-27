@@ -1,13 +1,17 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import FormInput from "@/components/FormInput";
 import { useSettings } from "@/context/SettingsContext";
 import { Sliders, Save, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import PinDialog from "@/components/PinDialog";
 
 const Settings = () => {
   const { provisionRate, setProvisionRate, additionalAdminFee, setAdditionalAdminFee } = useSettings();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isPinDialogOpen, setIsPinDialogOpen] = useState(true);
+  const navigate = useNavigate();
 
   const handleProvisionRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = parseFloat(e.target.value);
@@ -26,6 +30,35 @@ const Settings = () => {
       setAdditionalAdminFee(parseInt(value, 10));
     }
   };
+
+  const handlePinSuccess = () => {
+    setIsAuthenticated(true);
+    setIsPinDialogOpen(false);
+  };
+
+  // Redirect to home if PIN dialog is closed without authentication
+  const handlePinDialogClose = () => {
+    if (!isAuthenticated) {
+      navigate("/");
+    } else {
+      setIsPinDialogOpen(false);
+    }
+  };
+
+  // Show content only if authenticated
+  if (!isAuthenticated) {
+    return (
+      <>
+        <Navbar />
+        <PinDialog
+          isOpen={isPinDialogOpen}
+          onClose={handlePinDialogClose}
+          correctPin="082788"
+          onSuccess={handlePinSuccess}
+        />
+      </>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
