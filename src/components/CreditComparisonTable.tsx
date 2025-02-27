@@ -143,7 +143,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         <div className="lg:w-1/2 w-full flex">
           <div className="flex flex-col space-y-4 w-full h-full justify-between">
             {/* Harga OTR Card - PERTAMA */}
-            <div className="bg-[#002c5f] rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
+            <div className="bg-[#002c5f] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <DollarSign className="h-5 w-5" />
@@ -154,7 +154,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
             
             {/* Total DP Card - KEDUA */}
-            <div className="bg-[#00aad2] rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
+            <div className="bg-[#00aad2] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <DollarSign className="h-5 w-5" />
@@ -167,7 +167,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
             
             {/* Angsuran Bulanan Card - KETIGA */}
-            <div className="bg-[#002c5f] rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
+            <div className="bg-[#002c5f] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <CreditCard className="h-5 w-5" />
@@ -180,7 +180,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
             
             {/* Tenor Card - KEEMPAT */}
-            <div className="bg-gray-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
+            <div className="bg-gray-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <Calendar className="h-5 w-5" />
@@ -191,7 +191,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
             
             {/* Jenis Asuransi Card - KELIMA */}
-            <div className="bg-gray-100 rounded-xl p-4 flex justify-between items-center shadow-xl">
+            <div className="bg-gray-100 rounded-xl p-4 flex justify-between items-center shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-[#002c5f] rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <Shield className="h-5 w-5 text-white" />

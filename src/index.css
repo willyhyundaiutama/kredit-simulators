@@ -198,6 +198,21 @@
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
 }
 
+/* Interactive Card Effect */
+.interactive-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.interactive-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.interactive-card:active {
+  transform: scale(0.98);
+}
+
 /* Background patterns */
 .bg-pattern {
   background-color: var(--background);

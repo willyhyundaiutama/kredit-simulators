@@ -315,7 +315,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
               <div className="w-full md:w-1/2">
                 <div className="grid grid-cols-1 gap-2 h-full">
                   {/* Harga OTR Card */}
-                  <div className="bg-[#002c5f] rounded-lg shadow-md overflow-hidden">
+                  <div className="bg-[#002c5f] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                     <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -330,7 +330,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
                   </div>
                   
                   {/* Total DP Card */}
-                  <div className="bg-[#00aad2] rounded-lg shadow-md overflow-hidden">
+                  <div className="bg-[#00aad2] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                     <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -345,7 +345,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
                   </div>
                   
                   {/* Angsuran Card */}
-                  <div className="bg-[#002c5f] rounded-lg shadow-md overflow-hidden">
+                  <div className="bg-[#002c5f] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                     <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -360,7 +360,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
                   </div>
                   
                   {/* Tenor Card */}
-                  <div className="bg-gray-500 rounded-lg shadow-md overflow-hidden">
+                  <div className="bg-gray-500 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                     <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -375,7 +375,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
                   </div>
                   
                   {/* Asuransi Card */}
-                  <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
+                  <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                     <div className="px-3 py-3">
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-full bg-[#002c5f] flex items-center justify-center mr-3">

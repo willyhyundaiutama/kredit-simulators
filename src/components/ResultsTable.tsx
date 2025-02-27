@@ -53,7 +53,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           {/* Main Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* OTR Price */}
-            <div className="bg-[#002c5f] text-white rounded-xl p-4">
+            <div className="bg-[#002c5f] text-white rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center mb-1">
                 <Car className="w-4 h-4 text-white/80 mr-2" />
                 <span className="text-sm text-white/80">Harga OTR</span>
@@ -63,7 +63,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
 
             {/* Total DP */}
             <div 
-              className="bg-[#00aad2] text-white rounded-xl p-4 cursor-pointer hover:bg-[#009abf] transition-colors"
+              className="bg-[#00aad2] text-white rounded-xl p-4 cursor-pointer hover:bg-[#009abf] transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
               onClick={() => setShowDpDetails(!showDpDetails)}
             >
               <div className="flex items-center justify-between">
@@ -103,7 +103,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
             </div>
 
             {/* Monthly Payment */}
-            <div className="bg-[#002c5f] text-white rounded-xl p-4">
+            <div className="bg-[#002c5f] text-white rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center mb-1">
                 <CreditCard className="w-4 h-4 text-white/80 mr-2" />
                 <span className="text-sm text-white/80">Angsuran per Bulan</span>
@@ -114,7 +114,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
             </div>
 
             {/* Tenor */}
-            <div className="bg-gray-500 text-white rounded-xl p-4">
+            <div className="bg-gray-500 text-white rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center mb-1">
                 <Calendar className="w-4 h-4 text-white/80 mr-2" />
                 <span className="text-sm text-white/80">Tenor</span>
@@ -126,7 +126,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           </div>
 
           {/* Insurance Type */}
-          <div className="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4">
+          <div className="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
             <div className="flex items-center mb-1">
               <Shield className="w-4 h-4 text-[#002c5f] mr-2" />
               <span className="text-sm text-gray-500">Asuransi</span>
@@ -159,46 +159,46 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                 <div className="overflow-hidden rounded-lg border">
                   <div className="divide-y divide-gray-200 dark:divide-gray-800">
                     {/* Mobile-optimized table rows */}
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">OTR Final</div>
                       <div className="text-sm font-semibold">{formatRupiah(otrPrice)}</div>
                     </div>
 
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">DP Murni ({dpPercent}%)</div>
                       <div className="text-sm font-semibold">{formatRupiah(results.dpAmount)}</div>
                     </div>
 
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Pokok Hutang</div>
                       <div className="text-sm font-semibold">{formatRupiah(results.loanPrincipal)}</div>
                     </div>
 
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
                         Credit Handling Fee
                       </div>
                       <div className="text-sm font-semibold">{formatRupiah(results.provisionFee)}</div>
                     </div>
 
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Pokok Hutang Provisi</div>
                       <div className="text-sm font-semibold">{formatRupiah(results.loanWithProvision)}</div>
                     </div>
 
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
                         Bunga ({results.interestRate.toFixed(2)}%)
                       </div>
                       <div className="text-sm font-semibold">{formatRupiah(results.interestAmount)}</div>
                     </div>
 
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Total Hutang</div>
                       <div className="text-sm font-semibold">{formatRupiah(results.totalLoanAmount)}</div>
                     </div>
 
-                    <div className="table-row-alternate bg-[#002c5f]/5 p-3 flex flex-col">
+                    <div className="table-row-alternate bg-[#002c5f]/5 p-3 flex flex-col hover:bg-[#002c5f]/10 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Angsuran per Bulan</div>
                       <div className="text-sm font-semibold text-[#002c5f]">{formatRupiah(results.monthlyInstallment)}</div>
                     </div>
@@ -211,59 +211,59 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                 <h3 className="text-lg font-medium mb-2">Total DP</h3>
                 <div className="overflow-hidden rounded-lg border">
                   <div className="divide-y divide-gray-200 dark:divide-gray-800">
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
                         DP Murni ({dpPercent}%)
                       </div>
                       <div className="text-sm font-semibold">{formatRupiah(results.dpAmount)}</div>
                     </div>
 
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Angsuran ke-1</div>
                       <div className="text-sm font-semibold">{formatRupiah(results.monthlyInstallment)}</div>
                     </div>
 
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
                         Asuransi Mobil {tenor} Tahun ({results.insuranceType}, {results.insuranceRate?.toFixed(2)}%)
                       </div>
                       <div className="text-sm font-semibold">{formatRupiah(results.insuranceAmount)}</div>
                     </div>
 
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">TPI III (0.00%)</div>
                       <div className="text-sm font-semibold">{formatRupiah(results.tpiFee)}</div>
                     </div>
 
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Credit Protection (NO)</div>
                       <div className="text-sm font-semibold">-</div>
                     </div>
 
-                    <div className="table-row-alternate p-3 flex flex-col">
+                    <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Provisi (0.00%)</div>
                       <div className="text-sm font-semibold">-</div>
                     </div>
 
                     {hasAdditionalAdminFee ? (
                       <>
-                        <div className="table-row-alternate p-3 flex flex-col">
+                        <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                           <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Admin (Dasar)</div>
                           <div className="text-sm font-semibold">{formatRupiah(results.adminFee)}</div>
                         </div>
-                        <div className="table-row-alternate p-3 flex flex-col">
+                        <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                           <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Express Process</div>
                           <div className="text-sm font-semibold">{formatRupiah(results.additionalAdminFee)}</div>
                         </div>
                       </>
                     ) : (
-                      <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="table-row-alternate p-3 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                         <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Biaya Admin</div>
                         <div className="text-sm font-semibold">{formatRupiah(results.adminFee)}</div>
                       </div>
                     )}
 
-                    <div className="table-row-alternate bg-[#002c5f]/5 p-3 flex flex-col">
+                    <div className="table-row-alternate bg-[#002c5f]/5 p-3 flex flex-col hover:bg-[#002c5f]/10 transition-colors">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Total DP</div>
                       <div className="text-sm font-semibold text-[#002c5f]">{formatRupiah(results.totalDp)}</div>
                     </div>
