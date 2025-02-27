@@ -252,7 +252,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                           <div className="text-sm font-semibold">{formatRupiah(results.adminFee)}</div>
                         </div>
                         <div className="table-row-alternate p-3 flex flex-col">
-                          <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Admin (Tambahan)</div>
+                          <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Express Process</div>
                           <div className="text-sm font-semibold">{formatRupiah(results.additionalAdminFee)}</div>
                         </div>
                       </>
@@ -288,7 +288,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   <span className="font-medium text-gray-700 dark:text-gray-300">Admin:</span> {formatRupiah(results.totalAdminFee || results.adminFee)}
-                  {hasAdditionalAdminFee && ` (Dasar: ${formatRupiah(results.adminFee)} + Tambahan: ${formatRupiah(results.additionalAdminFee)})`}
+                  {hasAdditionalAdminFee && ` (Dasar: ${formatRupiah(results.adminFee)} + Express Process: ${formatRupiah(results.additionalAdminFee)})`}
                 </p>
                 <p className="text-xs italic text-gray-500 dark:text-gray-400 mt-2">
                   * Simulasi ini hanya perkiraan. Nilai sebenarnya dapat berbeda.
