@@ -17,6 +17,7 @@ interface CalculationResults {
   adminFee: number;
   tpiFee: number;
   insuranceType?: string;
+  provisionRate?: number;
 }
 
 interface ResultsTableProps {
@@ -55,7 +56,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                   </tr>
                   <tr className="table-row-alternate">
                     <td className="px-4 py-3 text-sm font-medium text-left">Provisi Kredit</td>
-                    <td className="px-4 py-3 text-sm text-right">5.00%</td>
+                    <td className="px-4 py-3 text-sm text-right">{results.provisionRate?.toFixed(2)}%</td>
                     <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.provisionFee)}</td>
                   </tr>
                   <tr className="table-row-alternate">
@@ -141,6 +142,9 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             Suku Bunga: <span className="font-medium text-gray-700 dark:text-gray-300">{results.interestRate.toFixed(2)}% per tahun</span>
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Provisi: <span className="font-medium text-gray-700 dark:text-gray-300">{results.provisionRate?.toFixed(2)}%</span>
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             Asuransi: <span className="font-medium text-gray-700 dark:text-gray-300">{results.insuranceType} ({results.insuranceRate?.toFixed(2)}%)</span>

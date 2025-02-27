@@ -27,6 +27,7 @@ interface CalculationResults {
   adminFee: number;
   tpiFee: number;
   insuranceType: string;
+  provisionRate: number;
 }
 
 const LoanCalculator: React.FC<LoanCalculatorProps> = ({
@@ -37,6 +38,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   const [otrPrice, setOtrPrice] = useState<number>(defaultOtr);
   const [dpPercent, setDpPercent] = useState<number>(defaultDpPercent);
   const [tenor, setTenor] = useState<number>(defaultTenor);
+  const [provisionRate, setProvisionRate] = useState<number>(fees.provisionRate);
   const [insuranceType, setInsuranceType] = useState<'kombinasi' | 'allrisk' | 'allriskPerluasan'>('kombinasi');
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
@@ -68,6 +70,15 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
     }
   };
 
+  const handleProvisionRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = parseFloat(e.target.value);
+    if (isNaN(value)) {
+      setProvisionRate(0);
+    } else {
+      setProvisionRate(Math.min(Math.max(value, 0), 10)); // Clamp between 0 and 10%
+    }
+  };
+
   const calculateLoan = () => {
     setIsCalculating(true);
     
@@ -75,12 +86,12 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
       try {
         const dpAmount = otrPrice * (dpPercent / 100);
         const loanPrincipal = otrPrice - dpAmount;
-        const provisionFee = loanPrincipal * (fees.provisionRate / 100);
+        const provisionFee = loanPrincipal * (provisionRate / 100);
         const loanWithProvision = loanPrincipal + provisionFee;
         
         const interestRate = getInterestRateFromTable(tenor);
         
-        // Changed: Calculate interest based on loan principal plus provision
+        // Calculate interest based on loan principal plus provision
         const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
         
         const totalLoanAmount = loanWithProvision + interestAmount;
@@ -111,6 +122,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
           totalDp,
           adminFee: fees.adminFee,
           tpiFee: fees.tpiFee,
+          provisionRate,
           insuranceType: insuranceType === 'kombinasi' 
             ? 'Kombinasi' 
             : insuranceType === 'allrisk' 
@@ -129,7 +141,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   // Calculate on initial render and when inputs change
   useEffect(() => {
     calculateLoan();
-  }, [otrPrice, dpPercent, tenor, insuranceType]);
+  }, [otrPrice, dpPercent, tenor, insuranceType, provisionRate]);
 
   return (
     <div className="w-full animate-fade-in">
@@ -171,6 +183,17 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
               onChange={handleTenorChange}
               suffix="tahun"
               description="Jangka waktu kredit (1-7 tahun)"
+            />
+
+            <FormInput
+              label="Provisi"
+              type="number"
+              min={0}
+              max={10}
+              value={provisionRate}
+              onChange={handleProvisionRateChange}
+              suffix="%"
+              description="Biaya provisi dari pokok hutang"
             />
             
             <div className="space-y-1.5">
@@ -235,7 +258,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
               <p className="input-label">Biaya Provisi</p>
               <div className="flex items-center justify-between p-3 border rounded-md bg-gray-50 dark:bg-gray-800/50">
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {fees.provisionRate}% dari Pokok Hutang
+                  {provisionRate}% dari Pokok Hutang
                 </span>
                 <span className="font-medium">
                   {formatRupiah(results?.provisionFee || 0)}
