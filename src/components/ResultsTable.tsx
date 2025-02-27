@@ -159,7 +159,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                     <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
                       <tr className="table-row-alternate">
                         <td className="px-4 py-3 text-sm font-medium text-left">OTR Final</td>
-                        <td className="px-4 py-3 text-sm text-right">{formatRupiah(otrPrice)}</td>
+                        <td className="px-4 py-3 text-sm text-right" colSpan={2}>{formatRupiah(otrPrice)}</td>
                       </tr>
                       <tr className="table-row-alternate">
                         <td className="px-4 py-3 text-sm font-medium text-left">DP Murni</td>
