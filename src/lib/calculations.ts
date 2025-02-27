@@ -48,20 +48,21 @@ export const calculateLoanWithProvision = (loanPrincipal: number, provisionFee: 
 
 /**
  * Calculate total interest amount
+ * Updated to use loanWithProvision instead of just loanPrincipal
  */
 export const calculateInterestAmount = (
-  loanPrincipal: number, 
+  loanWithProvision: number, 
   interestRate: number, 
   tenorYears: number
 ): number => {
-  return loanPrincipal * (interestRate / 100) * tenorYears;
+  return loanWithProvision * (interestRate / 100) * tenorYears;
 };
 
 /**
  * Calculate total loan amount including interest
  */
-export const calculateTotalLoanAmount = (loanPrincipal: number, interestAmount: number): number => {
-  return loanPrincipal + interestAmount;
+export const calculateTotalLoanAmount = (loanWithProvision: number, interestAmount: number): number => {
+  return loanWithProvision + interestAmount;
 };
 
 /**

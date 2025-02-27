@@ -79,8 +79,11 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
         const loanWithProvision = loanPrincipal + provisionFee;
         
         const interestRate = getInterestRateFromTable(tenor);
-        const interestAmount = loanPrincipal * (interestRate / 100) * tenor;
-        const totalLoanAmount = loanPrincipal + interestAmount;
+        
+        // Changed: Calculate interest based on loan principal plus provision
+        const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
+        
+        const totalLoanAmount = loanWithProvision + interestAmount;
         
         const tenorMonths = tenor * 12;
         const monthlyInstallment = totalLoanAmount / tenorMonths;
