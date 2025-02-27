@@ -9,8 +9,8 @@ import PinDialog from "@/components/PinDialog";
 
 const Settings = () => {
   const { provisionRate, setProvisionRate, additionalAdminFee, setAdditionalAdminFee } = useSettings();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isPinDialogOpen, setIsPinDialogOpen] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(true); // Set to true to prevent double PIN dialog
+  const [isPinDialogOpen, setIsPinDialogOpen] = useState(false); // Set to false to prevent initial PIN dialog
   const navigate = useNavigate();
 
   const handleProvisionRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,21 +44,6 @@ const Settings = () => {
       setIsPinDialogOpen(false);
     }
   };
-
-  // Show content only if authenticated
-  if (!isAuthenticated) {
-    return (
-      <>
-        <Navbar />
-        <PinDialog
-          isOpen={isPinDialogOpen}
-          onClose={handlePinDialogClose}
-          correctPin="082788"
-          onSuccess={handlePinSuccess}
-        />
-      </>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
@@ -133,6 +118,13 @@ const Settings = () => {
           </div>
         </div>
       </footer>
+      
+      <PinDialog 
+        isOpen={isPinDialogOpen}
+        onClose={handlePinDialogClose}
+        correctPin="082788"
+        onSuccess={handlePinSuccess}
+      />
     </div>
   );
 };
