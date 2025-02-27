@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { formatRupiah } from "@/lib/calculations";
 import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
+import { DollarSign, Shield, Percent, Calendar, CreditCard } from "lucide-react";
 
 interface CreditComparisonTableProps {
   otrPrice: number;
@@ -141,69 +142,63 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         {/* Info cards di sebelah kanan - 50% width pada desktop */}
         <div className="lg:w-1/2 w-full">
           <div className="space-y-4">
-            {/* Harga OTR Card */}
+            {/* Harga OTR Card - PERTAMA */}
             <div className="bg-blue-600 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                  <DollarSign className="h-5 w-5" />
                 </div>
                 <div className="text-sm font-medium">Harga OTR</div>
               </div>
               <div className="text-lg font-bold">Rp {otrPrice.toLocaleString('id-ID')}</div>
             </div>
             
-            {/* Asuransi Card */}
-            <div className="bg-purple-600 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
-              <div className="flex items-center">
-                <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                </div>
-                <div className="text-sm font-medium">Jenis Asuransi</div>
-              </div>
-              <div className="text-lg font-bold">{insuranceTypeDisplay}</div>
-            </div>
-            
-            {/* DP Calculated Card */}
+            {/* DP Calculated Card - KEDUA */}
             <div className="bg-emerald-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                  </svg>
+                  <Percent className="h-5 w-5" />
                 </div>
                 <div className="text-sm font-medium">DP Calculated</div>
               </div>
               <div className="text-lg font-bold">{dpPercent}%</div>
             </div>
             
-            {/* Tenor Terpilih Card */}
+            {/* Total DP Card - KETIGA */}
             <div className="bg-white dark:bg-gray-800 rounded-xl p-4 flex justify-between items-center border border-gray-100 dark:border-gray-700 shadow-md">
               <div className="flex items-center">
                 <div className="bg-gray-100 dark:bg-gray-700 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
+                  <DollarSign className="h-5 w-5 text-gray-500 dark:text-gray-300" />
                 </div>
-                <div className="text-sm font-medium text-gray-600 dark:text-gray-300">Tenor Terpilih</div>
+                <div className="text-sm font-medium text-gray-600 dark:text-gray-300">Total DP</div>
               </div>
-              <div className="text-lg font-bold text-gray-800 dark:text-white">{selectedTenor} tahun</div>
+              <div className="text-lg font-bold text-gray-800 dark:text-white">
+                {formatRupiah(selectedTenorData.totalDp)}
+              </div>
             </div>
             
-            {/* Angsuran Bulanan Card */}
+            {/* Angsuran Bulanan Card - KEEMPAT */}
             <div className="bg-white dark:bg-gray-800 rounded-xl p-4 flex justify-between items-center border border-gray-100 dark:border-gray-700 shadow-md">
               <div className="flex items-center">
                 <div className="bg-gray-100 dark:bg-gray-700 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                  </svg>
+                  <CreditCard className="h-5 w-5 text-gray-500 dark:text-gray-300" />
                 </div>
                 <div className="text-sm font-medium text-gray-600 dark:text-gray-300">Angsuran Bulanan</div>
               </div>
-              <div className="text-lg font-bold text-gray-800 dark:text-white">Rp {selectedTenorData.monthlyInstallment.toLocaleString('id-ID')}</div>
+              <div className="text-lg font-bold text-gray-800 dark:text-white">
+                {formatRupiah(selectedTenorData.monthlyInstallment)}
+              </div>
+            </div>
+            
+            {/* Jenis Asuransi Card - KELIMA */}
+            <div className="bg-purple-600 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
+              <div className="flex items-center">
+                <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                  <Shield className="h-5 w-5" />
+                </div>
+                <div className="text-sm font-medium">Jenis Asuransi</div>
+              </div>
+              <div className="text-lg font-bold">{insuranceTypeDisplay}</div>
             </div>
           </div>
         </div>
