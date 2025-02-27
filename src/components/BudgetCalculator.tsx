@@ -304,113 +304,119 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <p className="text-sm text-gray-500 mt-2">Menghitung simulasi...</p>
           </div>
         ) : results ? (
-          <div className="space-y-4 mt-4 sm:mt-6">
-            {/* Ringkasan Simulasi Kredit dengan Material Design Cards */}
-            <div className="rounded-xl p-4 mb-4">
-              <h3 className="text-base font-semibold text-center text-gray-800 dark:text-gray-200 mb-3">
-                Ringkasan Simulasi Kredit
-              </h3>
+          <div className="mt-6">
+            <h3 className="text-base font-semibold text-center text-gray-800 dark:text-gray-200 mb-4">
+              Ringkasan Simulasi Kredit
+            </h3>
+            
+            {/* Layout 2 kolom: cards di kiri, hasil detail di kanan */}
+            <div className="flex flex-col md:flex-row gap-6">
+              {/* Kolom kiri - Info Cards (50% width) */}
+              <div className="w-full md:w-1/2">
+                <div className="grid grid-cols-1 gap-3">
+                  {/* Total DP Card */}
+                  <div className="bg-blue-500 rounded-xl shadow-md overflow-hidden">
+                    <div className="px-4 py-5 text-white">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                          <Wallet className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-sm opacity-90 font-medium">Total DP</p>
+                          <p className="text-lg font-bold">Rp {results.totalDp.toLocaleString('id-ID')}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Angsuran Card */}
+                  <div className="bg-cyan-500 rounded-xl shadow-md overflow-hidden">
+                    <div className="px-4 py-5 text-white">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                          <CreditCard className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-sm opacity-90 font-medium">Angsuran</p>
+                          <p className="text-lg font-bold">Rp {results.monthlyInstallment.toLocaleString('id-ID')}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Tenor Card */}
+                  <div className="bg-green-500 rounded-xl shadow-md overflow-hidden">
+                    <div className="px-4 py-5 text-white">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                          <Calendar className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-sm opacity-90 font-medium">Tenor</p>
+                          <p className="text-lg font-bold">{tenor} tahun</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Asuransi Card */}
+                  <div className="bg-purple-500 rounded-xl shadow-md overflow-hidden">
+                    <div className="px-4 py-5 text-white">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                          <Shield className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-sm opacity-90 font-medium">Asuransi</p>
+                          <p className="text-lg font-bold">{getInsuranceTypeDisplay()}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {/* Total DP Card */}
-                <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl shadow-md overflow-hidden">
-                  <div className="px-4 py-4 sm:px-5 sm:py-5 flex justify-between items-center">
-                    <div className="flex items-center">
-                      <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                        <Wallet className="h-5 w-5 text-white" />
-                      </div>
-                      <div className="text-white">
-                        <p className="text-xs sm:text-sm opacity-90 font-medium">Total DP</p>
-                        <p className="text-lg sm:text-xl font-bold">{formatRupiah(results.totalDp)}</p>
-                      </div>
+              {/* Kolom kanan - Hasil Detail (50% width) */}
+              <div className="w-full md:w-1/2">
+                <div className="bg-primary/5 rounded-lg p-4 border border-primary/20 h-full">
+                  <h3 className="text-base sm:text-lg font-semibold text-primary mb-3">Hasil Simulasi</h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>
+                      <span className="text-sm font-medium">{results.dpPercentage.toFixed(5)}%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">DP Murni:</span>
+                      <span className="text-sm font-medium">{formatRupiah(results.dpAmount)}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Total DP:</span>
+                      <span className="text-sm font-medium">{formatRupiah(results.totalDp)}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Angsuran per bulan:</span>
+                      <span className="text-sm font-medium">{formatRupiah(results.monthlyInstallment)}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Pokok Hutang:</span>
+                      <span className="text-sm font-medium">{formatRupiah(results.loanPrincipal)}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Total Pinjaman:</span>
+                      <span className="text-sm font-medium">{formatRupiah(results.totalLoanAmount)}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Biaya Asuransi:</span>
+                      <span className="text-sm font-medium">{formatRupiah(results.insuranceAmount)}</span>
                     </div>
                   </div>
-                </div>
-                
-                {/* Angsuran Card */}
-                <div className="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl shadow-md overflow-hidden">
-                  <div className="px-4 py-4 sm:px-5 sm:py-5 flex justify-between items-center">
-                    <div className="flex items-center">
-                      <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                        <CreditCard className="h-5 w-5 text-white" />
-                      </div>
-                      <div className="text-white">
-                        <p className="text-xs sm:text-sm opacity-90 font-medium">Angsuran</p>
-                        <p className="text-lg sm:text-xl font-bold">{formatRupiah(results.monthlyInstallment)}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Tenor Card */}
-                <div className="bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl shadow-md overflow-hidden">
-                  <div className="px-4 py-4 sm:px-5 sm:py-5 flex justify-between items-center">
-                    <div className="flex items-center">
-                      <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                        <Calendar className="h-5 w-5 text-white" />
-                      </div>
-                      <div className="text-white">
-                        <p className="text-xs sm:text-sm opacity-90 font-medium">Tenor</p>
-                        <p className="text-lg sm:text-xl font-bold">{tenor} tahun</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Asuransi Card */}
-                <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl shadow-md overflow-hidden">
-                  <div className="px-4 py-4 sm:px-5 sm:py-5 flex justify-between items-center">
-                    <div className="flex items-center">
-                      <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                        <Shield className="h-5 w-5 text-white" />
-                      </div>
-                      <div className="text-white">
-                        <p className="text-xs sm:text-sm opacity-90 font-medium">Asuransi</p>
-                        <p className="text-lg sm:text-xl font-bold">{getInsuranceTypeDisplay()}</p>
-                      </div>
-                    </div>
-                  </div>
+                  
+                  <p className="text-xs text-gray-500 dark:text-gray-400 italic mt-4">
+                    * Hasil simulasi di atas merupakan perkiraan. Silakan hubungi dealer untuk informasi lebih akurat.
+                  </p>
                 </div>
               </div>
             </div>
-            
-            <div className="bg-primary/5 rounded-lg p-3 sm:p-4 border border-primary/20">
-              <h3 className="text-base sm:text-lg font-semibold text-primary mb-2">Hasil Simulasi</h3>
-              <div className="space-y-1.5 sm:space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>
-                  <span className="text-xs sm:text-sm font-medium">{results.dpPercentage.toFixed(5)}%</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">DP Murni:</span>
-                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.dpAmount)}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Total DP:</span>
-                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.totalDp)}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Angsuran per bulan:</span>
-                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.monthlyInstallment)}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Pokok Hutang:</span>
-                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.loanPrincipal)}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Total Pinjaman:</span>
-                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.totalLoanAmount)}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Biaya Asuransi:</span>
-                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.insuranceAmount)}</span>
-                </div>
-              </div>
-            </div>
-            
-            <p className="text-xs text-gray-500 dark:text-gray-400 italic">
-              * Hasil simulasi di atas merupakan perkiraan. Silakan hubungi dealer untuk informasi lebih akurat.
-            </p>
           </div>
         ) : null}
       </div>
