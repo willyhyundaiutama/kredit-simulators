@@ -25,6 +25,8 @@ interface CalculationResults {
   insuranceRate: number;
   totalDp: number;
   adminFee: number;
+  additionalAdminFee: number;
+  totalAdminFee: number;
   tpiFee: number;
   insuranceType: string;
   provisionRate: number;
@@ -39,6 +41,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   const [dpPercent, setDpPercent] = useState<number>(defaultDpPercent);
   const [tenor, setTenor] = useState<number>(defaultTenor);
   const [provisionRate, setProvisionRate] = useState<number>(fees.provisionRate);
+  const [additionalAdminFee, setAdditionalAdminFee] = useState<number>(0);
   const [insuranceType, setInsuranceType] = useState<'kombinasi' | 'allrisk' | 'allriskPerluasan'>('kombinasi');
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
@@ -78,6 +81,15 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
       setProvisionRate(Math.min(Math.max(value, 0), 10)); // Clamp between 0 and 10%
     }
   };
+  
+  const handleAdditionalAdminFeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, "");
+    if (value === "") {
+      setAdditionalAdminFee(0);
+    } else {
+      setAdditionalAdminFee(parseInt(value, 10));
+    }
+  };
 
   const calculateLoan = () => {
     setIsCalculating(true);
@@ -105,11 +117,12 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
         
         // Get admin fee based on tenor
         const adminFee = getAdminFee(tenor);
+        const totalAdminFee = adminFee + additionalAdminFee;
         
         const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
         
         // Total DP includes: DP + First Installment + Insurance + Admin Fee + TPI Fee + Credit Protection
-        const totalDp = dpAmount + monthlyInstallment + insuranceAmount + adminFee + fees.tpiFee + creditProtection;
+        const totalDp = dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection;
         
         setResults({
           dpAmount,
@@ -124,6 +137,8 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
           insuranceRate,
           totalDp,
           adminFee,
+          additionalAdminFee,
+          totalAdminFee,
           tpiFee: fees.tpiFee,
           provisionRate,
           insuranceType: insuranceType === 'kombinasi' 
@@ -144,7 +159,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   // Calculate on initial render and when inputs change
   useEffect(() => {
     calculateLoan();
-  }, [otrPrice, dpPercent, tenor, insuranceType, provisionRate]);
+  }, [otrPrice, dpPercent, tenor, insuranceType, provisionRate, additionalAdminFee]);
 
   return (
     <div className="w-full animate-fade-in">
@@ -197,6 +212,16 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
               onChange={handleProvisionRateChange}
               suffix="%"
               description="Biaya provisi dari pokok hutang"
+            />
+            
+            <FormInput
+              label="Biaya Admin Tambahan"
+              type="text"
+              prefix="Rp"
+              value={additionalAdminFee.toLocaleString('id-ID')}
+              onChange={handleAdditionalAdminFeeChange}
+              placeholder="0"
+              description="Biaya admin tambahan di luar biaya admin default"
             />
             
             <div className="space-y-1.5">
@@ -271,13 +296,33 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             
             <div>
               <p className="input-label">Biaya Administrasi</p>
-              <div className="flex items-center justify-between p-3 border rounded-md bg-gray-50 dark:bg-gray-800/50">
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  Sesuai tenor {tenor} tahun
-                </span>
-                <span className="font-medium">
-                  {formatRupiah(getAdminFee(tenor))}
-                </span>
+              <div className="flex flex-col p-3 border rounded-md bg-gray-50 dark:bg-gray-800/50">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                    Admin Dasar (Tenor {tenor} tahun)
+                  </span>
+                  <span className="font-medium">
+                    {formatRupiah(getAdminFee(tenor))}
+                  </span>
+                </div>
+                {additionalAdminFee > 0 && (
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      Admin Tambahan
+                    </span>
+                    <span className="font-medium">
+                      {formatRupiah(additionalAdminFee)}
+                    </span>
+                  </div>
+                )}
+                <div className="flex items-center justify-between mt-1 pt-1 border-t border-gray-200 dark:border-gray-700">
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Total Admin
+                  </span>
+                  <span className="font-medium">
+                    {formatRupiah((results?.totalAdminFee || 0))}
+                  </span>
+                </div>
               </div>
             </div>
             

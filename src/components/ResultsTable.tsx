@@ -15,6 +15,8 @@ interface CalculationResults {
   insuranceRate?: number;
   totalDp: number;
   adminFee: number;
+  additionalAdminFee?: number;
+  totalAdminFee?: number;
   tpiFee: number;
   insuranceType?: string;
   provisionRate?: number;
@@ -121,10 +123,17 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                     <td className="px-4 py-3 text-sm text-right">-</td>
                   </tr>
                   <tr className="table-row-alternate">
-                    <td className="px-4 py-3 text-sm font-medium text-left">Admin</td>
+                    <td className="px-4 py-3 text-sm font-medium text-left">Admin (Dasar)</td>
                     <td className="px-4 py-3 text-sm text-right"></td>
                     <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.adminFee)}</td>
                   </tr>
+                  {(results.additionalAdminFee && results.additionalAdminFee > 0) && (
+                    <tr className="table-row-alternate">
+                      <td className="px-4 py-3 text-sm font-medium text-left">Admin (Tambahan)</td>
+                      <td className="px-4 py-3 text-sm text-right"></td>
+                      <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.additionalAdminFee)}</td>
+                    </tr>
+                  )}
                   <tr className="table-row-alternate bg-primary/5">
                     <td className="px-4 py-3 text-sm font-medium text-left">Total DP</td>
                     <td className="px-4 py-3 text-sm text-right"></td>
@@ -148,6 +157,11 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             Asuransi: <span className="font-medium text-gray-700 dark:text-gray-300">{results.insuranceType} ({results.insuranceRate?.toFixed(2)}%)</span>
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Admin: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(results.totalAdminFee || results.adminFee)}</span> 
+            {(results.additionalAdminFee && results.additionalAdminFee > 0) ? 
+              ` (Dasar: ${formatRupiah(results.adminFee)} + Tambahan: ${formatRupiah(results.additionalAdminFee)})` : ''}
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             * Simulasi ini hanya perkiraan. Nilai sebenarnya dapat berbeda.
