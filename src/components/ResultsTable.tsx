@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { formatRupiah } from "@/lib/calculations";
 import { ChevronDown, ChevronUp, Car, Calendar, Shield, DollarSign, CreditCard, Info } from "lucide-react";
@@ -34,7 +33,6 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
   const [showDpDetails, setShowDpDetails] = useState(false);
   const [showFullDetails, setShowFullDetails] = useState(false);
 
-  // Fix: Define hasAdditionalAdminFee variable here in the component scope
   const hasAdditionalAdminFee = results.additionalAdminFee && results.additionalAdminFee > 0;
 
   return (
@@ -153,54 +151,57 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
         {/* Full Details Section */}
         {showFullDetails && (
           <div className="border-t border-gray-100 dark:border-gray-700 p-4 animate-fade-in">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-6">
               {/* OTR Final Details */}
               <div className="space-y-3">
                 <h3 className="text-lg font-medium mb-2">OTR Final</h3>
                 <div className="overflow-hidden rounded-lg border">
-                  <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-                    <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">OTR Final</td>
-                        <td className="px-4 py-3 text-sm text-right" colSpan={2}>{formatRupiah(otrPrice)}</td>
-                      </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">DP Murni</td>
-                        <td className="px-4 py-3 text-sm text-right">{dpPercent}%</td>
-                        <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.dpAmount)}</td>
-                      </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Pokok Hutang</td>
-                        <td className="px-4 py-3 text-sm text-right"></td>
-                        <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.loanPrincipal)}</td>
-                      </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Provisi Kredit</td>
-                        <td className="px-4 py-3 text-sm text-right">{results.provisionRate?.toFixed(2)}%</td>
-                        <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.provisionFee)}</td>
-                      </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Pokok Hutang Provisi</td>
-                        <td className="px-4 py-3 text-sm text-right"></td>
-                        <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.loanWithProvision)}</td>
-                      </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Bunga</td>
-                        <td className="px-4 py-3 text-sm text-right">{results.interestRate.toFixed(2)}%</td>
-                        <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.interestAmount)}</td>
-                      </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Total Hutang</td>
-                        <td className="px-4 py-3 text-sm text-right"></td>
-                        <td className="px-4 py-3 text-sm text-right font-semibold">{formatRupiah(results.totalLoanAmount)}</td>
-                      </tr>
-                      <tr className="table-row-alternate bg-primary/5">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Angsuran</td>
-                        <td className="px-4 py-3 text-sm text-right"></td>
-                        <td className="px-4 py-3 text-sm text-right font-semibold text-primary">{formatRupiah(results.monthlyInstallment)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div className="divide-y divide-gray-200 dark:divide-gray-800">
+                    {/* Mobile-optimized table rows */}
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">OTR Final</div>
+                      <div className="text-sm font-semibold">{formatRupiah(otrPrice)}</div>
+                    </div>
+
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">DP Murni ({dpPercent}%)</div>
+                      <div className="text-sm font-semibold">{formatRupiah(results.dpAmount)}</div>
+                    </div>
+
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Pokok Hutang</div>
+                      <div className="text-sm font-semibold">{formatRupiah(results.loanPrincipal)}</div>
+                    </div>
+
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
+                        Provisi Kredit ({results.provisionRate?.toFixed(2)}%)
+                      </div>
+                      <div className="text-sm font-semibold">{formatRupiah(results.provisionFee)}</div>
+                    </div>
+
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Pokok Hutang Provisi</div>
+                      <div className="text-sm font-semibold">{formatRupiah(results.loanWithProvision)}</div>
+                    </div>
+
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
+                        Bunga ({results.interestRate.toFixed(2)}%)
+                      </div>
+                      <div className="text-sm font-semibold">{formatRupiah(results.interestAmount)}</div>
+                    </div>
+
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Total Hutang</div>
+                      <div className="text-sm font-semibold">{formatRupiah(results.totalLoanAmount)}</div>
+                    </div>
+
+                    <div className="table-row-alternate bg-primary/5 p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Angsuran per Bulan</div>
+                      <div className="text-sm font-semibold text-primary">{formatRupiah(results.monthlyInstallment)}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
               
@@ -208,98 +209,90 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
               <div className="space-y-3">
                 <h3 className="text-lg font-medium mb-2">Total DP</h3>
                 <div className="overflow-hidden rounded-lg border">
-                  <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-                    <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">DP Murni</td>
-                        <td className="px-4 py-3 text-sm text-right">{dpPercent}%</td>
-                        <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.dpAmount)}</td>
-                      </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Angsuran ke-1</td>
-                        <td className="px-4 py-3 text-sm text-right"></td>
-                        <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.monthlyInstallment)}</td>
-                      </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Asuransi Mobil {tenor} Tahun</td>
-                        <td className="px-4 py-3 text-sm text-right">{results.insuranceRate?.toFixed(2)}% ({results.insuranceType})</td>
-                        <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.insuranceAmount)}</td>
-                      </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">TPI III</td>
-                        <td className="px-4 py-3 text-sm text-right">0.00%</td>
-                        <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.tpiFee)}</td>
-                      </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Credit Protection (NO)</td>
-                        <td className="px-4 py-3 text-sm text-right">0.00%</td>
-                        <td className="px-4 py-3 text-sm text-right">-</td>
-                      </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Provisi</td>
-                        <td className="px-4 py-3 text-sm text-right">0.00%</td>
-                        <td className="px-4 py-3 text-sm text-right">-</td>
-                      </tr>
-                      
-                      {/* Admin Fee Row */}
-                      {hasAdditionalAdminFee ? (
-                        // If there's additional admin fee, show both
-                        <>
-                          <tr className="table-row-alternate">
-                            <td className="px-4 py-3 text-sm font-medium text-left">Admin (Dasar)</td>
-                            <td className="px-4 py-3 text-sm text-right"></td>
-                            <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.adminFee)}</td>
-                          </tr>
-                          <tr className="table-row-alternate">
-                            <td className="px-4 py-3 text-sm font-medium text-left">Admin (Tambahan)</td>
-                            <td className="px-4 py-3 text-sm text-right"></td>
-                            <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.additionalAdminFee)}</td>
-                          </tr>
-                        </>
-                      ) : (
-                        // If no additional admin fee, just show the admin fee as "Biaya Admin"
-                        <tr className="table-row-alternate">
-                          <td className="px-4 py-3 text-sm font-medium text-left">Biaya Admin</td>
-                          <td className="px-4 py-3 text-sm text-right"></td>
-                          <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.adminFee)}</td>
-                        </tr>
-                      )}
-                      
-                      <tr className="table-row-alternate bg-primary/5">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Total DP</td>
-                        <td className="px-4 py-3 text-sm text-right"></td>
-                        <td className="px-4 py-3 text-sm text-right font-semibold text-primary">{formatRupiah(results.totalDp)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div className="divide-y divide-gray-200 dark:divide-gray-800">
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
+                        DP Murni ({dpPercent}%)
+                      </div>
+                      <div className="text-sm font-semibold">{formatRupiah(results.dpAmount)}</div>
+                    </div>
+
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Angsuran ke-1</div>
+                      <div className="text-sm font-semibold">{formatRupiah(results.monthlyInstallment)}</div>
+                    </div>
+
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
+                        Asuransi Mobil {tenor} Tahun ({results.insuranceType}, {results.insuranceRate?.toFixed(2)}%)
+                      </div>
+                      <div className="text-sm font-semibold">{formatRupiah(results.insuranceAmount)}</div>
+                    </div>
+
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">TPI III (0.00%)</div>
+                      <div className="text-sm font-semibold">{formatRupiah(results.tpiFee)}</div>
+                    </div>
+
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Credit Protection (NO)</div>
+                      <div className="text-sm font-semibold">-</div>
+                    </div>
+
+                    <div className="table-row-alternate p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Provisi (0.00%)</div>
+                      <div className="text-sm font-semibold">-</div>
+                    </div>
+
+                    {hasAdditionalAdminFee ? (
+                      <>
+                        <div className="table-row-alternate p-3 flex flex-col">
+                          <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Admin (Dasar)</div>
+                          <div className="text-sm font-semibold">{formatRupiah(results.adminFee)}</div>
+                        </div>
+                        <div className="table-row-alternate p-3 flex flex-col">
+                          <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Admin (Tambahan)</div>
+                          <div className="text-sm font-semibold">{formatRupiah(results.additionalAdminFee)}</div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="table-row-alternate p-3 flex flex-col">
+                        <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Biaya Admin</div>
+                        <div className="text-sm font-semibold">{formatRupiah(results.adminFee)}</div>
+                      </div>
+                    )}
+
+                    <div className="table-row-alternate bg-primary/5 p-3 flex flex-col">
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Total DP</div>
+                      <div className="text-sm font-semibold text-primary">{formatRupiah(results.totalDp)}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             
             <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800/30 rounded-lg border border-gray-200 dark:border-gray-700">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Tenor: <span className="font-medium text-gray-700 dark:text-gray-300">{tenor} tahun ({tenor * 12} bulan)</span>
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Suku Bunga: <span className="font-medium text-gray-700 dark:text-gray-300">{results.interestRate.toFixed(2)}% per tahun</span>
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Provisi: <span className="font-medium text-gray-700 dark:text-gray-300">{results.provisionRate?.toFixed(2)}%</span>
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Asuransi: <span className="font-medium text-gray-700 dark:text-gray-300">{results.insuranceType} ({results.insuranceRate?.toFixed(2)}%)</span>
-              </p>
-              
-              {/* Admin Fee summary text */}
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Admin: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(results.totalAdminFee || results.adminFee)}</span> 
-                {hasAdditionalAdminFee ? 
-                  ` (Dasar: ${formatRupiah(results.adminFee)} + Tambahan: ${formatRupiah(results.additionalAdminFee)})` : ''}
-              </p>
-              
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                * Simulasi ini hanya perkiraan. Nilai sebenarnya dapat berbeda.
-              </p>
+              <div className="space-y-2">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Tenor:</span> {tenor} tahun ({tenor * 12} bulan)
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Suku Bunga:</span> {results.interestRate.toFixed(2)}% per tahun
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Provisi:</span> {results.provisionRate?.toFixed(2)}%
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Asuransi:</span> {results.insuranceType} ({results.insuranceRate?.toFixed(2)}%)
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Admin:</span> {formatRupiah(results.totalAdminFee || results.adminFee)}
+                  {hasAdditionalAdminFee && ` (Dasar: ${formatRupiah(results.adminFee)} + Tambahan: ${formatRupiah(results.additionalAdminFee)})`}
+                </p>
+                <p className="text-xs italic text-gray-500 dark:text-gray-400 mt-2">
+                  * Simulasi ini hanya perkiraan. Nilai sebenarnya dapat berbeda.
+                </p>
+              </div>
             </div>
           </div>
         )}
