@@ -236,17 +236,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
         </div>
       </div>
       
-      {/* Tabel Perbandingan Tenor */}
-      <div className="mt-8 results-appear">
-        <CreditComparisonTable 
-          otrPrice={otrPrice}
-          dpPercent={dpPercent}
-          insuranceType={insuranceType}
-          provisionRate={provisionRate}
-          additionalAdminFee={additionalAdminFee}
-        />
-      </div>
-      
+      {/* Hasil Simulasi dipindahkan ke atas */}
       {results && (
         <div className="mt-8 results-appear">
           <ResultsTable 
@@ -257,6 +247,17 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
           />
         </div>
       )}
+      
+      {/* Tabel Perbandingan Tenor */}
+      <div className="mt-8 results-appear">
+        <CreditComparisonTable 
+          otrPrice={otrPrice}
+          dpPercent={dpPercent}
+          insuranceType={insuranceType}
+          provisionRate={provisionRate}
+          additionalAdminFee={additionalAdminFee}
+        />
+      </div>
     </div>
   );
 };
