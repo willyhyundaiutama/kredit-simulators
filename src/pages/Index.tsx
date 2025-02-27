@@ -10,6 +10,7 @@ const Index = () => {
   const [otrPrice, setOtrPrice] = useState<number | undefined>(undefined);
   const [dpPercent, setDpPercent] = useState<number>(20);
   const [tenor, setTenor] = useState<number>(5);
+  const [activeTab, setActiveTab] = useState<string>("loan");
 
   return (
     <div className="min-h-screen bg-pattern dark:from-gray-900 dark:to-gray-800">
@@ -67,10 +68,10 @@ const Index = () => {
             </div>
           </div>
           
-          <Tabs defaultValue="loan" className="w-full mb-8 sm:mb-10">
+          <Tabs defaultValue="loan" className="w-full mb-8 sm:mb-10" onValueChange={setActiveTab}>
             <TabsList className="relative w-full max-w-md mx-auto bg-white dark:bg-gray-800 p-1 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 overflow-hidden">
               <div className="absolute inset-0 w-1/2 h-full bg-primary rounded-lg shadow-lg transition-transform duration-300 ease-in-out" 
-                style={{ transform: `translateX(${defaultValue === "budget" ? "100%" : "0%"})` }}>
+                style={{ transform: `translateX(${activeTab === "budget" ? "100%" : "0%"})` }}>
               </div>
               <TabsTrigger 
                 value="loan" 
@@ -96,32 +97,34 @@ const Index = () => {
               </TabsTrigger>
             </TabsList>
             
-            <style jsx>{`
-              [data-state="active"][value="loan"] {
-                --tab-loan-color: var(--primary-foreground);
-                font-weight: 600;
-                animation: fadeIn 0.3s ease-in-out;
-              }
-              
-              [data-state="active"][value="budget"] {
-                --tab-budget-color: var(--primary-foreground);
-                font-weight: 600;
-                animation: fadeIn 0.3s ease-in-out;
-              }
-              
-              [data-state="inactive"][value="loan"] {
-                --tab-loan-color: var(--foreground);
-              }
-              
-              [data-state="inactive"][value="budget"] {
-                --tab-budget-color: var(--foreground);
-              }
-              
-              @keyframes fadeIn {
-                from { opacity: 0.7; }
-                to { opacity: 1; }
-              }
-            `}</style>
+            <style>
+              {`
+                [data-state="active"][value="loan"] {
+                  --tab-loan-color: var(--primary-foreground);
+                  font-weight: 600;
+                  animation: fadeIn 0.3s ease-in-out;
+                }
+                
+                [data-state="active"][value="budget"] {
+                  --tab-budget-color: var(--primary-foreground);
+                  font-weight: 600;
+                  animation: fadeIn 0.3s ease-in-out;
+                }
+                
+                [data-state="inactive"][value="loan"] {
+                  --tab-loan-color: var(--foreground);
+                }
+                
+                [data-state="inactive"][value="budget"] {
+                  --tab-budget-color: var(--foreground);
+                }
+                
+                @keyframes fadeIn {
+                  from { opacity: 0.7; }
+                  to { opacity: 1; }
+                }
+              `}
+            </style>
             
             <TabsContent value="loan" className="mt-6 sm:mt-8">
               <div className="frosted-glass p-6 rounded-2xl shadow-md">
