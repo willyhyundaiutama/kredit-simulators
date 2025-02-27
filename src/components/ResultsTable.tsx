@@ -176,7 +176,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
 
                     <div className="table-row-alternate p-3 flex flex-col">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
-                        Provisi Kredit ({results.provisionRate?.toFixed(2)}%)
+                        Credit Handling Fee
                       </div>
                       <div className="text-sm font-semibold">{formatRupiah(results.provisionFee)}</div>
                     </div>
@@ -281,7 +281,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                   <span className="font-medium text-gray-700 dark:text-gray-300">Suku Bunga:</span> {results.interestRate.toFixed(2)}% per tahun
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-medium text-gray-700 dark:text-gray-300">Provisi:</span> {results.provisionRate?.toFixed(2)}%
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Credit Handling Fee:</span> {formatRupiah(results.provisionFee)}
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   <span className="font-medium text-gray-700 dark:text-gray-300">Asuransi:</span> {results.insuranceType} ({results.insuranceRate?.toFixed(2)}%)
