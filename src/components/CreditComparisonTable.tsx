@@ -110,13 +110,13 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-gray-200 dark:border-gray-700">
-                <th className="text-gray-600 dark:text-gray-300 font-medium px-3 py-2 text-left text-xs">
+                <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-left text-xs">
                   TENOR
                 </th>
-                <th className="text-gray-600 dark:text-gray-300 font-medium px-3 py-2 text-center text-xs">
+                <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-center text-xs">
                   TOTAL DP
                 </th>
-                <th className="text-gray-600 dark:text-gray-300 font-medium px-3 py-2 text-right text-xs">
+                <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-right text-xs">
                   ANGSURAN
                 </th>
               </tr>
@@ -127,37 +127,20 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                   key={data.tenor}
                   className="border-b border-gray-100 dark:border-gray-800 transition-all duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
                 >
-                  <td className="px-3 py-2.5">
-                    <div className="flex flex-col">
-                      <span className="font-medium text-xs text-gray-800 dark:text-gray-200">
-                        {data.tenor * 12} bulan
-                      </span>
-                      <span className="text-[10px] text-gray-500 dark:text-gray-400">
-                        Bunga: {data.interestRate.toFixed(2)}%
-                      </span>
-                    </div>
+                  <td className="px-4 py-3.5">
+                    <span className="font-medium text-sm text-gray-800 dark:text-gray-200">
+                      {data.tenor * 12} bulan
+                    </span>
                   </td>
-                  <td className="px-3 py-2.5 text-center">
-                    <div className="flex flex-col items-center">
-                      <span className="text-blue-600 dark:text-blue-400 font-medium text-xs">
-                        {formatRupiah(data.totalDp)}
-                      </span>
-                      <div className="flex flex-col text-[10px] text-gray-500 dark:text-gray-400">
-                        <span>DP Murni: {dpPercent}% ({formatRupiah(otrPrice * dpPercent / 100)})</span>
-                        <span>Asuransi: {data.insuranceRate.toFixed(2)}%</span>
-                      </div>
-                    </div>
+                  <td className="px-4 py-3.5 text-center">
+                    <span className="text-blue-600 dark:text-blue-400 font-medium text-sm">
+                      {formatRupiah(data.totalDp)}
+                    </span>
                   </td>
-                  <td className="px-3 py-2.5 text-right">
-                    <div className="flex flex-col items-end">
-                      <span className="text-green-600 dark:text-green-400 font-medium text-xs">
-                        {formatRupiah(data.monthlyInstallment)}
-                      </span>
-                      <div className="flex flex-col text-right text-[10px] text-gray-500 dark:text-gray-400">
-                        <span>Admin: {formatRupiah(data.adminFee)}</span>
-                        <span>Provisi: {provisionRate}%</span>
-                      </div>
-                    </div>
+                  <td className="px-4 py-3.5 text-right">
+                    <span className="text-green-600 dark:text-green-400 font-medium text-sm">
+                      {formatRupiah(data.monthlyInstallment)}
+                    </span>
                   </td>
                 </tr>
               ))}
