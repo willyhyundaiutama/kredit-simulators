@@ -64,15 +64,21 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
   return (
     <div className="my-8">
       <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Perbandingan Tenor</h3>
+      
+      {/* Harga OTR Box di atas tabel */}
+      <div className="mb-4 bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4 inline-block">
+        <div className="text-center">
+          <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Harga OTR</div>
+          <div className="text-lg font-bold text-primary">{formatRupiah(otrPrice)}</div>
+        </div>
+      </div>
+      
       <div className="overflow-x-auto rounded-xl -mx-4 sm:mx-0">
         <div className="min-w-[640px] pb-4 sm:pb-0">
           <table className="w-full border-separate border-spacing-0">
             <thead>
               <tr>
-                <th className="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium px-4 sm:px-6 py-4 text-left rounded-tl-xl border-b border-gray-200 dark:border-gray-700">
-                  TIPE
-                </th>
-                <th className="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium px-4 sm:px-6 py-4 text-center border-b border-gray-200 dark:border-gray-700">
+                <th className="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium px-4 sm:px-6 py-4 text-center rounded-tl-xl border-b border-gray-200 dark:border-gray-700">
                   TENOR
                 </th>
                 <th className="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium px-4 sm:px-6 py-4 text-center border-b border-gray-200 dark:border-gray-700">
@@ -89,14 +95,6 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                   key={data.tenor}
                   className={`hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors`}
                 >
-                  {index === 0 && (
-                    <td rowSpan={7} className="px-4 sm:px-6 py-5 text-center font-bold text-gray-800 dark:text-white border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900/80 align-middle">
-                      <div className="flex flex-col items-center justify-center h-full">
-                        <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-1">Harga OTR</span>
-                        <span className="text-sm sm:text-base text-primary">{formatRupiah(otrPrice)}</span>
-                      </div>
-                    </td>
-                  )}
                   <td className={`px-4 sm:px-6 py-4 text-center border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900/80 ${index === 6 && 'rounded-bl-xl'}`}>
                     <span className="inline-flex items-center justify-center px-2 sm:px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-xs sm:text-sm font-medium">
                       {data.tenor * 12} bulan
