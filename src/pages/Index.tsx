@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calculator, Shield, Info } from "lucide-react";
 
 const Index = () => {
-  const [otrPrice, setOtrPrice] = useState<number>(292000000);
+  const [otrPrice, setOtrPrice] = useState<number>(300000000);
   const [dpPercent, setDpPercent] = useState<number>(20);
   const [tenor, setTenor] = useState<number>(4);
 
