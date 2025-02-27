@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { formatRupiah } from "@/lib/calculations";
 import { ChevronDown, ChevronUp, Car, Calendar, Shield, DollarSign, CreditCard, Info } from "lucide-react";
@@ -31,125 +30,125 @@ interface ResultsTableProps {
 }
 
 const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercent, tenor }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [showDpDetails, setShowDpDetails] = useState(false);
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  const toggleDpDetails = () => {
-    setShowDpDetails(!showDpDetails);
-  };
-
-  // Show additional admin fee only if it's greater than 0
-  const hasAdditionalAdminFee = results.additionalAdminFee && results.additionalAdminFee > 0;
+  const [showFullDetails, setShowFullDetails] = useState(false);
 
   return (
     <div className="w-full">
-      <div className="glass-card dark:glass-card-dark p-6 rounded-2xl">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold">Hasil Simulasi</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
+        <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-700">
+          <h2 className="text-lg font-semibold">Hasil Simulasi</h2>
           <button 
-            className="text-primary hover:bg-primary/10 p-1 rounded-full transition-colors"
-            onClick={toggleExpand}
+            onClick={() => setShowFullDetails(!showFullDetails)}
+            className="text-primary hover:bg-primary/10 p-1.5 rounded-lg transition-colors"
           >
-            {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            {showFullDetails ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
           </button>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-          {/* Harga OTR Card */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center">
-                <Car className="w-5 h-5 text-blue-500 mr-2" />
-                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">Harga OTR</span>
+
+        <div className="p-4 space-y-4">
+          {/* Main Summary Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* OTR Price */}
+            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4">
+              <div className="flex items-center mb-1">
+                <Car className="w-4 h-4 text-gray-400 mr-2" />
+                <span className="text-sm text-gray-500">Harga OTR</span>
+              </div>
+              <div className="text-xl font-semibold">{formatRupiah(otrPrice)}</div>
+            </div>
+
+            {/* Total DP */}
+            <div 
+              className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-colors"
+              onClick={() => setShowDpDetails(!showDpDetails)}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center mb-1">
+                  <DollarSign className="w-4 h-4 text-gray-400 mr-2" />
+                  <span className="text-sm text-gray-500">Total DP</span>
+                </div>
+                <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${showDpDetails ? 'rotate-180' : ''}`} />
+              </div>
+              <div className="text-xl font-semibold">{formatRupiah(results.totalDp)}</div>
+              
+              {/* DP Breakdown */}
+              {showDpDetails && (
+                <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700 space-y-2 animate-fade-in">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">DP Murni ({dpPercent}%)</span>
+                    <span>{formatRupiah(results.dpAmount)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Angsuran ke-1</span>
+                    <span>{formatRupiah(results.monthlyInstallment)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Asuransi</span>
+                    <span>{formatRupiah(results.insuranceAmount)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Admin</span>
+                    <span>{formatRupiah(results.totalAdminFee || results.adminFee)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">TPI</span>
+                    <span>{formatRupiah(results.tpiFee)}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Monthly Payment */}
+            <div className="bg-primary/5 rounded-xl p-4">
+              <div className="flex items-center mb-1">
+                <CreditCard className="w-4 h-4 text-primary mr-2" />
+                <span className="text-sm text-gray-500">Angsuran per Bulan</span>
+              </div>
+              <div className="text-xl font-semibold text-primary">
+                {formatRupiah(results.monthlyInstallment)}
               </div>
             </div>
-            <div className="text-xl font-bold">{formatRupiah(otrPrice)}</div>
-          </div>
-          
-          {/* Total DP Card */}
-          <div 
-            className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
-            onClick={toggleDpDetails}
-          >
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center">
-                <DollarSign className="w-5 h-5 text-green-500 mr-2" />
-                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">Total DP</span>
+
+            {/* Tenor */}
+            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4">
+              <div className="flex items-center mb-1">
+                <Calendar className="w-4 h-4 text-gray-400 mr-2" />
+                <span className="text-sm text-gray-500">Tenor</span>
               </div>
-              <button className="text-primary p-1 rounded-full">
-                {showDpDetails ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-              </button>
-            </div>
-            <div className="text-xl font-bold">{formatRupiah(results.totalDp)}</div>
-            
-            {/* DP Breakdown Section */}
-            {showDpDetails && (
-              <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700 space-y-2 animate-fade-in">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">DP Murni ({dpPercent}%)</span>
-                  <span className="font-medium">{formatRupiah(results.dpAmount)}</span>
-                </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Angsuran ke-1</span>
-                  <span className="font-medium">{formatRupiah(results.monthlyInstallment)}</span>
-                </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Asuransi ({results.insuranceType})</span>
-                  <span className="font-medium">{formatRupiah(results.insuranceAmount)}</span>
-                </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Admin</span>
-                  <span className="font-medium">{formatRupiah(results.totalAdminFee || results.adminFee)}</span>
-                </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">TPI</span>
-                  <span className="font-medium">{formatRupiah(results.tpiFee)}</span>
-                </div>
+              <div className="text-xl font-semibold">
+                {tenor} tahun <span className="text-sm font-normal text-gray-500">({tenor * 12} bulan)</span>
               </div>
-            )}
-          </div>
-          
-          {/* Angsuran Card */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-            <div className="flex items-center mb-2">
-              <CreditCard className="w-5 h-5 text-purple-500 mr-2" />
-              <span className="text-sm font-medium text-gray-500 dark:text-gray-400">Angsuran per Bulan</span>
             </div>
-            <div className="text-xl font-bold text-primary">{formatRupiah(results.monthlyInstallment)}</div>
           </div>
-          
-          {/* Tenor Card */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-            <div className="flex items-center mb-2">
-              <Calendar className="w-5 h-5 text-orange-500 mr-2" />
-              <span className="text-sm font-medium text-gray-500 dark:text-gray-400">Tenor</span>
+
+          {/* Insurance Type */}
+          <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4">
+            <div className="flex items-center mb-1">
+              <Shield className="w-4 h-4 text-gray-400 mr-2" />
+              <span className="text-sm text-gray-500">Asuransi</span>
             </div>
-            <div className="text-xl font-bold">{tenor} tahun <span className="text-sm font-normal text-gray-500">({tenor * 12} bulan)</span></div>
+            <div className="text-xl font-semibold">
+              {results.insuranceType} 
+              <span className="text-sm font-normal text-gray-500 ml-1">
+                ({results.insuranceRate?.toFixed(2)}%)
+              </span>
+            </div>
           </div>
-          
-          {/* Asuransi Card */}
-          <div className="md:col-span-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-            <div className="flex items-center mb-2">
-              <Shield className="w-5 h-5 text-teal-500 mr-2" />
-              <span className="text-sm font-medium text-gray-500 dark:text-gray-400">Asuransi</span>
-            </div>
-            <div className="text-xl font-bold">{results.insuranceType} <span className="text-sm font-normal text-gray-500">({results.insuranceRate?.toFixed(2)}%)</span></div>
+
+          {/* Info Note */}
+          <div className="flex items-start p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <Info className="w-4 h-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
+            <p className="text-sm text-blue-600 dark:text-blue-300">
+              Hasil simulasi ini merupakan estimasi. 
+              {!showFullDetails && " Klik tombol di kanan atas untuk melihat detail lengkap."}
+            </p>
           </div>
         </div>
-        
-        {/* Note */}
-        <div className="flex items-start p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm text-blue-600 dark:text-blue-300">
-          <Info className="w-4 h-4 mt-0.5 mr-2 flex-shrink-0" />
-          <p>Hasil simulasi ini merupakan estimasi. Klik tombol di kanan atas untuk melihat detail lengkap.</p>
-        </div>
-        
-        {/* Detailed tables when expanded */}
-        {isExpanded && (
-          <div className="animate-fade-in mt-8">
+
+        {/* Full Details Section */}
+        {showFullDetails && (
+          <div className="border-t border-gray-100 dark:border-gray-700 p-4 animate-fade-in">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* OTR Final Details */}
               <div className="space-y-3">
