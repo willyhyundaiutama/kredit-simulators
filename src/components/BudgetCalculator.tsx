@@ -173,13 +173,13 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
   };
 
   return (
-    <div className="glass-card dark:glass-card-dark p-6 rounded-2xl animate-fade-in">
-      <div className="flex items-center mb-5">
-        <Wallet className="h-5 w-5 text-primary mr-2" />
-        <h2 className="text-xl font-semibold">Simulasi Budget</h2>
+    <div className="glass-card dark:glass-card-dark p-4 sm:p-6 rounded-2xl animate-fade-in">
+      <div className="flex items-center mb-4 sm:mb-5">
+        <Wallet className="h-5 w-5 text-primary mr-2 flex-shrink-0" />
+        <h2 className="text-lg sm:text-xl font-semibold">Simulasi Budget</h2>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         <FormInput
           label="Harga OTR"
           type="text"
@@ -207,7 +207,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <button
               type="button"
               onClick={() => setInsuranceType('kombinasi')}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-2 sm:px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
                 insuranceType === 'kombinasi'
                   ? 'bg-primary text-white'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -218,7 +218,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <button
               type="button"
               onClick={() => setInsuranceType('allrisk')}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-2 sm:px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
                 insuranceType === 'allrisk'
                   ? 'bg-primary text-white'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -229,7 +229,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <button
               type="button"
               onClick={() => setInsuranceType('allriskPerluasan')}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-2 sm:px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
                 insuranceType === 'allriskPerluasan'
                   ? 'bg-primary text-white'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -247,7 +247,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <button
               type="button"
               onClick={() => setBudgetType('tdp')}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
                 budgetType === 'tdp'
                   ? 'bg-primary text-white'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -258,7 +258,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <button
               type="button"
               onClick={() => setBudgetType('installment')}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
                 budgetType === 'installment'
                   ? 'bg-primary text-white'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -282,72 +282,74 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
         <button
           type="button"
           onClick={handleCalculate}
-          className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-md font-medium flex items-center justify-center transition-colors"
+          className="w-full bg-primary hover:bg-primary/90 text-white py-2.5 sm:py-3 rounded-md font-medium flex items-center justify-center transition-colors"
           disabled={!budgetAmount || isCalculating}
         >
-          <Calculator className="h-5 w-5 mr-2" />
-          {isCalculating ? "Sedang Menghitung..." : "Hitung Simulasi"}
+          <Calculator className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+          <span className="text-sm sm:text-base">
+            {isCalculating ? "Sedang Menghitung..." : "Hitung Simulasi"}
+          </span>
         </button>
 
         {isCalculating ? (
           <div className="text-center py-4">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+            <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-primary mx-auto"></div>
             <p className="text-sm text-gray-500 mt-2">Menghitung simulasi...</p>
           </div>
         ) : results ? (
-          <div className="space-y-4 mt-6">
-            <div className="bg-primary/20 dark:bg-primary/10 rounded-lg p-4 border border-primary/30">
-              <h3 className="text-lg font-semibold text-center mb-3">Ringkasan Simulasi Kredit</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+          <div className="space-y-4 mt-4 sm:mt-6">
+            <div className="bg-primary/20 dark:bg-primary/10 rounded-lg p-3 sm:p-4 border border-primary/30">
+              <h3 className="text-base sm:text-lg font-semibold text-center mb-2 sm:mb-3">Ringkasan Simulasi Kredit</h3>
+              <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
                   <p className="text-gray-500 dark:text-gray-400 text-xs">Total DP</p>
-                  <p className="text-lg font-semibold">{formatRupiah(results.totalDp)}</p>
+                  <p className="text-sm sm:text-lg font-semibold">{formatRupiah(results.totalDp)}</p>
                 </div>
-                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
                   <p className="text-gray-500 dark:text-gray-400 text-xs">Angsuran</p>
-                  <p className="text-lg font-semibold">{formatRupiah(results.monthlyInstallment)}</p>
+                  <p className="text-sm sm:text-lg font-semibold">{formatRupiah(results.monthlyInstallment)}</p>
                 </div>
-                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
                   <p className="text-gray-500 dark:text-gray-400 text-xs">Tenor</p>
-                  <p className="text-lg font-semibold">{tenor} tahun</p>
+                  <p className="text-sm sm:text-lg font-semibold">{tenor} tahun</p>
                 </div>
-                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
                   <p className="text-gray-500 dark:text-gray-400 text-xs">Asuransi</p>
-                  <p className="text-lg font-semibold">{getInsuranceTypeDisplay()}</p>
+                  <p className="text-sm sm:text-lg font-semibold">{getInsuranceTypeDisplay()}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-primary/5 rounded-lg p-4 border border-primary/20">
-              <h3 className="text-lg font-semibold text-primary mb-2">Hasil Simulasi</h3>
-              <div className="space-y-2">
+            <div className="bg-primary/5 rounded-lg p-3 sm:p-4 border border-primary/20">
+              <h3 className="text-base sm:text-lg font-semibold text-primary mb-2">Hasil Simulasi</h3>
+              <div className="space-y-1.5 sm:space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>
-                  <span className="font-medium">{results.dpPercentage.toFixed(5)}%</span>
+                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>
+                  <span className="text-xs sm:text-sm font-medium">{results.dpPercentage.toFixed(5)}%</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">DP Murni:</span>
-                  <span className="font-medium">{formatRupiah(results.dpAmount)}</span>
+                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">DP Murni:</span>
+                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.dpAmount)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Total DP:</span>
-                  <span className="font-medium">{formatRupiah(results.totalDp)}</span>
+                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Total DP:</span>
+                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.totalDp)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Angsuran per bulan:</span>
-                  <span className="font-medium">{formatRupiah(results.monthlyInstallment)}</span>
+                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Angsuran per bulan:</span>
+                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.monthlyInstallment)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Pokok Hutang:</span>
-                  <span className="font-medium">{formatRupiah(results.loanPrincipal)}</span>
+                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Pokok Hutang:</span>
+                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.loanPrincipal)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Total Pinjaman:</span>
-                  <span className="font-medium">{formatRupiah(results.totalLoanAmount)}</span>
+                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Total Pinjaman:</span>
+                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.totalLoanAmount)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Biaya Asuransi:</span>
-                  <span className="font-medium">{formatRupiah(results.insuranceAmount)}</span>
+                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Biaya Asuransi:</span>
+                  <span className="text-xs sm:text-sm font-medium">{formatRupiah(results.insuranceAmount)}</span>
                 </div>
               </div>
             </div>
