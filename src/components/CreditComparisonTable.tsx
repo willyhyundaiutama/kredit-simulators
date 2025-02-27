@@ -106,17 +106,17 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
       </div>
       
       <div className="overflow-x-auto rounded-xl -mx-4 sm:mx-0">
-        <div className="min-w-[500px]"> {/* Mengurangi lebar minimal tabel */}
+        <div className="min-w-[640px]">
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-gray-200 dark:border-gray-700">
-                <th className="text-gray-600 dark:text-gray-300 font-medium px-2 py-3 text-left text-xs w-[20%]">
+                <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-left text-xs">
                   TENOR
                 </th>
-                <th className="text-gray-600 dark:text-gray-300 font-medium px-2 py-3 text-center text-xs w-[40%]">
+                <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-center text-xs">
                   TOTAL DP
                 </th>
-                <th className="text-gray-600 dark:text-gray-300 font-medium px-2 py-3 text-right text-xs w-[40%]">
+                <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-right text-xs">
                   ANGSURAN
                 </th>
               </tr>
@@ -127,17 +127,17 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                   key={data.tenor}
                   className="border-b border-gray-100 dark:border-gray-800 transition-all duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
                 >
-                  <td className="px-2 py-3">
+                  <td className="px-4 py-3.5">
                     <span className="font-medium text-sm text-gray-800 dark:text-gray-200">
                       {data.tenor * 12} bulan
                     </span>
                   </td>
-                  <td className="px-2 py-3 text-center">
+                  <td className="px-4 py-3.5 text-center">
                     <span className="text-blue-600 dark:text-blue-400 font-medium text-sm">
                       {formatRupiah(data.totalDp)}
                     </span>
                   </td>
-                  <td className="px-2 py-3 text-right">
+                  <td className="px-4 py-3.5 text-right">
                     <span className="text-green-600 dark:text-green-400 font-medium text-sm">
                       {formatRupiah(data.monthlyInstallment)}
                     </span>
