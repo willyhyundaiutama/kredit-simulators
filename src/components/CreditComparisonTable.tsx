@@ -114,7 +114,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                     key={data.tenor}
                     className={`border-b border-gray-100 dark:border-gray-700 transition-all duration-200 hover:bg-primary/5 cursor-pointer ${
                       selectedTenor === data.tenor ? 'bg-primary/10' : ''
-                    } ${data.tenor === 4 ? 'bg-blue-50 dark:bg-blue-900/20' : ''}`}
+                    }`}
                     onClick={() => handleRowClick(data.tenor)}
                   >
                     <td className="py-3.5 pl-4">
@@ -179,7 +179,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
               </div>
             </div>
             
-            {/* Tenor Card - KEEMPAT (ganti DP Calculated) */}
+            {/* Tenor Card - KEEMPAT */}
             <div className="bg-emerald-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
