@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Calculator, Wallet } from "lucide-react";
+import { Calculator, Wallet, CreditCard, Calendar, Shield } from "lucide-react";
 import FormInput from "./FormInput";
 import { formatRupiah } from "@/lib/calculations";
 import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
@@ -305,31 +305,71 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           </div>
         ) : results ? (
           <div className="space-y-4 mt-4 sm:mt-6">
-            {/* Ringkasan Simulasi Kredit - Updated to match the image */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 overflow-hidden">
-              <h3 className="text-base font-semibold text-center text-blue-700 dark:text-blue-300 mb-3">
+            {/* Ringkasan Simulasi Kredit dengan Material Design Cards */}
+            <div className="rounded-xl p-4 mb-4">
+              <h3 className="text-base font-semibold text-center text-gray-800 dark:text-gray-200 mb-3">
                 Ringkasan Simulasi Kredit
               </h3>
               
-              <div className="grid grid-cols-2 gap-2">
-                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Total DP</p>
-                  <p className="text-sm sm:text-base font-semibold">Rp {results.totalDp.toLocaleString('id-ID')}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Total DP Card */}
+                <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl shadow-md overflow-hidden">
+                  <div className="px-4 py-4 sm:px-5 sm:py-5 flex justify-between items-center">
+                    <div className="flex items-center">
+                      <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                        <Wallet className="h-5 w-5 text-white" />
+                      </div>
+                      <div className="text-white">
+                        <p className="text-xs sm:text-sm opacity-90 font-medium">Total DP</p>
+                        <p className="text-lg sm:text-xl font-bold">{formatRupiah(results.totalDp)}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Angsuran</p>
-                  <p className="text-sm sm:text-base font-semibold">Rp {results.monthlyInstallment.toLocaleString('id-ID')}</p>
+                {/* Angsuran Card */}
+                <div className="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl shadow-md overflow-hidden">
+                  <div className="px-4 py-4 sm:px-5 sm:py-5 flex justify-between items-center">
+                    <div className="flex items-center">
+                      <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                        <CreditCard className="h-5 w-5 text-white" />
+                      </div>
+                      <div className="text-white">
+                        <p className="text-xs sm:text-sm opacity-90 font-medium">Angsuran</p>
+                        <p className="text-lg sm:text-xl font-bold">{formatRupiah(results.monthlyInstallment)}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Tenor</p>
-                  <p className="text-sm sm:text-base font-semibold">{tenor} tahun</p>
+                {/* Tenor Card */}
+                <div className="bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl shadow-md overflow-hidden">
+                  <div className="px-4 py-4 sm:px-5 sm:py-5 flex justify-between items-center">
+                    <div className="flex items-center">
+                      <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                        <Calendar className="h-5 w-5 text-white" />
+                      </div>
+                      <div className="text-white">
+                        <p className="text-xs sm:text-sm opacity-90 font-medium">Tenor</p>
+                        <p className="text-lg sm:text-xl font-bold">{tenor} tahun</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Asuransi</p>
-                  <p className="text-sm sm:text-base font-semibold">{getInsuranceTypeDisplay()}</p>
+                {/* Asuransi Card */}
+                <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl shadow-md overflow-hidden">
+                  <div className="px-4 py-4 sm:px-5 sm:py-5 flex justify-between items-center">
+                    <div className="flex items-center">
+                      <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                        <Shield className="h-5 w-5 text-white" />
+                      </div>
+                      <div className="text-white">
+                        <p className="text-xs sm:text-sm opacity-90 font-medium">Asuransi</p>
+                        <p className="text-lg sm:text-xl font-bold">{getInsuranceTypeDisplay()}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
