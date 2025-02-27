@@ -63,43 +63,64 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
   
   return (
     <div className="my-8">
-      <h3 className="text-lg font-semibold mb-3">Perbandingan Tenor</h3>
-      <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow">
+      <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Perbandingan Tenor</h3>
+      <div className="overflow-x-auto rounded-xl">
+        <table className="w-full border-separate border-spacing-0">
           <thead>
-            <tr className="bg-gray-50 dark:bg-gray-700 text-left">
-              <th className="px-6 py-3 text-sm font-medium text-gray-500 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600">TIPE</th>
-              <th className="px-6 py-3 text-sm font-medium text-gray-500 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600">TENOR</th>
-              <th className="px-6 py-3 text-sm font-medium text-gray-500 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600">TOTAL DP</th>
-              <th className="px-6 py-3 text-sm font-medium text-gray-500 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600">ANGSURAN</th>
+            <tr>
+              <th className="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium px-6 py-4 text-left rounded-tl-xl border-b border-gray-200 dark:border-gray-700">
+                TIPE
+              </th>
+              <th className="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium px-6 py-4 text-center border-b border-gray-200 dark:border-gray-700">
+                TENOR
+              </th>
+              <th className="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium px-6 py-4 text-center border-b border-gray-200 dark:border-gray-700">
+                TOTAL DP
+              </th>
+              <th className="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium px-6 py-4 text-center rounded-tr-xl border-b border-gray-200 dark:border-gray-700">
+                ANGSURAN
+              </th>
             </tr>
           </thead>
           <tbody>
             {tenorData.map((data, index) => (
               <tr 
-                key={data.tenor} 
-                className={index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-700'}
+                key={data.tenor}
+                className={`hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors`}
               >
                 {index === 0 && (
-                  <td rowSpan={7} className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-600 whitespace-nowrap align-middle">
-                    {formatRupiah(otrPrice)}
+                  <td rowSpan={7} className="px-6 py-5 text-center font-bold text-gray-800 dark:text-white border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900/80 align-middle">
+                    <div className="flex flex-col items-center justify-center h-full">
+                      <span className="text-sm text-gray-500 dark:text-gray-400 mb-1">Harga OTR</span>
+                      <span className="text-primary">{formatRupiah(otrPrice)}</span>
+                    </div>
                   </td>
                 )}
-                <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600 whitespace-nowrap">
-                  {data.tenor * 12}
+                <td className={`px-6 py-4 text-center border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900/80 ${index === 6 && 'rounded-bl-xl'}`}>
+                  <span className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm font-medium">
+                    {data.tenor * 12} bulan
+                  </span>
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600 whitespace-nowrap">
-                  <span className="text-blue-600 dark:text-blue-400 font-medium">{formatRupiah(data.totalDp)}</span>
+                <td className="px-6 py-4 text-center border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900/80">
+                  <span className="text-blue-600 dark:text-blue-400 font-semibold">{formatRupiah(data.totalDp)}</span>
+                  <span className="block text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    {dpPercent}% + biaya lainnya
+                  </span>
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600 whitespace-nowrap">
-                  <span className="text-green-600 dark:text-green-400 font-medium">{formatRupiah(data.monthlyInstallment)}</span>
+                <td className={`px-6 py-4 text-center border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900/80 ${index === 6 && 'rounded-br-xl'}`}>
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="text-green-600 dark:text-green-400 font-semibold">{formatRupiah(data.monthlyInstallment)}</span>
+                    <span className="block text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      per bulan
+                    </span>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <p className="text-xs text-gray-500 mt-2">* Tenor dalam bulan, DP dan angsuran dalam Rupiah</p>
+      <p className="text-xs text-gray-500 mt-3 italic">* Perhitungan di atas merupakan estimasi. Silahkan hubungi dealer untuk informasi lebih lanjut.</p>
     </div>
   );
 };
