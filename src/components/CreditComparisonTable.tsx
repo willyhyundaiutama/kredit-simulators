@@ -92,9 +92,9 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
       
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Tabel Perbandingan - 50% width pada desktop */}
-        <div className="lg:w-1/2 w-full">
-          <div className="rounded-xl shadow-md overflow-hidden bg-white dark:bg-gray-800/80">
-            <table className="w-full border-collapse">
+        <div className="lg:w-1/2 w-full flex">
+          <div className="rounded-xl shadow-md overflow-hidden bg-white dark:bg-gray-800/80 w-full h-full flex flex-col">
+            <table className="w-full border-collapse flex-grow">
               <thead className="bg-gradient-to-r from-primary to-primary/90 text-white">
                 <tr>
                   <th className="font-semibold py-3 text-left text-xs pl-4 w-[25%]">
@@ -108,13 +108,13 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="flex-grow">
                 {tenorData.map((data) => (
                   <tr 
                     key={data.tenor}
                     className={`border-b border-gray-100 dark:border-gray-700 transition-all duration-200 hover:bg-primary/5 cursor-pointer ${
                       selectedTenor === data.tenor ? 'bg-primary/10' : ''
-                    }`}
+                    } ${data.tenor === 4 ? 'bg-blue-50 dark:bg-blue-900/20' : ''}`}
                     onClick={() => handleRowClick(data.tenor)}
                   >
                     <td className="py-3.5 pl-4">
@@ -140,8 +140,8 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         </div>
 
         {/* Info cards di sebelah kanan - 50% width pada desktop */}
-        <div className="lg:w-1/2 w-full">
-          <div className="space-y-4">
+        <div className="lg:w-1/2 w-full flex">
+          <div className="flex flex-col space-y-4 w-full h-full justify-between">
             {/* Harga OTR Card - PERTAMA */}
             <div className="bg-blue-600 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
