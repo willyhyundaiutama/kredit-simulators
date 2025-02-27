@@ -12,7 +12,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [provisionRate, setProvisionRate] = useState<number>(5.0);
-  const [additionalAdminFee, setAdditionalAdminFee] = useState<number>(0);
+  const [additionalAdminFee, setAdditionalAdminFee] = useState<number>(5000000);
 
   return (
     <SettingsContext.Provider
