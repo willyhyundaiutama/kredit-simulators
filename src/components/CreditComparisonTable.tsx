@@ -76,22 +76,22 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
   
   return (
     <div className="my-6">
-      <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">Perbandingan Tenor</h3>
+      <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Perbandingan Tenor</h3>
       
       <div className="flex flex-col lg:flex-row gap-4">
         {/* Tabel Perbandingan - 50% width pada desktop */}
         <div className="lg:w-1/2 w-full">
-          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+          <div className="frosted-glass rounded-xl shadow-md overflow-hidden">
             <table className="w-full border-collapse">
-              <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-700">
-                  <th className="text-gray-600 dark:text-gray-300 font-medium py-3 text-left text-xs pl-4 w-[25%]">
+              <thead className="bg-gradient-to-r from-primary to-primary/90 text-white">
+                <tr>
+                  <th className="font-medium py-3 text-left text-xs pl-4 w-[25%]">
                     TENOR
                   </th>
-                  <th className="text-gray-600 dark:text-gray-300 font-medium py-3 text-center text-xs w-[37.5%]">
+                  <th className="font-medium py-3 text-center text-xs w-[37.5%]">
                     TOTAL DP
                   </th>
-                  <th className="text-gray-600 dark:text-gray-300 font-medium py-3 text-right text-xs pr-4 w-[37.5%]">
+                  <th className="font-medium py-3 text-right text-xs pr-4 w-[37.5%]">
                     ANGSURAN
                   </th>
                 </tr>
@@ -100,20 +100,20 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                 {tenorData.map((data, index) => (
                   <tr 
                     key={data.tenor}
-                    className="border-b border-gray-100 dark:border-gray-800 transition-all duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
+                    className="border-b border-gray-100 dark:border-gray-800 transition-all duration-200 hover:bg-primary/5"
                   >
-                    <td className="py-3 pl-4">
-                      <span className="font-medium text-sm text-gray-800 dark:text-gray-200">
+                    <td className="py-3.5 pl-4">
+                      <div className="font-medium text-sm">
                         {data.tenor} thn
-                      </span>
+                      </div>
                     </td>
-                    <td className="py-3 text-center">
-                      <span className="text-blue-600 dark:text-blue-400 font-medium text-sm">
+                    <td className="py-3.5 text-center">
+                      <span className="text-primary font-medium text-sm">
                         {formatRupiah(data.totalDp)}
                       </span>
                     </td>
-                    <td className="py-3 text-right pr-4">
-                      <span className="text-green-600 dark:text-green-400 font-medium text-sm">
+                    <td className="py-3.5 text-right pr-4">
+                      <span className="text-accent font-medium text-sm">
                         {formatRupiah(data.monthlyInstallment)}
                       </span>
                     </td>
@@ -128,33 +128,54 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         <div className="lg:w-1/2 w-full">
           <div className="space-y-3">
             {/* Harga OTR Card */}
-            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-lg p-4 shadow-sm">
+            <div className="gradient-card card-shine rounded-xl p-5">
               <div className="flex justify-between items-center">
-                <div className="text-sm text-gray-500 dark:text-gray-400">Harga OTR</div>
-                <div className="text-base font-bold text-primary">{formatRupiah(otrPrice)}</div>
+                <div className="flex items-center">
+                  <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div className="text-sm font-medium">Harga OTR</div>
+                </div>
+                <div className="text-lg font-bold">{formatRupiah(otrPrice)}</div>
               </div>
             </div>
             
             {/* Asuransi Card */}
-            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-lg p-4 shadow-sm">
+            <div className="gradient-card-secondary card-shine rounded-xl p-5">
               <div className="flex justify-between items-center">
-                <div className="text-sm text-gray-500 dark:text-gray-400">Jenis Asuransi</div>
-                <div className="text-base font-bold text-blue-600 dark:text-blue-400">{insuranceTypeDisplay}</div>
+                <div className="flex items-center">
+                  <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <div className="text-sm font-medium">Jenis Asuransi</div>
+                </div>
+                <div className="text-lg font-bold">{insuranceTypeDisplay}</div>
               </div>
             </div>
             
             {/* DP Percentage Card */}
-            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-lg p-4 shadow-sm">
+            <div className="gradient-card-success card-shine rounded-xl p-5">
               <div className="flex justify-between items-center">
-                <div className="text-sm text-gray-500 dark:text-gray-400">DP Calculated</div>
-                <div className="text-base font-bold text-green-600 dark:text-green-400">{dpPercent}%</div>
+                <div className="flex items-center">
+                  <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                    </svg>
+                  </div>
+                  <div className="text-sm font-medium">DP Calculated</div>
+                </div>
+                <div className="text-lg font-bold">{dpPercent}%</div>
               </div>
             </div>
           </div>
         </div>
       </div>
       
-      <p className="text-[10px] text-gray-500 mt-2 italic">* Perhitungan di atas merupakan estimasi. Silahkan hubungi dealer untuk informasi lebih lanjut.</p>
+      <p className="text-xs text-gray-500 mt-3 italic">* Perhitungan di atas merupakan estimasi. Silahkan hubungi dealer untuk informasi lebih lanjut.</p>
     </div>
   );
 };
