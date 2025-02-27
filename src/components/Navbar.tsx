@@ -10,10 +10,12 @@ const Navbar: React.FC = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <Calculator className="h-8 w-8 text-primary" />
-              <span className="ml-2 text-xl font-semibold tracking-tight">
-                Kredit Simulators
-              </span>
+              <img 
+                src="/lovable-uploads/11c9e2e8-b8bb-42c4-b1c4-b104261848b1.png" 
+                alt="Hyundai Gowa" 
+                className="h-5 sm:h-7 w-auto" 
+              />
+              <span className="hidden">Kredit Simulators</span>
             </Link>
           </div>
           
