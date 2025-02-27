@@ -59,7 +59,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     let closestDp = 20; // Start from minimum DP
     let smallestDiff = Number.MAX_VALUE;
     
-    for (let testDp = 20; testDp <= 90; testDp += 0.000001) { // Increment yang jauh lebih kecil
+    for (let testDp = 20; testDp <= 90; testDp += 0.00000001) { // Increment yang jauh lebih kecil
       const dpAmount = otrPrice * (testDp / 100);
       const loanPrincipal = otrPrice - dpAmount;
       const provisionFee = loanPrincipal * (provisionRate / 100);
@@ -87,13 +87,13 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
         smallestDiff = diff;
         closestDp = testDp;
         
-        if (diff < 10) { // Lebih ketat untuk mendapatkan hasil yang lebih presisi
+        if (diff < 1) { // Lebih ketat untuk mendapatkan hasil yang lebih presisi
           break;
         }
       }
     }
     
-    return Number(closestDp.toFixed(6)); // Mengembalikan dengan 6 angka di belakang koma
+    return Number(closestDp.toFixed(8)); // Mengembalikan dengan 8 angka di belakang koma
   };
 
   // Fungsi untuk menghitung simulasi ketika tombol Calculate diklik
@@ -323,7 +323,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>
-                  <span className="font-medium">{results.dpPercentage.toFixed(6)}%</span>
+                  <span className="font-medium">{results.dpPercentage.toFixed(8)}%</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600 dark:text-gray-400">DP Murni:</span>
