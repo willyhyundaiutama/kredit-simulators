@@ -64,6 +64,8 @@ const PinDialog: React.FC<PinDialogProps> = ({
           <div className="space-y-2">
             <Input
               type="password"
+              inputMode="numeric"
+              pattern="[0-9]*"
               placeholder="Masukkan PIN"
               value={pin}
               onChange={handlePinChange}
