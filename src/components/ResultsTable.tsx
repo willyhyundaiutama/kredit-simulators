@@ -35,15 +35,6 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
   const [showFullDetails, setShowFullDetails] = useState(false);
 
   const hasAdditionalAdminFee = results.additionalAdminFee && results.additionalAdminFee > 0;
-  
-  const getInsuranceTypeDisplay = () => {
-    switch(results.insuranceType) {
-      case 'Kombinasi': return 'Kombinasi';
-      case 'All Risk': return 'All Risk';
-      case 'All Risk Perluasan': return 'AR Perluasan';
-      default: return results.insuranceType || 'Kombinasi';
-    }
-  };
 
   return (
     <div className="w-full">
@@ -58,86 +49,104 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           </button>
         </div>
 
-        {/* Mobile-optimized summary view */}
         <div className="p-4 space-y-4">
-          {/* Main Summary Card */}
-          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4">
-            <h3 className="text-base font-medium text-center text-blue-700 dark:text-blue-300 mb-3">
-              Ringkasan Simulasi Kredit
-            </h3>
-            
-            <div className="grid grid-cols-2 gap-2">
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Total DP</p>
-                <p className="text-sm sm:text-base font-semibold">Rp {formatRupiah(results.totalDp, false)}</p>
+          {/* Main Summary Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* OTR Price */}
+            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4">
+              <div className="flex items-center mb-1">
+                <Car className="w-4 h-4 text-gray-400 mr-2" />
+                <span className="text-sm text-gray-500">Harga OTR</span>
               </div>
-              
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Angsuran</p>
-                <p className="text-sm sm:text-base font-semibold">Rp {formatRupiah(results.monthlyInstallment, false)}</p>
+              <div className="text-xl font-semibold">{formatRupiah(otrPrice)}</div>
+            </div>
+
+            {/* Total DP */}
+            <div 
+              className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-colors"
+              onClick={() => setShowDpDetails(!showDpDetails)}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center mb-1">
+                  <PiggyBank className="w-4 h-4 text-gray-400 mr-2" />
+                  <span className="text-sm text-gray-500">Total DP</span>
+                </div>
+                <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${showDpDetails ? 'rotate-180' : ''}`} />
               </div>
+              <div className="text-xl font-semibold">{formatRupiah(results.totalDp)}</div>
               
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Tenor</p>
-                <p className="text-sm sm:text-base font-semibold">{tenor} tahun</p>
+              {/* DP Breakdown */}
+              {showDpDetails && (
+                <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700 space-y-2 animate-fade-in">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">DP Murni ({dpPercent}%)</span>
+                    <span>{formatRupiah(results.dpAmount)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Angsuran ke-1</span>
+                    <span>{formatRupiah(results.monthlyInstallment)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Asuransi</span>
+                    <span>{formatRupiah(results.insuranceAmount)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Admin</span>
+                    <span>{formatRupiah(results.totalAdminFee || results.adminFee)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">TPI</span>
+                    <span>{formatRupiah(results.tpiFee)}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Monthly Payment */}
+            <div className="bg-primary/5 rounded-xl p-4">
+              <div className="flex items-center mb-1">
+                <CreditCard className="w-4 h-4 text-primary mr-2" />
+                <span className="text-sm text-gray-500">Angsuran per Bulan</span>
               </div>
-              
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Asuransi</p>
-                <p className="text-sm sm:text-base font-semibold">{getInsuranceTypeDisplay()}</p>
+              <div className="text-xl font-semibold text-primary">
+                {formatRupiah(results.monthlyInstallment)}
+              </div>
+            </div>
+
+            {/* Tenor */}
+            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4">
+              <div className="flex items-center mb-1">
+                <Calendar className="w-4 h-4 text-gray-400 mr-2" />
+                <span className="text-sm text-gray-500">Tenor</span>
+              </div>
+              <div className="text-xl font-semibold">
+                {tenor} tahun <span className="text-sm font-normal text-gray-500">({tenor * 12} bulan)</span>
               </div>
             </div>
           </div>
 
-          {/* DP Details Button */}
-          <button
-            onClick={() => setShowDpDetails(!showDpDetails)}
-            className="w-full flex items-center justify-between bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 p-3 rounded-lg transition-colors"
-          >
-            <span className="font-medium text-sm text-blue-700 dark:text-blue-300">Lihat Rincian DP</span>
-            <ChevronDown className={`w-4 h-4 text-blue-500 transition-transform ${showDpDetails ? 'rotate-180' : ''}`} />
-          </button>
-
-          {/* DP Breakdown */}
-          {showDpDetails && (
-            <div className="mt-1 bg-white dark:bg-gray-800/80 p-4 rounded-lg border border-gray-200 dark:border-gray-700 space-y-2 animate-fade-in">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">DP Murni ({dpPercent}%)</span>
-                <span>{formatRupiah(results.dpAmount)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Angsuran ke-1</span>
-                <span>{formatRupiah(results.monthlyInstallment)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Asuransi</span>
-                <span>{formatRupiah(results.insuranceAmount)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Admin</span>
-                <span>{formatRupiah(results.totalAdminFee || results.adminFee)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">TPI</span>
-                <span>{formatRupiah(results.tpiFee)}</span>
-              </div>
-              <div className="flex justify-between text-sm font-semibold pt-2 border-t border-gray-200 dark:border-gray-700">
-                <span className="text-gray-700 dark:text-gray-300">Total DP</span>
-                <span className="text-primary">{formatRupiah(results.totalDp)}</span>
-              </div>
+          {/* Insurance Type */}
+          <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4">
+            <div className="flex items-center mb-1">
+              <Shield className="w-4 h-4 text-gray-400 mr-2" />
+              <span className="text-sm text-gray-500">Asuransi</span>
             </div>
-          )}
+            <div className="text-xl font-semibold">
+              {results.insuranceType} 
+              <span className="text-sm font-normal text-gray-500 ml-1">
+                ({results.insuranceRate?.toFixed(2)}%)
+              </span>
+            </div>
+          </div>
 
-          {/* Full Details Link */}
-          <button 
-            onClick={() => setShowFullDetails(!showFullDetails)}
-            className="w-full flex items-center justify-center space-x-2 text-primary hover:bg-primary/5 p-2 rounded-lg transition-colors text-sm"
-          >
-            <Info className="w-4 h-4" />
-            <span>
-              {showFullDetails ? "Sembunyikan Detail Lengkap" : "Lihat Detail Lengkap"}
-            </span>
-          </button>
+          {/* Info Note */}
+          <div className="flex items-start p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <Info className="w-4 h-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
+            <p className="text-sm text-blue-600 dark:text-blue-300">
+              Hasil simulasi ini merupakan estimasi. 
+              {!showFullDetails && " Klik tombol di kanan atas untuk melihat detail lengkap."}
+            </p>
+          </div>
         </div>
 
         {/* Full Details Section */}
@@ -146,7 +155,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
             <div className="grid grid-cols-1 gap-6">
               {/* OTR Final Details */}
               <div className="space-y-3">
-                <h3 className="text-base font-medium mb-2">OTR Final</h3>
+                <h3 className="text-lg font-medium mb-2">OTR Final</h3>
                 <div className="overflow-hidden rounded-lg border">
                   <div className="divide-y divide-gray-200 dark:divide-gray-800">
                     {/* Mobile-optimized table rows */}
@@ -199,7 +208,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
               
               {/* Total DP Details */}
               <div className="space-y-3">
-                <h3 className="text-base font-medium mb-2">Total DP</h3>
+                <h3 className="text-lg font-medium mb-2">Total DP</h3>
                 <div className="overflow-hidden rounded-lg border">
                   <div className="divide-y divide-gray-200 dark:divide-gray-800">
                     <div className="table-row-alternate p-3 flex flex-col">
