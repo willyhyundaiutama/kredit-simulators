@@ -68,16 +68,60 @@ const Index = () => {
           </div>
           
           <Tabs defaultValue="loan" className="w-full mb-8 sm:mb-10">
-            <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto frosted-glass p-1">
-              <TabsTrigger value="loan" className="flex items-center justify-center">
-                <Calculator className="h-4 w-4 mr-2" />
-                <span className="text-xs sm:text-sm">Simulasi Kredit</span>
+            <TabsList className="relative w-full max-w-md mx-auto bg-white dark:bg-gray-800 p-1 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 overflow-hidden">
+              <div className="absolute inset-0 w-1/2 h-full bg-primary rounded-lg shadow-lg transition-transform duration-300 ease-in-out" 
+                style={{ transform: `translateX(${defaultValue === "budget" ? "100%" : "0%"})` }}>
+              </div>
+              <TabsTrigger 
+                value="loan" 
+                className="relative z-10 flex-1 flex items-center justify-center py-2.5 px-3 text-sm font-medium rounded-lg transition-all duration-300"
+                style={{
+                  color: `var(--tab-loan-color, var(--primary-foreground))`,
+                  background: 'transparent'
+                }}
+              >
+                <Calculator className="h-5 w-5 mr-2" />
+                <span>Simulasi Kredit</span>
               </TabsTrigger>
-              <TabsTrigger value="budget" className="flex items-center justify-center">
-                <Wallet className="h-4 w-4 mr-2" />
-                <span className="text-xs sm:text-sm">Simulasi Budget</span>
+              <TabsTrigger 
+                value="budget" 
+                className="relative z-10 flex-1 flex items-center justify-center py-2.5 px-3 text-sm font-medium rounded-lg transition-all duration-300"
+                style={{
+                  color: `var(--tab-budget-color, var(--foreground))`,
+                  background: 'transparent'
+                }}
+              >
+                <Wallet className="h-5 w-5 mr-2" />
+                <span>Simulasi Budget</span>
               </TabsTrigger>
             </TabsList>
+            
+            <style jsx>{`
+              [data-state="active"][value="loan"] {
+                --tab-loan-color: var(--primary-foreground);
+                font-weight: 600;
+                animation: fadeIn 0.3s ease-in-out;
+              }
+              
+              [data-state="active"][value="budget"] {
+                --tab-budget-color: var(--primary-foreground);
+                font-weight: 600;
+                animation: fadeIn 0.3s ease-in-out;
+              }
+              
+              [data-state="inactive"][value="loan"] {
+                --tab-loan-color: var(--foreground);
+              }
+              
+              [data-state="inactive"][value="budget"] {
+                --tab-budget-color: var(--foreground);
+              }
+              
+              @keyframes fadeIn {
+                from { opacity: 0.7; }
+                to { opacity: 1; }
+              }
+            `}</style>
             
             <TabsContent value="loan" className="mt-6 sm:mt-8">
               <div className="frosted-glass p-6 rounded-2xl shadow-md">
