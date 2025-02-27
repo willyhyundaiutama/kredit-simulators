@@ -163,6 +163,16 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
 
   const results = calculatedDpPercent !== null ? calculateResults() : null;
 
+  // Format jenis asuransi untuk tampilan
+  const getInsuranceTypeDisplay = () => {
+    switch(insuranceType) {
+      case 'kombinasi': return 'Kombinasi';
+      case 'allrisk': return 'All Risk';
+      case 'allriskPerluasan': return 'All Risk Perluasan';
+      default: return 'Kombinasi';
+    }
+  };
+
   return (
     <div className="glass-card dark:glass-card-dark p-6 rounded-2xl animate-fade-in">
       <div className="flex items-center mb-5">
@@ -277,6 +287,29 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           </div>
         ) : results ? (
           <div className="space-y-4 mt-6">
+            {/* Ringkasan (Summarize) untuk user */}
+            <div className="bg-primary/20 dark:bg-primary/10 rounded-lg p-4 border border-primary/30">
+              <h3 className="text-lg font-semibold text-center mb-3">Ringkasan Simulasi Kredit</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+                  <p className="text-gray-500 dark:text-gray-400 text-xs">Total DP</p>
+                  <p className="text-lg font-semibold">{formatRupiah(results.totalDp)}</p>
+                </div>
+                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+                  <p className="text-gray-500 dark:text-gray-400 text-xs">Angsuran</p>
+                  <p className="text-lg font-semibold">{formatRupiah(results.monthlyInstallment)}</p>
+                </div>
+                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+                  <p className="text-gray-500 dark:text-gray-400 text-xs">Tenor</p>
+                  <p className="text-lg font-semibold">{tenor} tahun</p>
+                </div>
+                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+                  <p className="text-gray-500 dark:text-gray-400 text-xs">Asuransi</p>
+                  <p className="text-lg font-semibold">{getInsuranceTypeDisplay()}</p>
+                </div>
+              </div>
+            </div>
+
             <div className="bg-primary/5 rounded-lg p-4 border border-primary/20">
               <h3 className="text-lg font-semibold text-primary mb-2">Hasil Simulasi</h3>
               <div className="space-y-2">
