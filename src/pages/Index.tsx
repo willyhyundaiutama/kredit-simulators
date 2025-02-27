@@ -68,7 +68,7 @@ const Index = () => {
           </div>
           
           <Tabs defaultValue="loan" className="w-full mb-8 sm:mb-10">
-            <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto frosted-glass p-1">
+            <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto frosted-glass p-1 rounded-lg">
               <TabsTrigger value="loan" className="flex items-center justify-center">
                 <Calculator className="h-4 w-4 mr-2" />
                 <span className="text-xs sm:text-sm">Simulasi Kredit</span>
