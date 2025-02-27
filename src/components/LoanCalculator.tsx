@@ -5,6 +5,7 @@ import FormInput from "./FormInput";
 import { formatRupiah } from "@/lib/calculations";
 import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
 import ResultsTable from "./ResultsTable";
+import { useSettings } from "@/context/SettingsContext";
 
 interface LoanCalculatorProps {
   defaultOtr?: number;
@@ -37,11 +38,10 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   defaultDpPercent = 20,
   defaultTenor = 4
 }) => {
+  const { provisionRate, additionalAdminFee } = useSettings();
   const [otrPrice, setOtrPrice] = useState<number>(defaultOtr);
   const [dpPercent, setDpPercent] = useState<number>(defaultDpPercent);
   const [tenor, setTenor] = useState<number>(defaultTenor);
-  const [provisionRate, setProvisionRate] = useState<number>(fees.provisionRate);
-  const [additionalAdminFee, setAdditionalAdminFee] = useState<number>(0);
   const [insuranceType, setInsuranceType] = useState<'kombinasi' | 'allrisk' | 'allriskPerluasan'>('kombinasi');
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
@@ -70,24 +70,6 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
       setTenor(1);
     } else {
       setTenor(Math.min(Math.max(value, 1), 7)); // Clamp between 1 and 7 years
-    }
-  };
-
-  const handleProvisionRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = parseFloat(e.target.value);
-    if (isNaN(value)) {
-      setProvisionRate(0);
-    } else {
-      setProvisionRate(Math.min(Math.max(value, 0), 10)); // Clamp between 0 and 10%
-    }
-  };
-  
-  const handleAdditionalAdminFeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, "");
-    if (value === "") {
-      setAdditionalAdminFee(0);
-    } else {
-      setAdditionalAdminFee(parseInt(value, 10));
     }
   };
 
@@ -201,27 +183,6 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
               onChange={handleTenorChange}
               suffix="tahun"
               description="Jangka waktu kredit (1-7 tahun)"
-            />
-
-            <FormInput
-              label="Provisi"
-              type="number"
-              min={0}
-              max={10}
-              value={provisionRate}
-              onChange={handleProvisionRateChange}
-              suffix="%"
-              description="Biaya provisi dari pokok hutang"
-            />
-            
-            <FormInput
-              label="Biaya Admin Tambahan"
-              type="text"
-              prefix="Rp"
-              value={additionalAdminFee.toLocaleString('id-ID')}
-              onChange={handleAdditionalAdminFeeChange}
-              placeholder="0"
-              description="Biaya admin tambahan di luar biaya admin default"
             />
             
             <div className="space-y-1.5">

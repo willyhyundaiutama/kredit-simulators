@@ -1,6 +1,7 @@
 
 import React from "react";
 import { Calculator, Settings } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   return (
@@ -8,20 +9,22 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
-            <Calculator className="h-8 w-8 text-primary" />
-            <span className="ml-2 text-xl font-semibold tracking-tight">
-              Kredit Simulators
-            </span>
+            <Link to="/" className="flex items-center">
+              <Calculator className="h-8 w-8 text-primary" />
+              <span className="ml-2 text-xl font-semibold tracking-tight">
+                Kredit Simulators
+              </span>
+            </Link>
           </div>
           
           <nav className="flex items-center space-x-4">
-            <a
-              href="#"
+            <Link
+              to="/settings"
               className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               <Settings className="mr-2 h-4 w-4" />
               <span>Setting</span>
-            </a>
+            </Link>
           </nav>
         </div>
       </div>
