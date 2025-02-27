@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import LoanCalculator from "@/components/LoanCalculator";
 import InsuranceCalculator from "@/components/InsuranceCalculator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calculator, Shield, Info } from "lucide-react";
+import { Calculator, Shield, Info, Wallet } from "lucide-react";
 
 const Index = () => {
   const [otrPrice, setOtrPrice] = useState<number>(300000000);
@@ -36,8 +36,8 @@ const Index = () => {
                 Simulasi Kredit
               </TabsTrigger>
               <TabsTrigger value="insurance" className="flex items-center justify-center">
-                <Shield className="h-4 w-4 mr-2" />
-                Asuransi
+                <Wallet className="h-4 w-4 mr-2" />
+                Simulasi Budget
               </TabsTrigger>
             </TabsList>
             
