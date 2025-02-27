@@ -179,6 +179,9 @@ const Index = () => {
           
           <div className="text-center text-sm text-gray-500 dark:text-gray-400">
             <p>&copy; 2024 Kredit Simulators. All rights reserved.</p>
+            <p className="mt-2 text-xs">
+              Developed by Willy Arsal from Hyundai Fatmawati for the Sales Team
+            </p>
           </div>
         </div>
       </footer>
