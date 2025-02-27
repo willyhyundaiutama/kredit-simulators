@@ -99,7 +99,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         {/* DP Percentage Card */}
         <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4">
           <div className="text-center">
-            <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">DP Minimum</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">DP Calculated</div>
             <div className="text-lg font-bold text-green-600 dark:text-green-400">{dpPercent}%</div>
           </div>
         </div>
