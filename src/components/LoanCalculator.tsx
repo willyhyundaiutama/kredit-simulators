@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Calendar, Shield } from "lucide-react";
 import FormInput from "./FormInput";
@@ -147,176 +148,92 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
 
   return (
     <div className="w-full animate-fade-in">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="glass-card dark:glass-card-dark p-6 rounded-2xl">
-          <div className="flex items-center mb-5">
-            <Calculator className="h-5 w-5 text-primary mr-2" />
-            <h2 className="text-xl font-semibold">Simulasi Kredit</h2>
-          </div>
-          
-          <div className="space-y-6">
-            <FormInput
-              label="Harga OTR"
-              type="text"
-              prefix="Rp"
-              value={otrPrice.toLocaleString('id-ID')}
-              onChange={handleOtrChange}
-              placeholder="0"
-              description="Harga On The Road kendaraan"
-            />
-            
-            <FormInput
-              label="Uang Muka (%)"
-              type="number"
-              min={0}
-              max={90}
-              value={dpPercent}
-              onChange={handleDpPercentChange}
-              suffix="%"
-              description="Minimal 20% dari harga OTR"
-            />
-            
-            <FormInput
-              label="Tenor"
-              type="number"
-              min={1}
-              max={7}
-              value={tenor}
-              onChange={handleTenorChange}
-              suffix="tahun"
-              description="Jangka waktu kredit (1-7 tahun)"
-            />
-            
-            <div className="space-y-1.5">
-              <label className="input-label block">Jenis Asuransi</label>
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setInsuranceType('kombinasi')}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    insuranceType === 'kombinasi'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  Kombinasi
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setInsuranceType('allrisk')}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    insuranceType === 'allrisk'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  All Risk
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setInsuranceType('allriskPerluasan')}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    insuranceType === 'allriskPerluasan'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  AR Perluasan
-                </button>
-              </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Pilih jenis asuransi kendaraan</p>
-            </div>
-            
-            <div className="pt-2">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Nilai DP Murni: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(otrPrice * (dpPercent / 100))}</span>
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Pokok Hutang: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(otrPrice - (otrPrice * (dpPercent / 100)))}</span>
-              </p>
-            </div>
-          </div>
+      <div className="glass-card dark:glass-card-dark p-6 rounded-2xl">
+        <div className="flex items-center mb-5">
+          <Calculator className="h-5 w-5 text-primary mr-2" />
+          <h2 className="text-xl font-semibold">Simulasi Kredit</h2>
         </div>
         
-        <div className="glass-card dark:glass-card-dark p-6 rounded-2xl">
-          <div className="flex items-center mb-5">
-            <DollarSign className="h-5 w-5 text-primary mr-2" />
-            <h2 className="text-xl font-semibold">Biaya Tambahan</h2>
+        <div className="space-y-6">
+          <FormInput
+            label="Harga OTR"
+            type="text"
+            prefix="Rp"
+            value={otrPrice.toLocaleString('id-ID')}
+            onChange={handleOtrChange}
+            placeholder="0"
+            description="Harga On The Road kendaraan"
+          />
+          
+          <FormInput
+            label="Uang Muka (%)"
+            type="number"
+            min={0}
+            max={90}
+            value={dpPercent}
+            onChange={handleDpPercentChange}
+            suffix="%"
+            description="Minimal 20% dari harga OTR"
+          />
+          
+          <FormInput
+            label="Tenor"
+            type="number"
+            min={1}
+            max={7}
+            value={tenor}
+            onChange={handleTenorChange}
+            suffix="tahun"
+            description="Jangka waktu kredit (1-7 tahun)"
+          />
+          
+          <div className="space-y-1.5">
+            <label className="input-label block">Jenis Asuransi</label>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => setInsuranceType('kombinasi')}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  insuranceType === 'kombinasi'
+                    ? 'bg-primary text-white'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                Kombinasi
+              </button>
+              <button
+                type="button"
+                onClick={() => setInsuranceType('allrisk')}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  insuranceType === 'allrisk'
+                    ? 'bg-primary text-white'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                All Risk
+              </button>
+              <button
+                type="button"
+                onClick={() => setInsuranceType('allriskPerluasan')}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  insuranceType === 'allriskPerluasan'
+                    ? 'bg-primary text-white'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                AR Perluasan
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Pilih jenis asuransi kendaraan</p>
           </div>
           
-          <div className="space-y-6">
-            <div>
-              <p className="input-label">Biaya Provisi</p>
-              <div className="flex items-center justify-between p-3 border rounded-md bg-gray-50 dark:bg-gray-800/50">
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {provisionRate}% dari Pokok Hutang
-                </span>
-                <span className="font-medium">
-                  {formatRupiah(results?.provisionFee || 0)}
-                </span>
-              </div>
-            </div>
-            
-            <div>
-              <p className="input-label">Biaya Administrasi</p>
-              <div className="flex flex-col p-3 border rounded-md bg-gray-50 dark:bg-gray-800/50">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {hasAdditionalFee ? "Admin Dasar" : "Biaya Admin"} (Tenor {tenor} tahun)
-                  </span>
-                  <span className="font-medium">
-                    {formatRupiah(getAdminFee(tenor))}
-                  </span>
-                </div>
-                {hasAdditionalFee && (
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      Admin Tambahan
-                    </span>
-                    <span className="font-medium">
-                      {formatRupiah(additionalAdminFee)}
-                    </span>
-                  </div>
-                )}
-                <div className="flex items-center justify-between mt-1 pt-1 border-t border-gray-200 dark:border-gray-700">
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Total Admin
-                  </span>
-                  <span className="font-medium">
-                    {formatRupiah((results?.totalAdminFee || 0))}
-                  </span>
-                </div>
-              </div>
-            </div>
-            
-            <div>
-              <p className="input-label">
-                <span className="flex items-center">
-                  <Shield className="h-4 w-4 text-primary mr-1" />
-                  <span>Asuransi Mobil {tenor} Tahun</span>
-                </span>
-              </p>
-              <div className="flex items-center justify-between p-3 border rounded-md bg-gray-50 dark:bg-gray-800/50">
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {results?.insuranceRate.toFixed(2)}% dari Harga OTR ({results?.insuranceType})
-                </span>
-                <span className="font-medium">
-                  {formatRupiah(results?.insuranceAmount || 0)}
-                </span>
-              </div>
-            </div>
-            
-            <div>
-              <p className="input-label">TPI III</p>
-              <div className="flex items-center justify-between p-3 border rounded-md bg-gray-50 dark:bg-gray-800/50">
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  Tetap
-                </span>
-                <span className="font-medium">
-                  {formatRupiah(fees.tpiFee)}
-                </span>
-              </div>
-            </div>
+          <div className="pt-2">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Nilai DP Murni: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(otrPrice * (dpPercent / 100))}</span>
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              Pokok Hutang: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(otrPrice - (otrPrice * (dpPercent / 100)))}</span>
+            </p>
           </div>
         </div>
       </div>
