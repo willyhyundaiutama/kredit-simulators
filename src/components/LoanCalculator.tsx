@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from "react";
-import { Calculator, DollarSign, Percent, Calendar } from "lucide-react";
+import { Calculator, DollarSign, Percent, Calendar, Shield } from "lucide-react";
 import FormInput from "./FormInput";
 import { formatRupiah } from "@/lib/calculations";
-import { fees, getInterestRateFromTable } from "@/data/rateData";
+import { fees, getInterestRateFromTable, getInsuranceRateFromTable } from "@/data/rateData";
 import ResultsTable from "./ResultsTable";
 
 interface LoanCalculatorProps {
@@ -22,9 +22,11 @@ interface CalculationResults {
   totalLoanAmount: number;
   monthlyInstallment: number;
   insuranceAmount: number;
+  insuranceRate: number;
   totalDp: number;
   adminFee: number;
   tpiFee: number;
+  insuranceType: string;
 }
 
 const LoanCalculator: React.FC<LoanCalculatorProps> = ({
@@ -35,6 +37,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   const [otrPrice, setOtrPrice] = useState<number>(defaultOtr);
   const [dpPercent, setDpPercent] = useState<number>(defaultDpPercent);
   const [tenor, setTenor] = useState<number>(defaultTenor);
+  const [insuranceType, setInsuranceType] = useState<'kombinasi' | 'allrisk' | 'allriskPerluasan'>('kombinasi');
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
 
@@ -61,7 +64,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
     if (isNaN(value)) {
       setTenor(1);
     } else {
-      setTenor(Math.min(Math.max(value, 1), 8)); // Clamp between 1 and 8 years
+      setTenor(Math.min(Math.max(value, 1), 7)); // Clamp between 1 and 7 years
     }
   };
 
@@ -82,8 +85,9 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
         const tenorMonths = tenor * 12;
         const monthlyInstallment = totalLoanAmount / tenorMonths;
         
-        // Using a fixed insurance rate of 3.6% for this example
-        const insuranceAmount = otrPrice * (3.6 / 100);
+        // Get insurance rate from table based on OTR price, tenor, and insurance type
+        const insuranceRate = getInsuranceRateFromTable(otrPrice, insuranceType, tenor);
+        const insuranceAmount = otrPrice * (insuranceRate / 100);
         
         const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
         
@@ -100,9 +104,15 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
           totalLoanAmount,
           monthlyInstallment,
           insuranceAmount,
+          insuranceRate,
           totalDp,
           adminFee: fees.adminFee,
-          tpiFee: fees.tpiFee
+          tpiFee: fees.tpiFee,
+          insuranceType: insuranceType === 'kombinasi' 
+            ? 'Kombinasi' 
+            : insuranceType === 'allrisk' 
+              ? 'All Risk' 
+              : 'All Risk Perluasan'
         });
         
         setIsCalculating(false);
@@ -116,7 +126,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   // Calculate on initial render and when inputs change
   useEffect(() => {
     calculateLoan();
-  }, [otrPrice, dpPercent, tenor]);
+  }, [otrPrice, dpPercent, tenor, insuranceType]);
 
   return (
     <div className="w-full animate-fade-in">
@@ -153,12 +163,52 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
               label="Tenor"
               type="number"
               min={1}
-              max={8}
+              max={7}
               value={tenor}
               onChange={handleTenorChange}
               suffix="tahun"
-              description="Jangka waktu kredit (1-8 tahun)"
+              description="Jangka waktu kredit (1-7 tahun)"
             />
+            
+            <div className="space-y-1.5">
+              <label className="input-label block">Jenis Asuransi</label>
+              <div className="grid grid-cols-3 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setInsuranceType('kombinasi')}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    insuranceType === 'kombinasi'
+                      ? 'bg-primary text-white'
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  Kombinasi
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setInsuranceType('allrisk')}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    insuranceType === 'allrisk'
+                      ? 'bg-primary text-white'
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  All Risk
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setInsuranceType('allriskPerluasan')}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    insuranceType === 'allriskPerluasan'
+                      ? 'bg-primary text-white'
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  AR Perluasan
+                </button>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Pilih jenis asuransi kendaraan</p>
+            </div>
             
             <div className="pt-2">
               <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -203,10 +253,15 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             </div>
             
             <div>
-              <p className="input-label">Asuransi Mobil 5 Tahun</p>
+              <p className="input-label">
+                <div className="flex items-center">
+                  <Shield className="h-4 w-4 text-primary mr-1" />
+                  <span>Asuransi Mobil {tenor} Tahun</span>
+                </div>
+              </p>
               <div className="flex items-center justify-between p-3 border rounded-md bg-gray-50 dark:bg-gray-800/50">
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  3.6% dari Harga OTR (tahun pertama)
+                  {results?.insuranceRate.toFixed(2)}% dari Harga OTR ({results?.insuranceType})
                 </span>
                 <span className="font-medium">
                   {formatRupiah(results?.insuranceAmount || 0)}
@@ -231,7 +286,12 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
       
       {results && (
         <div className="mt-8 results-appear">
-          <ResultsTable results={results} otrPrice={otrPrice} dpPercent={dpPercent} tenor={tenor} />
+          <ResultsTable 
+            results={results} 
+            otrPrice={otrPrice} 
+            dpPercent={dpPercent} 
+            tenor={tenor} 
+          />
         </div>
       )}
     </div>

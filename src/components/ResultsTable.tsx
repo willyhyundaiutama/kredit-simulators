@@ -12,9 +12,11 @@ interface CalculationResults {
   totalLoanAmount: number;
   monthlyInstallment: number;
   insuranceAmount: number;
+  insuranceRate?: number;
   totalDp: number;
   adminFee: number;
   tpiFee: number;
+  insuranceType?: string;
 }
 
 interface ResultsTableProps {
@@ -98,8 +100,8 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                     <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.monthlyInstallment)}</td>
                   </tr>
                   <tr className="table-row-alternate">
-                    <td className="px-4 py-3 text-sm font-medium text-left">Asuransi Mobil 5 Tahun</td>
-                    <td className="px-4 py-3 text-sm text-right">3.60%</td>
+                    <td className="px-4 py-3 text-sm font-medium text-left">Asuransi Mobil {tenor} Tahun</td>
+                    <td className="px-4 py-3 text-sm text-right">{results.insuranceRate?.toFixed(2)}% ({results.insuranceType})</td>
                     <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.insuranceAmount)}</td>
                   </tr>
                   <tr className="table-row-alternate">
@@ -139,6 +141,9 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             Suku Bunga: <span className="font-medium text-gray-700 dark:text-gray-300">{results.interestRate.toFixed(2)}% per tahun</span>
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Asuransi: <span className="font-medium text-gray-700 dark:text-gray-300">{results.insuranceType} ({results.insuranceRate?.toFixed(2)}%)</span>
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             * Simulasi ini hanya perkiraan. Nilai sebenarnya dapat berbeda.
