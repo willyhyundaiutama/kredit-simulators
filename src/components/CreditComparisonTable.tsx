@@ -129,7 +129,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                 >
                   <td className="px-4 py-3.5">
                     <span className="font-medium text-sm text-gray-800 dark:text-gray-200">
-                      {data.tenor * 12} bulan
+                      {data.tenor} thn
                     </span>
                   </td>
                   <td className="px-4 py-3.5 text-center">
