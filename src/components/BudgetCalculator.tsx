@@ -305,28 +305,40 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           </div>
         ) : results ? (
           <div className="space-y-4 mt-4 sm:mt-6">
-            <div className="bg-primary/20 dark:bg-primary/10 rounded-lg p-3 sm:p-4 border border-primary/30">
-              <h3 className="text-base sm:text-lg font-semibold text-center mb-2 sm:mb-3">Ringkasan Simulasi Kredit</h3>
-              <div className="grid grid-cols-2 gap-2 sm:gap-4">
-                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
-                  <p className="text-gray-500 dark:text-gray-400 text-xs">Total DP</p>
-                  <p className="text-sm sm:text-lg font-semibold">{formatRupiah(results.totalDp)}</p>
+            {/* Ringkasan Simulasi - Tampilan Mobile yang Ditingkatkan */}
+            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 overflow-hidden">
+              <h3 className="text-base font-semibold text-center text-blue-700 dark:text-blue-300 mb-3">
+                Ringkasan Simulasi Kredit
+              </h3>
+              
+              {/* Layout baru untuk mobile - Stack vertically */}
+              <div className="grid grid-cols-1 gap-2">
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Total DP</p>
+                    <p className="text-sm font-semibold">Rp {formatRupiah(results.totalDp, false)}</p>
+                  </div>
+                  
+                  <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Angsuran</p>
+                    <p className="text-sm font-semibold">Rp {formatRupiah(results.monthlyInstallment, false)}</p>
+                  </div>
                 </div>
-                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
-                  <p className="text-gray-500 dark:text-gray-400 text-xs">Angsuran</p>
-                  <p className="text-sm sm:text-lg font-semibold">{formatRupiah(results.monthlyInstallment)}</p>
-                </div>
-                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
-                  <p className="text-gray-500 dark:text-gray-400 text-xs">Tenor</p>
-                  <p className="text-sm sm:text-lg font-semibold">{tenor} tahun</p>
-                </div>
-                <div className="bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-lg shadow-sm">
-                  <p className="text-gray-500 dark:text-gray-400 text-xs">Asuransi</p>
-                  <p className="text-sm sm:text-lg font-semibold">{getInsuranceTypeDisplay()}</p>
+                
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Tenor</p>
+                    <p className="text-sm font-semibold">{tenor} tahun</p>
+                  </div>
+                  
+                  <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Asuransi</p>
+                    <p className="text-sm font-semibold">{getInsuranceTypeDisplay()}</p>
+                  </div>
                 </div>
               </div>
             </div>
-
+            
             <div className="bg-primary/5 rounded-lg p-3 sm:p-4 border border-primary/20">
               <h3 className="text-base sm:text-lg font-semibold text-primary mb-2">Hasil Simulasi</h3>
               <div className="space-y-1.5 sm:space-y-2">
