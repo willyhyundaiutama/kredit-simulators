@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Calendar, Shield } from "lucide-react";
 import FormInput from "./FormInput";
 import { formatRupiah } from "@/lib/calculations";
-import { fees, getInterestRateFromTable, getInsuranceRateFromTable } from "@/data/rateData";
+import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
 import ResultsTable from "./ResultsTable";
 
 interface LoanCalculatorProps {
@@ -103,10 +103,13 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
         const insuranceRate = getInsuranceRateFromTable(otrPrice, insuranceType, tenor);
         const insuranceAmount = otrPrice * (insuranceRate / 100);
         
+        // Get admin fee based on tenor
+        const adminFee = getAdminFee(tenor);
+        
         const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
         
         // Total DP includes: DP + First Installment + Insurance + Admin Fee + TPI Fee + Credit Protection
-        const totalDp = dpAmount + monthlyInstallment + insuranceAmount + fees.adminFee + fees.tpiFee + creditProtection;
+        const totalDp = dpAmount + monthlyInstallment + insuranceAmount + adminFee + fees.tpiFee + creditProtection;
         
         setResults({
           dpAmount,
@@ -120,7 +123,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
           insuranceAmount,
           insuranceRate,
           totalDp,
-          adminFee: fees.adminFee,
+          adminFee,
           tpiFee: fees.tpiFee,
           provisionRate,
           insuranceType: insuranceType === 'kombinasi' 
@@ -270,10 +273,10 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
               <p className="input-label">Biaya Administrasi</p>
               <div className="flex items-center justify-between p-3 border rounded-md bg-gray-50 dark:bg-gray-800/50">
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  Tetap
+                  Sesuai tenor {tenor} tahun
                 </span>
                 <span className="font-medium">
-                  {formatRupiah(fees.adminFee)}
+                  {formatRupiah(getAdminFee(tenor))}
                 </span>
               </div>
             </div>
