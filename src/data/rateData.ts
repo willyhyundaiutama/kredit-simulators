@@ -3,14 +3,13 @@
  * Sample interest rates data by tenor
  */
 export const interestRates = [
-  { tenor: 1, rate: 3.5 },
-  { tenor: 2, rate: 4.0 },
-  { tenor: 3, rate: 4.5 },
-  { tenor: 4, rate: 4.88 },
-  { tenor: 5, rate: 5.2 },
-  { tenor: 6, rate: 5.5 },
-  { tenor: 7, rate: 5.8 },
-  { tenor: 8, rate: 6.0 }
+  { tenor: 1, rate: 2.88 },
+  { tenor: 2, rate: 2.88 },
+  { tenor: 3, rate: 2.88 },
+  { tenor: 4, rate: 3.88 },
+  { tenor: 5, rate: 4.88 },
+  { tenor: 6, rate: 5.88 },
+  { tenor: 7, rate: 6.88 }
 ];
 
 /**
