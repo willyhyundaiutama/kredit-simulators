@@ -34,18 +34,13 @@ const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({
     if (isNaN(value)) {
       setTenor(1);
     } else {
-      setTenor(Math.min(Math.max(value, 1), 8)); // Clamp between 1 and 8 years
+      setTenor(Math.min(Math.max(value, 1), 7)); // Clamp between 1 and 7 years
     }
   };
   
   const calculateInsurance = () => {
-    // Get base rate from table
-    let rate = getInsuranceRateFromTable(otrPrice, insuranceType);
-    
-    // Adjust rate based on tenor
-    if (tenor > 3) rate += 0.2;
-    if (tenor > 5) rate += 0.2;
-    
+    // Get rate from the updated table based on price, insurance type and tenor
+    const rate = getInsuranceRateFromTable(otrPrice, insuranceType, tenor);
     setInsuranceRate(rate);
     setInsuranceAmount(otrPrice * (rate / 100));
   };
@@ -78,11 +73,11 @@ const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({
             label="Tenor"
             type="number"
             min={1}
-            max={8}
+            max={7}
             value={tenor}
             onChange={handleTenorChange}
             suffix="tahun"
-            description="Jangka waktu kredit (1-8 tahun)"
+            description="Jangka waktu kredit (1-7 tahun)"
           />
           
           <div className="space-y-1.5">
@@ -149,7 +144,7 @@ const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({
           
           <div className="p-4 bg-gray-50 dark:bg-gray-800/30 rounded-lg border border-gray-200 dark:border-gray-700">
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              * Biaya asuransi dapat berbeda untuk setiap tahun berikutnya dan bisa berubah sesuai kebijakan asuransi.
+              * Biaya asuransi dihitung berdasarkan tabel rate sesuai range harga OTR dan tenor.
             </p>
           </div>
         </div>
