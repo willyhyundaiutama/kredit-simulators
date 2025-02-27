@@ -165,27 +165,27 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
             
             {/* Total DP Card - KETIGA */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-4 flex justify-between items-center border border-gray-100 dark:border-gray-700 shadow-md">
+            <div className="bg-gradient-to-r from-amber-400 to-orange-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
-                <div className="bg-gray-100 dark:bg-gray-700 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                  <DollarSign className="h-5 w-5 text-gray-500 dark:text-gray-300" />
+                <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                  <DollarSign className="h-5 w-5" />
                 </div>
-                <div className="text-sm font-medium text-gray-600 dark:text-gray-300">Total DP</div>
+                <div className="text-sm font-medium">Total DP</div>
               </div>
-              <div className="text-lg font-bold text-gray-800 dark:text-white">
+              <div className="text-lg font-bold">
                 {formatRupiah(selectedTenorData.totalDp)}
               </div>
             </div>
             
             {/* Angsuran Bulanan Card - KEEMPAT */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-4 flex justify-between items-center border border-gray-100 dark:border-gray-700 shadow-md">
+            <div className="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
-                <div className="bg-gray-100 dark:bg-gray-700 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                  <CreditCard className="h-5 w-5 text-gray-500 dark:text-gray-300" />
+                <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                  <CreditCard className="h-5 w-5" />
                 </div>
-                <div className="text-sm font-medium text-gray-600 dark:text-gray-300">Angsuran Bulanan</div>
+                <div className="text-sm font-medium">Angsuran Bulanan</div>
               </div>
-              <div className="text-lg font-bold text-gray-800 dark:text-white">
+              <div className="text-lg font-bold">
                 {formatRupiah(selectedTenorData.monthlyInstallment)}
               </div>
             </div>
