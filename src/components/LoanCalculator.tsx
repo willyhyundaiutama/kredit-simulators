@@ -5,6 +5,7 @@ import FormInput from "./FormInput";
 import { formatRupiah } from "@/lib/calculations";
 import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
 import ResultsTable from "./ResultsTable";
+import CreditComparisonTable from "./CreditComparisonTable";
 import { useSettings } from "@/context/SettingsContext";
 
 interface LoanCalculatorProps {
@@ -143,9 +144,6 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
     calculateLoan();
   }, [otrPrice, dpPercent, tenor, insuranceType, provisionRate, additionalAdminFee]);
 
-  // Check if admin additional fee is greater than 0
-  const hasAdditionalFee = additionalAdminFee > 0;
-
   return (
     <div className="w-full animate-fade-in">
       <div className="glass-card dark:glass-card-dark p-6 rounded-2xl">
@@ -236,6 +234,17 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             </p>
           </div>
         </div>
+      </div>
+      
+      {/* Tabel Perbandingan Tenor */}
+      <div className="mt-8 results-appear">
+        <CreditComparisonTable 
+          otrPrice={otrPrice}
+          dpPercent={dpPercent}
+          insuranceType={insuranceType}
+          provisionRate={provisionRate}
+          additionalAdminFee={additionalAdminFee}
+        />
       </div>
       
       {results && (
