@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Calculator, Wallet, CreditCard, Calendar, Shield } from "lucide-react";
+import { Calculator, Wallet, CreditCard, Calendar, Shield, Car } from "lucide-react";
 import FormInput from "./FormInput";
 import { formatRupiah } from "@/lib/calculations";
 import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
@@ -313,17 +313,17 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <div className="flex flex-col md:flex-row gap-6">
               {/* Kolom kiri - Info Cards (50% width) */}
               <div className="w-full md:w-1/2">
-                <div className="grid grid-cols-1 gap-3">
-                  {/* Total DP Card */}
-                  <div className="bg-blue-500 rounded-xl shadow-md overflow-hidden">
+                <div className="grid grid-cols-1 gap-3 h-full">
+                  {/* Harga OTR Card */}
+                  <div className="bg-red-500 rounded-xl shadow-md overflow-hidden">
                     <div className="px-4 py-5 text-white">
                       <div className="flex items-center">
                         <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
-                          <Wallet className="h-5 w-5 text-white" />
+                          <Car className="h-5 w-5 text-white" />
                         </div>
                         <div>
-                          <p className="text-sm opacity-90 font-medium">Total DP</p>
-                          <p className="text-lg font-bold">Rp {results.totalDp.toLocaleString('id-ID')}</p>
+                          <p className="text-sm opacity-90 font-medium">Harga OTR</p>
+                          <p className="text-lg font-bold">Rp {otrPrice.toLocaleString('id-ID')}</p>
                         </div>
                       </div>
                     </div>
@@ -369,6 +369,21 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
                         <div>
                           <p className="text-sm opacity-90 font-medium">Asuransi</p>
                           <p className="text-lg font-bold">{getInsuranceTypeDisplay()}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Total DP Card - Moved to bottom */}
+                  <div className="bg-blue-500 rounded-xl shadow-md overflow-hidden">
+                    <div className="px-4 py-5 text-white">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                          <Wallet className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-sm opacity-90 font-medium">Total DP</p>
+                          <p className="text-lg font-bold">Rp {results.totalDp.toLocaleString('id-ID')}</p>
                         </div>
                       </div>
                     </div>
