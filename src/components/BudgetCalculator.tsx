@@ -96,7 +96,8 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     return Number(closestDp.toFixed(6)); // Mengembalikan dengan 6 angka di belakang koma
   };
 
-  useEffect(() => {
+  // Fungsi untuk menghitung simulasi ketika tombol Calculate diklik
+  const handleCalculate = () => {
     if (!budgetAmount || budgetAmount === "") {
       setCalculatedDpPercent(null);
       return;
@@ -124,7 +125,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
       }
       setIsCalculating(false);
     }, 100);
-  }, [budgetAmount, budgetType, otrPrice, tenor, insuranceType]);
+  };
 
   const calculateResults = () => {
     if (calculatedDpPercent === null) return null;
@@ -277,6 +278,16 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           placeholder="0"
           description={`Masukkan budget ${budgetType === 'tdp' ? 'Total DP' : 'angsuran'} yang Anda inginkan`}
         />
+
+        <button
+          type="button"
+          onClick={handleCalculate}
+          className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-md font-medium flex items-center justify-center transition-colors"
+          disabled={!budgetAmount || isCalculating}
+        >
+          <Calculator className="h-5 w-5 mr-2" />
+          {isCalculating ? "Sedang Menghitung..." : "Hitung Simulasi"}
+        </button>
 
         {isCalculating ? (
           <div className="text-center py-4">
