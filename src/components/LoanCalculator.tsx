@@ -257,10 +257,10 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             
             <div>
               <p className="input-label">
-                <div className="flex items-center">
+                <span className="flex items-center">
                   <Shield className="h-4 w-4 text-primary mr-1" />
                   <span>Asuransi Mobil {tenor} Tahun</span>
-                </div>
+                </span>
               </p>
               <div className="flex items-center justify-between p-3 border rounded-md bg-gray-50 dark:bg-gray-800/50">
                 <span className="text-sm text-gray-500 dark:text-gray-400">
