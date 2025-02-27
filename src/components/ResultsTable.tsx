@@ -53,49 +53,49 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           {/* Main Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* OTR Price */}
-            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4">
+            <div className="bg-[#002c5f] text-white rounded-xl p-4">
               <div className="flex items-center mb-1">
-                <Car className="w-4 h-4 text-gray-400 mr-2" />
-                <span className="text-sm text-gray-500">Harga OTR</span>
+                <Car className="w-4 h-4 text-white/80 mr-2" />
+                <span className="text-sm text-white/80">Harga OTR</span>
               </div>
               <div className="text-xl font-semibold">{formatRupiah(otrPrice)}</div>
             </div>
 
             {/* Total DP */}
             <div 
-              className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-colors"
+              className="bg-[#00aad2] text-white rounded-xl p-4 cursor-pointer hover:bg-[#009abf] transition-colors"
               onClick={() => setShowDpDetails(!showDpDetails)}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center mb-1">
-                  <PiggyBank className="w-4 h-4 text-gray-400 mr-2" />
-                  <span className="text-sm text-gray-500">Total DP</span>
+                  <PiggyBank className="w-4 h-4 text-white/80 mr-2" />
+                  <span className="text-sm text-white/80">Total DP</span>
                 </div>
-                <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${showDpDetails ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-white/80 transition-transform ${showDpDetails ? 'rotate-180' : ''}`} />
               </div>
               <div className="text-xl font-semibold">{formatRupiah(results.totalDp)}</div>
               
               {/* DP Breakdown */}
               {showDpDetails && (
-                <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700 space-y-2 animate-fade-in">
+                <div className="mt-3 pt-3 border-t border-white/20 space-y-2 animate-fade-in">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">DP Murni ({dpPercent}%)</span>
+                    <span className="text-white/80">DP Murni ({dpPercent}%)</span>
                     <span>{formatRupiah(results.dpAmount)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Angsuran ke-1</span>
+                    <span className="text-white/80">Angsuran ke-1</span>
                     <span>{formatRupiah(results.monthlyInstallment)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Asuransi</span>
+                    <span className="text-white/80">Asuransi</span>
                     <span>{formatRupiah(results.insuranceAmount)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Admin</span>
+                    <span className="text-white/80">Admin</span>
                     <span>{formatRupiah(results.totalAdminFee || results.adminFee)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">TPI</span>
+                    <span className="text-white/80">TPI</span>
                     <span>{formatRupiah(results.tpiFee)}</span>
                   </div>
                 </div>
@@ -103,35 +103,35 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
             </div>
 
             {/* Monthly Payment */}
-            <div className="bg-primary/5 rounded-xl p-4">
+            <div className="bg-[#002c5f] text-white rounded-xl p-4">
               <div className="flex items-center mb-1">
-                <CreditCard className="w-4 h-4 text-primary mr-2" />
-                <span className="text-sm text-gray-500">Angsuran per Bulan</span>
+                <CreditCard className="w-4 h-4 text-white/80 mr-2" />
+                <span className="text-sm text-white/80">Angsuran per Bulan</span>
               </div>
-              <div className="text-xl font-semibold text-primary">
+              <div className="text-xl font-semibold">
                 {formatRupiah(results.monthlyInstallment)}
               </div>
             </div>
 
             {/* Tenor */}
-            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4">
+            <div className="bg-gray-500 text-white rounded-xl p-4">
               <div className="flex items-center mb-1">
-                <Calendar className="w-4 h-4 text-gray-400 mr-2" />
-                <span className="text-sm text-gray-500">Tenor</span>
+                <Calendar className="w-4 h-4 text-white/80 mr-2" />
+                <span className="text-sm text-white/80">Tenor</span>
               </div>
               <div className="text-xl font-semibold">
-                {tenor} tahun <span className="text-sm font-normal text-gray-500">({tenor * 12} bulan)</span>
+                {tenor} tahun <span className="text-sm font-normal text-white/80">({tenor * 12} bulan)</span>
               </div>
             </div>
           </div>
 
           {/* Insurance Type */}
-          <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4">
+          <div className="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4">
             <div className="flex items-center mb-1">
-              <Shield className="w-4 h-4 text-gray-400 mr-2" />
+              <Shield className="w-4 h-4 text-[#002c5f] mr-2" />
               <span className="text-sm text-gray-500">Asuransi</span>
             </div>
-            <div className="text-xl font-semibold">
+            <div className="text-xl font-semibold text-[#002c5f]">
               {results.insuranceType} 
               <span className="text-sm font-normal text-gray-500 ml-1">
                 ({results.insuranceRate?.toFixed(2)}%)
@@ -141,8 +141,8 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
 
           {/* Info Note */}
           <div className="flex items-start p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-            <Info className="w-4 h-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
-            <p className="text-sm text-blue-600 dark:text-blue-300">
+            <Info className="w-4 h-4 text-[#00aad2] mt-0.5 mr-2 flex-shrink-0" />
+            <p className="text-sm text-[#002c5f] dark:text-blue-300">
               Hasil simulasi ini merupakan estimasi. 
               {!showFullDetails && " Klik tombol di kanan atas untuk melihat detail lengkap."}
             </p>
@@ -198,9 +198,9 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                       <div className="text-sm font-semibold">{formatRupiah(results.totalLoanAmount)}</div>
                     </div>
 
-                    <div className="table-row-alternate bg-primary/5 p-3 flex flex-col">
+                    <div className="table-row-alternate bg-[#002c5f]/5 p-3 flex flex-col">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Angsuran per Bulan</div>
-                      <div className="text-sm font-semibold text-primary">{formatRupiah(results.monthlyInstallment)}</div>
+                      <div className="text-sm font-semibold text-[#002c5f]">{formatRupiah(results.monthlyInstallment)}</div>
                     </div>
                   </div>
                 </div>
@@ -263,9 +263,9 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                       </div>
                     )}
 
-                    <div className="table-row-alternate bg-primary/5 p-3 flex flex-col">
+                    <div className="table-row-alternate bg-[#002c5f]/5 p-3 flex flex-col">
                       <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Total DP</div>
-                      <div className="text-sm font-semibold text-primary">{formatRupiah(results.totalDp)}</div>
+                      <div className="text-sm font-semibold text-[#002c5f]">{formatRupiah(results.totalDp)}</div>
                     </div>
                   </div>
                 </div>
