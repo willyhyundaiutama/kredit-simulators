@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { formatRupiah } from "@/lib/calculations";
 import { ChevronDown, ChevronUp, Car, Calendar, Shield, DollarSign, CreditCard, Info } from "lucide-react";
@@ -32,6 +33,9 @@ interface ResultsTableProps {
 const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercent, tenor }) => {
   const [showDpDetails, setShowDpDetails] = useState(false);
   const [showFullDetails, setShowFullDetails] = useState(false);
+
+  // Fix: Define hasAdditionalAdminFee variable here in the component scope
+  const hasAdditionalAdminFee = results.additionalAdminFee && results.additionalAdminFee > 0;
 
   return (
     <div className="w-full">
