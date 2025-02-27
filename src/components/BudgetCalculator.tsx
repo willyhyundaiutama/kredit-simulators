@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Calculator, Wallet, CreditCard, Calendar, Shield, Car } from "lucide-react";
+import { Calculator, Wallet, CreditCard, Calendar, Shield, Car, DollarSign } from "lucide-react";
 import FormInput from "./FormInput";
 import { formatRupiah } from "@/lib/calculations";
 import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
@@ -169,33 +169,42 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
   };
 
   return (
-    <div className="glass-card dark:glass-card-dark p-4 sm:p-6 rounded-2xl animate-fade-in">
-      <div className="flex items-center mb-4 sm:mb-5">
-        <Wallet className="h-5 w-5 text-primary mr-2 flex-shrink-0" />
-        <h2 className="text-lg sm:text-xl font-semibold">Simulasi Budget</h2>
+    <div className="animate-fade-in">
+      <div className="flex items-center mb-6">
+        <div className="w-10 h-10 rounded-full gradient-border flex items-center justify-center mr-3">
+          <Wallet className="h-5 w-5 text-primary" />
+        </div>
+        <h2 className="text-xl font-semibold">Simulasi Budget</h2>
       </div>
 
-      <div className="space-y-4 sm:space-y-6">
-        <FormInput
-          label="Harga OTR"
-          type="text"
-          prefix="Rp"
-          value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
-          onChange={handleOtrChange}
-          placeholder="Masukkan harga OTR"
-          description="Harga On The Road kendaraan"
-        />
+      <div className="space-y-5">
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">Harga OTR</label>
+          <div className="relative">
+            <div className="absolute left-0 inset-y-0 flex items-center pl-3 pointer-events-none">
+              <DollarSign className="h-4 w-4 text-gray-500" />
+            </div>
+            <input
+              type="text"
+              className="premium-input pl-10"
+              value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
+              onChange={handleOtrChange}
+              placeholder="Masukkan harga OTR"
+            />
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Harga On The Road kendaraan</p>
+        </div>
 
-        <div className="space-y-1.5">
-          <label className="input-label block">Tenor</label>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">Tenor</label>
           <Select 
             value={tenor.toString()} 
             onValueChange={handleTenorChange}
           >
-            <SelectTrigger className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md">
+            <SelectTrigger className="premium-input">
               <SelectValue placeholder="Pilih tenor" />
             </SelectTrigger>
-            <SelectContent className="bg-white dark:bg-gray-800">
+            <SelectContent className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
               <SelectItem value="1">1 tahun</SelectItem>
               <SelectItem value="2">2 tahun</SelectItem>
               <SelectItem value="3">3 tahun</SelectItem>
@@ -208,15 +217,15 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           <p className="text-xs text-gray-500 dark:text-gray-400">Jangka waktu kredit (1-7 tahun)</p>
         </div>
 
-        <div className="space-y-1.5">
-          <label className="input-label block">Jenis Asuransi</label>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">Jenis Asuransi</label>
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
               onClick={() => setInsuranceType('kombinasi')}
-              className={`px-2 sm:px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                 insuranceType === 'kombinasi'
-                  ? 'bg-primary text-white'
+                  ? 'bg-primary text-white shadow-md shadow-primary/20'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
@@ -225,9 +234,9 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <button
               type="button"
               onClick={() => setInsuranceType('allrisk')}
-              className={`px-2 sm:px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                 insuranceType === 'allrisk'
-                  ? 'bg-primary text-white'
+                  ? 'bg-primary text-white shadow-md shadow-primary/20'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
@@ -236,9 +245,9 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <button
               type="button"
               onClick={() => setInsuranceType('allriskPerluasan')}
-              className={`px-2 sm:px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                 insuranceType === 'allriskPerluasan'
-                  ? 'bg-primary text-white'
+                  ? 'bg-primary text-white shadow-md shadow-primary/20'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
@@ -248,15 +257,15 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           <p className="text-xs text-gray-500 dark:text-gray-400">Pilih jenis asuransi kendaraan</p>
         </div>
 
-        <div className="space-y-1.5">
-          <label className="input-label block">Jenis Budget</label>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">Jenis Budget</label>
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={() => setBudgetType('tdp')}
-              className={`px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+              className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                 budgetType === 'tdp'
-                  ? 'bg-primary text-white'
+                  ? 'bg-primary text-white shadow-md shadow-primary/20'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
@@ -265,9 +274,9 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <button
               type="button"
               onClick={() => setBudgetType('installment')}
-              className={`px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+              className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                 budgetType === 'installment'
-                  ? 'bg-primary text-white'
+                  ? 'bg-primary text-white shadow-md shadow-primary/20'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
@@ -276,36 +285,45 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           </div>
         </div>
 
-        <FormInput
-          label={budgetType === 'tdp' ? "Budget Total DP" : "Budget Angsuran"}
-          type="text"
-          prefix="Rp"
-          value={budgetAmount}
-          onChange={handleBudgetAmountChange}
-          placeholder={budgetType === 'tdp' ? "Masukkan budget DP" : "Masukkan budget angsuran"}
-          description={`Masukkan budget ${budgetType === 'tdp' ? 'Total DP' : 'angsuran'} yang Anda inginkan`}
-        />
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">
+            {budgetType === 'tdp' ? "Budget Total DP" : "Budget Angsuran"}
+          </label>
+          <div className="relative">
+            <div className="absolute left-0 inset-y-0 flex items-center pl-3 pointer-events-none">
+              <DollarSign className="h-4 w-4 text-gray-500" />
+            </div>
+            <input
+              type="text"
+              className="premium-input pl-10"
+              value={budgetAmount}
+              onChange={handleBudgetAmountChange}
+              placeholder={budgetType === 'tdp' ? "Masukkan budget DP" : "Masukkan budget angsuran"}
+            />
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            {`Masukkan budget ${budgetType === 'tdp' ? 'Total DP' : 'angsuran'} yang Anda inginkan`}
+          </p>
+        </div>
 
         <button
           type="button"
           onClick={handleCalculate}
-          className="w-full bg-primary hover:bg-primary/90 text-white py-2.5 sm:py-3 rounded-md font-medium flex items-center justify-center transition-colors"
+          className="premium-button w-full py-3 px-4 text-white"
           disabled={!budgetAmount || isCalculating || otrPrice <= 0}
         >
-          <Calculator className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-          <span className="text-sm sm:text-base">
-            {isCalculating ? "Sedang Menghitung..." : "Hitung Simulasi"}
-          </span>
+          <Calculator className="h-5 w-5 mr-2" />
+          <span>{isCalculating ? "Sedang Menghitung..." : "Hitung Simulasi"}</span>
         </button>
 
         {isCalculating ? (
-          <div className="text-center py-4">
-            <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-primary mx-auto"></div>
-            <p className="text-sm text-gray-500 mt-2">Menghitung simulasi...</p>
+          <div className="text-center py-6">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+            <p className="text-sm text-gray-500 mt-3">Menghitung simulasi...</p>
           </div>
         ) : results ? (
-          <div className="mt-6">
-            <h3 className="text-base font-semibold text-center text-gray-800 dark:text-gray-200 mb-4">
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold text-center text-gray-800 dark:text-gray-200 mb-6 luxury-text">
               Ringkasan Simulasi Kredit
             </h3>
             
@@ -313,77 +331,77 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <div className="flex flex-col md:flex-row gap-6">
               {/* Kolom kiri - Info Cards (50% width) */}
               <div className="w-full md:w-1/2">
-                <div className="grid grid-cols-1 gap-2 h-full">
+                <div className="grid grid-cols-1 gap-3 h-full">
                   {/* Harga OTR Card */}
-                  <div className="bg-red-500 rounded-lg shadow-sm overflow-hidden">
-                    <div className="px-3 py-3 text-white">
+                  <div className="rounded-xl overflow-hidden gradient-border card-shine">
+                    <div className="bg-gradient-to-r from-red-500 to-pink-500 px-4 py-3">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                        <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center mr-3">
                           <Car className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                          <p className="text-xs opacity-90 font-medium">Harga OTR</p>
-                          <p className="text-base font-bold">Rp {otrPrice.toLocaleString('id-ID')}</p>
+                          <p className="text-xs text-white/90 font-medium">Harga OTR</p>
+                          <p className="text-base font-bold text-white">Rp {otrPrice.toLocaleString('id-ID')}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                   
                   {/* Angsuran Card */}
-                  <div className="bg-cyan-500 rounded-lg shadow-sm overflow-hidden">
-                    <div className="px-3 py-3 text-white">
+                  <div className="rounded-xl overflow-hidden gradient-border card-shine">
+                    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-3">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                        <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center mr-3">
                           <CreditCard className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                          <p className="text-xs opacity-90 font-medium">Angsuran</p>
-                          <p className="text-base font-bold">Rp {results.monthlyInstallment.toLocaleString('id-ID')}</p>
+                          <p className="text-xs text-white/90 font-medium">Angsuran</p>
+                          <p className="text-base font-bold text-white">Rp {results.monthlyInstallment.toLocaleString('id-ID')}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                   
                   {/* Tenor Card */}
-                  <div className="bg-green-500 rounded-lg shadow-sm overflow-hidden">
-                    <div className="px-3 py-3 text-white">
+                  <div className="rounded-xl overflow-hidden gradient-border card-shine">
+                    <div className="bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-3">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                        <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center mr-3">
                           <Calendar className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                          <p className="text-xs opacity-90 font-medium">Tenor</p>
-                          <p className="text-base font-bold">{tenor} tahun</p>
+                          <p className="text-xs text-white/90 font-medium">Tenor</p>
+                          <p className="text-base font-bold text-white">{tenor} tahun</p>
                         </div>
                       </div>
                     </div>
                   </div>
                   
                   {/* Asuransi Card */}
-                  <div className="bg-purple-500 rounded-lg shadow-sm overflow-hidden">
-                    <div className="px-3 py-3 text-white">
+                  <div className="rounded-xl overflow-hidden gradient-border card-shine">
+                    <div className="bg-gradient-to-r from-purple-500 to-indigo-500 px-4 py-3">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                        <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center mr-3">
                           <Shield className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                          <p className="text-xs opacity-90 font-medium">Asuransi</p>
-                          <p className="text-base font-bold">{getInsuranceTypeDisplay()}</p>
+                          <p className="text-xs text-white/90 font-medium">Asuransi</p>
+                          <p className="text-base font-bold text-white">{getInsuranceTypeDisplay()}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                   
                   {/* Total DP Card */}
-                  <div className="bg-blue-500 rounded-lg shadow-sm overflow-hidden">
-                    <div className="px-3 py-3 text-white">
+                  <div className="rounded-xl overflow-hidden gradient-border card-shine">
+                    <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-4 py-3">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                        <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center mr-3">
                           <Wallet className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                          <p className="text-xs opacity-90 font-medium">Total DP</p>
-                          <p className="text-base font-bold">Rp {results.totalDp.toLocaleString('id-ID')}</p>
+                          <p className="text-xs text-white/90 font-medium">Total DP</p>
+                          <p className="text-base font-bold text-white">Rp {results.totalDp.toLocaleString('id-ID')}</p>
                         </div>
                       </div>
                     </div>
@@ -393,42 +411,44 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
               
               {/* Kolom kanan - Hasil Detail (50% width) */}
               <div className="w-full md:w-1/2">
-                <div className="bg-primary/5 rounded-lg p-4 border border-primary/20 h-full">
-                  <h3 className="text-base font-semibold text-primary mb-3">Hasil Simulasi</h3>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>
-                      <span className="text-sm font-medium">{results.dpPercentage.toFixed(5)}%</span>
+                <div className="gradient-border h-full">
+                  <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-5 h-full">
+                    <h3 className="text-lg font-semibold text-primary mb-4">Hasil Simulasi</h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center luxury-info-card">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>
+                        <span className="text-sm font-medium">{results.dpPercentage.toFixed(5)}%</span>
+                      </div>
+                      <div className="flex justify-between items-center luxury-info-card">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">DP Murni:</span>
+                        <span className="text-sm font-medium">{formatRupiah(results.dpAmount)}</span>
+                      </div>
+                      <div className="flex justify-between items-center luxury-info-card">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Total DP:</span>
+                        <span className="text-sm font-medium">{formatRupiah(results.totalDp)}</span>
+                      </div>
+                      <div className="flex justify-between items-center luxury-info-card">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Angsuran per bulan:</span>
+                        <span className="text-sm font-medium">{formatRupiah(results.monthlyInstallment)}</span>
+                      </div>
+                      <div className="flex justify-between items-center luxury-info-card">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Pokok Hutang:</span>
+                        <span className="text-sm font-medium">{formatRupiah(results.loanPrincipal)}</span>
+                      </div>
+                      <div className="flex justify-between items-center luxury-info-card">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Total Pinjaman:</span>
+                        <span className="text-sm font-medium">{formatRupiah(results.totalLoanAmount)}</span>
+                      </div>
+                      <div className="flex justify-between items-center luxury-info-card">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Biaya Asuransi:</span>
+                        <span className="text-sm font-medium">{formatRupiah(results.insuranceAmount)}</span>
+                      </div>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">DP Murni:</span>
-                      <span className="text-sm font-medium">{formatRupiah(results.dpAmount)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Total DP:</span>
-                      <span className="text-sm font-medium">{formatRupiah(results.totalDp)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Angsuran per bulan:</span>
-                      <span className="text-sm font-medium">{formatRupiah(results.monthlyInstallment)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Pokok Hutang:</span>
-                      <span className="text-sm font-medium">{formatRupiah(results.loanPrincipal)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Total Pinjaman:</span>
-                      <span className="text-sm font-medium">{formatRupiah(results.totalLoanAmount)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Biaya Asuransi:</span>
-                      <span className="text-sm font-medium">{formatRupiah(results.insuranceAmount)}</span>
-                    </div>
+                    
+                    <p className="text-xs text-gray-500 dark:text-gray-400 italic mt-4 bg-gray-50 dark:bg-gray-800/40 p-2 rounded-lg border border-gray-100 dark:border-gray-700">
+                      * Hasil simulasi di atas merupakan perkiraan. Silakan hubungi dealer untuk informasi lebih akurat.
+                    </p>
                   </div>
-                  
-                  <p className="text-xs text-gray-500 dark:text-gray-400 italic mt-4">
-                    * Hasil simulasi di atas merupakan perkiraan. Silakan hubungi dealer untuk informasi lebih akurat.
-                  </p>
                 </div>
               </div>
             </div>
