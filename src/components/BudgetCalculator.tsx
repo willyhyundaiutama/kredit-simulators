@@ -313,77 +313,77 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
             <div className="flex flex-col md:flex-row gap-6">
               {/* Kolom kiri - Info Cards (50% width) */}
               <div className="w-full md:w-1/2">
-                <div className="grid grid-cols-1 gap-3 h-full">
+                <div className="grid grid-cols-1 gap-2 h-full">
                   {/* Harga OTR Card */}
-                  <div className="bg-red-500 rounded-xl shadow-md overflow-hidden">
-                    <div className="px-4 py-5 text-white">
+                  <div className="bg-red-500 rounded-lg shadow-sm overflow-hidden">
+                    <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
-                          <Car className="h-5 w-5 text-white" />
+                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                          <Car className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                          <p className="text-sm opacity-90 font-medium">Harga OTR</p>
-                          <p className="text-lg font-bold">Rp {otrPrice.toLocaleString('id-ID')}</p>
+                          <p className="text-xs opacity-90 font-medium">Harga OTR</p>
+                          <p className="text-base font-bold">Rp {otrPrice.toLocaleString('id-ID')}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                   
                   {/* Angsuran Card */}
-                  <div className="bg-cyan-500 rounded-xl shadow-md overflow-hidden">
-                    <div className="px-4 py-5 text-white">
+                  <div className="bg-cyan-500 rounded-lg shadow-sm overflow-hidden">
+                    <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
-                          <CreditCard className="h-5 w-5 text-white" />
+                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                          <CreditCard className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                          <p className="text-sm opacity-90 font-medium">Angsuran</p>
-                          <p className="text-lg font-bold">Rp {results.monthlyInstallment.toLocaleString('id-ID')}</p>
+                          <p className="text-xs opacity-90 font-medium">Angsuran</p>
+                          <p className="text-base font-bold">Rp {results.monthlyInstallment.toLocaleString('id-ID')}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                   
                   {/* Tenor Card */}
-                  <div className="bg-green-500 rounded-xl shadow-md overflow-hidden">
-                    <div className="px-4 py-5 text-white">
+                  <div className="bg-green-500 rounded-lg shadow-sm overflow-hidden">
+                    <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
-                          <Calendar className="h-5 w-5 text-white" />
+                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                          <Calendar className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                          <p className="text-sm opacity-90 font-medium">Tenor</p>
-                          <p className="text-lg font-bold">{tenor} tahun</p>
+                          <p className="text-xs opacity-90 font-medium">Tenor</p>
+                          <p className="text-base font-bold">{tenor} tahun</p>
                         </div>
                       </div>
                     </div>
                   </div>
                   
                   {/* Asuransi Card */}
-                  <div className="bg-purple-500 rounded-xl shadow-md overflow-hidden">
-                    <div className="px-4 py-5 text-white">
+                  <div className="bg-purple-500 rounded-lg shadow-sm overflow-hidden">
+                    <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
-                          <Shield className="h-5 w-5 text-white" />
+                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                          <Shield className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                          <p className="text-sm opacity-90 font-medium">Asuransi</p>
-                          <p className="text-lg font-bold">{getInsuranceTypeDisplay()}</p>
+                          <p className="text-xs opacity-90 font-medium">Asuransi</p>
+                          <p className="text-base font-bold">{getInsuranceTypeDisplay()}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Total DP Card - Moved to bottom */}
-                  <div className="bg-blue-500 rounded-xl shadow-md overflow-hidden">
-                    <div className="px-4 py-5 text-white">
+                  {/* Total DP Card */}
+                  <div className="bg-blue-500 rounded-lg shadow-sm overflow-hidden">
+                    <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
-                          <Wallet className="h-5 w-5 text-white" />
+                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                          <Wallet className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                          <p className="text-sm opacity-90 font-medium">Total DP</p>
-                          <p className="text-lg font-bold">Rp {results.totalDp.toLocaleString('id-ID')}</p>
+                          <p className="text-xs opacity-90 font-medium">Total DP</p>
+                          <p className="text-base font-bold">Rp {results.totalDp.toLocaleString('id-ID')}</p>
                         </div>
                       </div>
                     </div>
@@ -394,8 +394,8 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
               {/* Kolom kanan - Hasil Detail (50% width) */}
               <div className="w-full md:w-1/2">
                 <div className="bg-primary/5 rounded-lg p-4 border border-primary/20 h-full">
-                  <h3 className="text-base sm:text-lg font-semibold text-primary mb-3">Hasil Simulasi</h3>
-                  <div className="space-y-3">
+                  <h3 className="text-base font-semibold text-primary mb-3">Hasil Simulasi</h3>
+                  <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>
                       <span className="text-sm font-medium">{results.dpPercentage.toFixed(5)}%</span>
