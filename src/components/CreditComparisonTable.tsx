@@ -78,77 +78,85 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
     <div className="my-6">
       <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">Perbandingan Tenor</h3>
       
-      {/* Info cards di atas tabel */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-        {/* Harga OTR Card */}
-        <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-3">
-          <div className="text-center">
-            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Harga OTR</div>
-            <div className="text-base font-bold text-primary">{formatRupiah(otrPrice)}</div>
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Tabel Perbandingan - 50% width pada desktop */}
+        <div className="lg:w-1/2">
+          <div className="overflow-x-auto rounded-xl">
+            <div className="min-w-[400px]">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-left text-xs">
+                      TENOR
+                    </th>
+                    <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-center text-xs">
+                      TOTAL DP
+                    </th>
+                    <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-right text-xs">
+                      ANGSURAN
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tenorData.map((data, index) => (
+                    <tr 
+                      key={data.tenor}
+                      className="border-b border-gray-100 dark:border-gray-800 transition-all duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
+                    >
+                      <td className="px-4 py-3">
+                        <span className="font-medium text-sm text-gray-800 dark:text-gray-200">
+                          {data.tenor} thn
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <span className="text-blue-600 dark:text-blue-400 font-medium text-sm">
+                          {formatRupiah(data.totalDp)}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <span className="text-green-600 dark:text-green-400 font-medium text-sm">
+                          {formatRupiah(data.monthlyInstallment)}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-        
-        {/* Asuransi Card */}
-        <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-3">
-          <div className="text-center">
-            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Jenis Asuransi</div>
-            <div className="text-base font-bold text-blue-600 dark:text-blue-400">{insuranceTypeDisplay}</div>
-          </div>
-        </div>
-        
-        {/* DP Percentage Card */}
-        <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-3">
-          <div className="text-center">
-            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">DP Calculated</div>
-            <div className="text-base font-bold text-green-600 dark:text-green-400">{dpPercent}%</div>
+
+        {/* Info cards di sebelah kanan - 50% width pada desktop */}
+        <div className="lg:w-1/2">
+          <div className="space-y-3">
+            {/* Harga OTR Card */}
+            <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4">
+              <div className="flex justify-between items-center">
+                <div className="text-sm text-gray-500 dark:text-gray-400">Harga OTR</div>
+                <div className="text-base font-bold text-primary">{formatRupiah(otrPrice)}</div>
+              </div>
+            </div>
+            
+            {/* Asuransi Card */}
+            <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4">
+              <div className="flex justify-between items-center">
+                <div className="text-sm text-gray-500 dark:text-gray-400">Jenis Asuransi</div>
+                <div className="text-base font-bold text-blue-600 dark:text-blue-400">{insuranceTypeDisplay}</div>
+              </div>
+            </div>
+            
+            {/* DP Percentage Card */}
+            <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4">
+              <div className="flex justify-between items-center">
+                <div className="text-sm text-gray-500 dark:text-gray-400">DP Calculated</div>
+                <div className="text-base font-bold text-green-600 dark:text-green-400">{dpPercent}%</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
-      <div className="overflow-x-auto rounded-xl -mx-4 sm:mx-0">
-        <div className="min-w-[640px]">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700">
-                <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-left text-xs">
-                  TENOR
-                </th>
-                <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-center text-xs">
-                  TOTAL DP
-                </th>
-                <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-right text-xs">
-                  ANGSURAN
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {tenorData.map((data, index) => (
-                <tr 
-                  key={data.tenor}
-                  className="border-b border-gray-100 dark:border-gray-800 transition-all duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
-                >
-                  <td className="px-4 py-3.5">
-                    <span className="font-medium text-sm text-gray-800 dark:text-gray-200">
-                      {data.tenor} thn
-                    </span>
-                  </td>
-                  <td className="px-4 py-3.5 text-center">
-                    <span className="text-blue-600 dark:text-blue-400 font-medium text-sm">
-                      {formatRupiah(data.totalDp)}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3.5 text-right">
-                    <span className="text-green-600 dark:text-green-400 font-medium text-sm">
-                      {formatRupiah(data.monthlyInstallment)}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <p className="text-[10px] text-gray-500 mt-2 italic px-4 sm:px-0">* Perhitungan di atas merupakan estimasi. Silahkan hubungi dealer untuk informasi lebih lanjut.</p>
+      <p className="text-[10px] text-gray-500 mt-2 italic">* Perhitungan di atas merupakan estimasi. Silahkan hubungi dealer untuk informasi lebih lanjut.</p>
     </div>
   );
 };
