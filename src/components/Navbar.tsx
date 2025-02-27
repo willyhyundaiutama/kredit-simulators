@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Calculator, CreditCard } from "lucide-react";
+import { Calculator, Settings } from "lucide-react";
 
 const Navbar: React.FC = () => {
   return (
@@ -19,8 +19,8 @@ const Navbar: React.FC = () => {
               href="#"
               className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
-              <CreditCard className="mr-2 h-4 w-4" />
-              <span>About</span>
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Setting</span>
             </a>
           </nav>
         </div>
