@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { formatRupiah } from "@/lib/calculations";
 import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
-import { DollarSign, Shield, Percent, Calendar, CreditCard } from "lucide-react";
+import { Wallet, Shield, Percent, Calendar, CreditCard, Car } from "lucide-react";
 
 interface CreditComparisonTableProps {
   otrPrice: number;
@@ -146,7 +146,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             <div className="bg-[#002c5f] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                  <DollarSign className="h-5 w-5" />
+                  <Car className="h-5 w-5" />
                 </div>
                 <div className="text-sm font-medium">Harga OTR</div>
               </div>
@@ -157,7 +157,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             <div className="bg-[#00aad2] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                  <DollarSign className="h-5 w-5" />
+                  <Wallet className="h-5 w-5" />
                 </div>
                 <div className="text-sm font-medium">Total DP</div>
               </div>
