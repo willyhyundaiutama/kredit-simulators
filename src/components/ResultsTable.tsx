@@ -37,6 +37,9 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
     setIsExpanded(!isExpanded);
   };
 
+  // Show additional admin fee only if it's greater than 0
+  const hasAdditionalAdminFee = results.additionalAdminFee && results.additionalAdminFee > 0;
+
   return (
     <div className="w-full">
       <div className="glass-card dark:glass-card-dark p-6 rounded-2xl">
@@ -155,18 +158,31 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
                         <td className="px-4 py-3 text-sm text-right">0.00%</td>
                         <td className="px-4 py-3 text-sm text-right">-</td>
                       </tr>
-                      <tr className="table-row-alternate">
-                        <td className="px-4 py-3 text-sm font-medium text-left">Admin (Dasar)</td>
-                        <td className="px-4 py-3 text-sm text-right"></td>
-                        <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.adminFee)}</td>
-                      </tr>
-                      {(results.additionalAdminFee && results.additionalAdminFee > 0) && (
+                      
+                      {/* Admin Fee Row */}
+                      {hasAdditionalAdminFee ? (
+                        // If there's additional admin fee, show both
+                        <>
+                          <tr className="table-row-alternate">
+                            <td className="px-4 py-3 text-sm font-medium text-left">Admin (Dasar)</td>
+                            <td className="px-4 py-3 text-sm text-right"></td>
+                            <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.adminFee)}</td>
+                          </tr>
+                          <tr className="table-row-alternate">
+                            <td className="px-4 py-3 text-sm font-medium text-left">Admin (Tambahan)</td>
+                            <td className="px-4 py-3 text-sm text-right"></td>
+                            <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.additionalAdminFee)}</td>
+                          </tr>
+                        </>
+                      ) : (
+                        // If no additional admin fee, just show the admin fee as "Biaya Admin"
                         <tr className="table-row-alternate">
-                          <td className="px-4 py-3 text-sm font-medium text-left">Admin (Tambahan)</td>
+                          <td className="px-4 py-3 text-sm font-medium text-left">Biaya Admin</td>
                           <td className="px-4 py-3 text-sm text-right"></td>
-                          <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.additionalAdminFee)}</td>
+                          <td className="px-4 py-3 text-sm text-right">{formatRupiah(results.adminFee)}</td>
                         </tr>
                       )}
+                      
                       <tr className="table-row-alternate bg-primary/5">
                         <td className="px-4 py-3 text-sm font-medium text-left">Total DP</td>
                         <td className="px-4 py-3 text-sm text-right"></td>
@@ -191,11 +207,14 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 Asuransi: <span className="font-medium text-gray-700 dark:text-gray-300">{results.insuranceType} ({results.insuranceRate?.toFixed(2)}%)</span>
               </p>
+              
+              {/* Admin Fee summary text */}
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 Admin: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(results.totalAdminFee || results.adminFee)}</span> 
-                {(results.additionalAdminFee && results.additionalAdminFee > 0) ? 
+                {hasAdditionalAdminFee ? 
                   ` (Dasar: ${formatRupiah(results.adminFee)} + Tambahan: ${formatRupiah(results.additionalAdminFee)})` : ''}
               </p>
+              
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 * Simulasi ini hanya perkiraan. Nilai sebenarnya dapat berbeda.
               </p>

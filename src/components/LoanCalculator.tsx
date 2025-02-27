@@ -143,6 +143,9 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
     calculateLoan();
   }, [otrPrice, dpPercent, tenor, insuranceType, provisionRate, additionalAdminFee]);
 
+  // Check if admin additional fee is greater than 0
+  const hasAdditionalFee = additionalAdminFee > 0;
+
   return (
     <div className="w-full animate-fade-in">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -260,13 +263,13 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
               <div className="flex flex-col p-3 border rounded-md bg-gray-50 dark:bg-gray-800/50">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm text-gray-500 dark:text-gray-400">
-                    Admin Dasar (Tenor {tenor} tahun)
+                    {hasAdditionalFee ? "Admin Dasar" : "Biaya Admin"} (Tenor {tenor} tahun)
                   </span>
                   <span className="font-medium">
                     {formatRupiah(getAdminFee(tenor))}
                   </span>
                 </div>
-                {additionalAdminFee > 0 && (
+                {hasAdditionalFee && (
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-sm text-gray-500 dark:text-gray-400">
                       Admin Tambahan
