@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { formatRupiah } from "@/lib/calculations";
-import { ChevronDown, ChevronUp, Car, Calendar, Shield, CreditCard, Info, PiggyBank } from "lucide-react";
+import { ChevronDown, ChevronUp, Car, Calendar, Shield, CreditCard, Info, Wallet } from "lucide-react";
 
 interface CalculationResults {
   dpAmount: number;
@@ -68,7 +68,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center mb-1">
-                  <PiggyBank className="w-4 h-4 text-white/80 mr-2" />
+                  <Wallet className="w-4 h-4 text-white/80 mr-2" />
                   <span className="text-sm text-white/80">Total DP</span>
                 </div>
                 <ChevronDown className={`w-4 h-4 text-white/80 transition-transform ${showDpDetails ? 'rotate-180' : ''}`} />
