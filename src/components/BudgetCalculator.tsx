@@ -282,7 +282,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           prefix="Rp"
           value={budgetAmount}
           onChange={handleBudgetAmountChange}
-          placeholder="0"
+          placeholder={budgetType === 'tdp' ? "Masukkan budget DP" : "Masukkan budget angsuran"}
           description={`Masukkan budget ${budgetType === 'tdp' ? 'Total DP' : 'angsuran'} yang Anda inginkan`}
         />
 
