@@ -14,11 +14,11 @@ interface BudgetCalculatorProps {
 }
 
 const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
-  defaultOtr = 300000000,
+  defaultOtr,
   defaultTenor = 4
 }) => {
   const { provisionRate, additionalAdminFee } = useSettings();
-  const [otrPrice, setOtrPrice] = useState<number>(defaultOtr);
+  const [otrPrice, setOtrPrice] = useState<number>(defaultOtr || 0);
   const [tenor, setTenor] = useState<number>(defaultTenor);
   const [insuranceType, setInsuranceType] = useState<'kombinasi' | 'allrisk' | 'allriskPerluasan'>('kombinasi');
   const [budgetType, setBudgetType] = useState<'tdp' | 'installment'>('tdp');
@@ -94,7 +94,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
 
   // Fungsi untuk menghitung simulasi ketika tombol Calculate diklik
   const handleCalculate = () => {
-    if (!budgetAmount || budgetAmount === "") {
+    if (!budgetAmount || budgetAmount === "" || otrPrice <= 0) {
       setCalculatedDpPercent(null);
       return;
     }
@@ -180,9 +180,9 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           label="Harga OTR"
           type="text"
           prefix="Rp"
-          value={otrPrice.toLocaleString('id-ID')}
+          value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
           onChange={handleOtrChange}
-          placeholder="0"
+          placeholder="Masukkan harga OTR"
           description="Harga On The Road kendaraan"
         />
 
@@ -290,7 +290,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           type="button"
           onClick={handleCalculate}
           className="w-full bg-primary hover:bg-primary/90 text-white py-2.5 sm:py-3 rounded-md font-medium flex items-center justify-center transition-colors"
-          disabled={!budgetAmount || isCalculating}
+          disabled={!budgetAmount || isCalculating || otrPrice <= 0}
         >
           <Calculator className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
           <span className="text-sm sm:text-base">

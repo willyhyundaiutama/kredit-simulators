@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Calendar, Shield } from "lucide-react";
 import FormInput from "./FormInput";
@@ -35,12 +36,12 @@ interface CalculationResults {
 }
 
 const LoanCalculator: React.FC<LoanCalculatorProps> = ({
-  defaultOtr = 300000000,
+  defaultOtr,
   defaultDpPercent = 20,
   defaultTenor = 4
 }) => {
   const { provisionRate, additionalAdminFee } = useSettings();
-  const [otrPrice, setOtrPrice] = useState<number>(defaultOtr);
+  const [otrPrice, setOtrPrice] = useState<number>(defaultOtr || 0);
   const [dpPercent, setDpPercent] = useState<number>(defaultDpPercent);
   const [tenor, setTenor] = useState<number>(defaultTenor);
   const [insuranceType, setInsuranceType] = useState<'kombinasi' | 'allrisk' | 'allriskPerluasan'>('kombinasi');
@@ -70,6 +71,11 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   };
 
   const calculateLoan = () => {
+    if (otrPrice <= 0) {
+      setResults(null);
+      return;
+    }
+    
     setIsCalculating(true);
     
     setTimeout(() => {
@@ -152,9 +158,9 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             label="Harga OTR"
             type="text"
             prefix="Rp"
-            value={otrPrice.toLocaleString('id-ID')}
+            value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
             onChange={handleOtrChange}
-            placeholder="0"
+            placeholder="Masukkan harga OTR"
             description="Harga On The Road kendaraan"
           />
           
@@ -258,14 +264,16 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             <p className="text-xs text-gray-500 dark:text-gray-400">Pilih jenis asuransi kendaraan</p>
           </div>
           
-          <div className="pt-2">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Nilai DP Murni: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(otrPrice * (dpPercent / 100))}</span>
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              Pokok Hutang: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(otrPrice - (otrPrice * (dpPercent / 100)))}</span>
-            </p>
-          </div>
+          {otrPrice > 0 && (
+            <div className="pt-2">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Nilai DP Murni: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(otrPrice * (dpPercent / 100))}</span>
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Pokok Hutang: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(otrPrice - (otrPrice * (dpPercent / 100)))}</span>
+              </p>
+            </div>
+          )}
         </div>
       </div>
       
@@ -282,15 +290,17 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
       )}
       
       {/* Tabel Perbandingan Tenor */}
-      <div className="mt-8 results-appear">
-        <CreditComparisonTable 
-          otrPrice={otrPrice}
-          dpPercent={dpPercent}
-          insuranceType={insuranceType}
-          provisionRate={provisionRate}
-          additionalAdminFee={additionalAdminFee}
-        />
-      </div>
+      {otrPrice > 0 && (
+        <div className="mt-8 results-appear">
+          <CreditComparisonTable 
+            otrPrice={otrPrice}
+            dpPercent={dpPercent}
+            insuranceType={insuranceType}
+            provisionRate={provisionRate}
+            additionalAdminFee={additionalAdminFee}
+          />
+        </div>
+      )}
     </div>
   );
 };

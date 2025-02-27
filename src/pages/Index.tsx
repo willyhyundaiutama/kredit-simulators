@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calculator, Shield, Info, Wallet, Car, CreditCard, CheckCircle } from "lucide-react";
 
 const Index = () => {
-  const [otrPrice, setOtrPrice] = useState<number>(450000000);
+  const [otrPrice, setOtrPrice] = useState<number | undefined>(undefined);
   const [dpPercent, setDpPercent] = useState<number>(20);
   const [tenor, setTenor] = useState<number>(5);
 
@@ -82,7 +82,7 @@ const Index = () => {
             <TabsContent value="loan" className="mt-6 sm:mt-8">
               <div className="frosted-glass p-6 rounded-2xl shadow-md">
                 <LoanCalculator 
-                  defaultOtr={otrPrice} 
+                  defaultOtr={undefined} 
                   defaultDpPercent={dpPercent} 
                   defaultTenor={tenor} 
                 />
@@ -92,7 +92,7 @@ const Index = () => {
             <TabsContent value="budget" className="mt-6 sm:mt-8">
               <div className="frosted-glass p-6 rounded-2xl shadow-md">
                 <BudgetCalculator 
-                  defaultOtr={otrPrice} 
+                  defaultOtr={undefined} 
                   defaultTenor={tenor}
                 />
               </div>
