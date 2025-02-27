@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import LoanCalculator from "@/components/LoanCalculator";
-import InsuranceCalculator from "@/components/InsuranceCalculator";
+import BudgetCalculator from "@/components/BudgetCalculator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calculator, Shield, Info, Wallet } from "lucide-react";
 
@@ -35,7 +35,7 @@ const Index = () => {
                 <Calculator className="h-4 w-4 mr-2" />
                 Simulasi Kredit
               </TabsTrigger>
-              <TabsTrigger value="insurance" className="flex items-center justify-center">
+              <TabsTrigger value="budget" className="flex items-center justify-center">
                 <Wallet className="h-4 w-4 mr-2" />
                 Simulasi Budget
               </TabsTrigger>
@@ -49,8 +49,8 @@ const Index = () => {
               />
             </TabsContent>
             
-            <TabsContent value="insurance" className="mt-6">
-              <InsuranceCalculator 
+            <TabsContent value="budget" className="mt-6">
+              <BudgetCalculator 
                 defaultOtr={otrPrice} 
                 defaultTenor={tenor}
               />
