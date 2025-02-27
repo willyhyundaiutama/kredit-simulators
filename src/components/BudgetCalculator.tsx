@@ -315,7 +315,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
               <div className="w-full md:w-1/2">
                 <div className="grid grid-cols-1 gap-2 h-full">
                   {/* Harga OTR Card */}
-                  <div className="bg-red-500 rounded-lg shadow-md overflow-hidden">
+                  <div className="hyundai-blue rounded-lg shadow-md overflow-hidden">
                     <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -330,7 +330,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
                   </div>
                   
                   {/* Total DP Card */}
-                  <div className="bg-blue-500 rounded-lg shadow-md overflow-hidden">
+                  <div className="hyundai-light-blue rounded-lg shadow-md overflow-hidden">
                     <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -345,7 +345,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
                   </div>
                   
                   {/* Angsuran Card */}
-                  <div className="bg-cyan-500 rounded-lg shadow-md overflow-hidden">
+                  <div className="hyundai-gradient rounded-lg shadow-md overflow-hidden">
                     <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -360,7 +360,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
                   </div>
                   
                   {/* Tenor Card */}
-                  <div className="bg-green-500 rounded-lg shadow-md overflow-hidden">
+                  <div className="hyundai-silver rounded-lg shadow-md overflow-hidden">
                     <div className="px-3 py-3 text-white">
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -375,15 +375,15 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
                   </div>
                   
                   {/* Asuransi Card */}
-                  <div className="bg-purple-500 rounded-lg shadow-md overflow-hidden">
-                    <div className="px-3 py-3 text-white">
+                  <div className="hyundai-light-gray rounded-lg shadow-md overflow-hidden">
+                    <div className="px-3 py-3">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                        <div className="w-8 h-8 rounded-full bg-[#002c5f] flex items-center justify-center mr-3">
                           <Shield className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                          <p className="text-xs opacity-90 font-medium">Asuransi</p>
-                          <p className="text-base font-bold">{getInsuranceTypeDisplay()}</p>
+                          <p className="text-xs opacity-90 font-medium text-[#002c5f]">Asuransi</p>
+                          <p className="text-base font-bold text-[#002c5f]">{getInsuranceTypeDisplay()}</p>
                         </div>
                       </div>
                     </div>
@@ -393,8 +393,8 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
               
               {/* Kolom kanan - Hasil Detail (50% width) */}
               <div className="w-full md:w-1/2">
-                <div className="bg-blue-50 dark:bg-gray-800/50 rounded-lg p-4 border border-blue-100 dark:border-gray-700 h-full">
-                  <h3 className="text-base font-semibold text-blue-700 dark:text-blue-400 mb-3">Hasil Simulasi</h3>
+                <div className="bg-[#f2f6fa] dark:bg-gray-800/50 rounded-lg p-4 border border-[#d6dce4] dark:border-gray-700 h-full">
+                  <h3 className="text-base font-semibold text-[#002c5f] dark:text-[#00aad2] mb-3">Hasil Simulasi</h3>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>
@@ -426,7 +426,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
                     </div>
                   </div>
                   
-                  <p className="text-xs text-gray-500 dark:text-gray-400 italic mt-4 bg-gray-50 dark:bg-gray-700/30 p-2 rounded-md border border-gray-100 dark:border-gray-700">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 italic mt-4 bg-white dark:bg-gray-700/30 p-2 rounded-md border border-[#e4e8ec] dark:border-gray-700">
                     * Hasil simulasi di atas merupakan perkiraan. Silakan hubungi dealer untuk informasi lebih akurat.
                   </p>
                 </div>

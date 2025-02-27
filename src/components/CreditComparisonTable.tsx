@@ -95,7 +95,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         <div className="lg:w-1/2 w-full flex">
           <div className="rounded-xl shadow-md overflow-hidden bg-white dark:bg-gray-800/80 w-full h-full flex flex-col">
             <table className="w-full border-collapse flex-grow">
-              <thead className="bg-gradient-to-r from-primary to-primary/90 text-white">
+              <thead className="bg-gradient-to-r from-[#002c5f] to-[#00aad2] text-white">
                 <tr>
                   <th className="font-semibold py-3 text-left text-xs pl-4 w-[25%]">
                     TENOR
@@ -112,8 +112,8 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                 {tenorData.map((data) => (
                   <tr 
                     key={data.tenor}
-                    className={`border-b border-gray-100 dark:border-gray-700 transition-all duration-200 hover:bg-primary/5 cursor-pointer ${
-                      selectedTenor === data.tenor ? 'bg-primary/10' : ''
+                    className={`border-b border-gray-100 dark:border-gray-700 transition-all duration-200 hover:bg-[#f2f6fa] cursor-pointer ${
+                      selectedTenor === data.tenor ? 'bg-[#e4e8ec] dark:bg-[#002c5f]/20' : ''
                     }`}
                     onClick={() => handleRowClick(data.tenor)}
                   >
@@ -123,12 +123,12 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                       </div>
                     </td>
                     <td className="py-3.5 text-center">
-                      <span className="text-primary font-medium text-sm">
+                      <span className="text-[#002c5f] font-medium text-sm">
                         {formatRupiah(data.totalDp)}
                       </span>
                     </td>
                     <td className="py-3.5 text-right pr-4">
-                      <span className="text-accent font-medium text-sm">
+                      <span className="text-[#00aad2] font-medium text-sm">
                         {formatRupiah(data.monthlyInstallment)}
                       </span>
                     </td>
@@ -143,7 +143,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         <div className="lg:w-1/2 w-full flex">
           <div className="flex flex-col space-y-4 w-full h-full justify-between">
             {/* Harga OTR Card - PERTAMA */}
-            <div className="bg-blue-600 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
+            <div className="hyundai-blue rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <DollarSign className="h-5 w-5" />
@@ -154,7 +154,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
             
             {/* Total DP Card - KEDUA */}
-            <div className="bg-gradient-to-r from-amber-400 to-orange-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
+            <div className="hyundai-light-blue rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <DollarSign className="h-5 w-5" />
@@ -167,7 +167,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
             
             {/* Angsuran Bulanan Card - KETIGA */}
-            <div className="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
+            <div className="hyundai-gradient rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <CreditCard className="h-5 w-5" />
@@ -180,7 +180,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
             
             {/* Tenor Card - KEEMPAT */}
-            <div className="bg-emerald-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
+            <div className="hyundai-silver rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <Calendar className="h-5 w-5" />
@@ -191,14 +191,14 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
             
             {/* Jenis Asuransi Card - KELIMA */}
-            <div className="bg-purple-600 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
+            <div className="hyundai-light-gray rounded-xl p-4 flex justify-between items-center shadow-xl">
               <div className="flex items-center">
-                <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                  <Shield className="h-5 w-5" />
+                <div className="bg-[#002c5f] rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                  <Shield className="h-5 w-5 text-white" />
                 </div>
-                <div className="text-sm font-medium">Jenis Asuransi</div>
+                <div className="text-sm font-medium text-[#002c5f]">Jenis Asuransi</div>
               </div>
-              <div className="text-lg font-bold">{insuranceTypeDisplay}</div>
+              <div className="text-lg font-bold text-[#002c5f]">{insuranceTypeDisplay}</div>
             </div>
           </div>
         </div>
