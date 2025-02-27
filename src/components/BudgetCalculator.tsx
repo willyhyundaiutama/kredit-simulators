@@ -52,7 +52,8 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     }
     
     const numericValue = parseInt(value, 10);
-    setBudgetAmount(formatRupiah(numericValue));
+    // Menghilangkan "Rp" di awal untuk menghindari duplikasi dengan prefix di FormInput
+    setBudgetAmount(numericValue.toLocaleString('id-ID'));
   };
 
   // Fungsi untuk mencari DP percentage yang menghasilkan total DP atau angsuran yang mendekati budget
@@ -102,6 +103,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     }
 
     setIsCalculating(true);
+    // Parse the number without any formatting
     const numericBudget = parseInt(budgetAmount.replace(/[^\d]/g, ''), 10);
 
     if (isNaN(numericBudget) || numericBudget <= 0) {
