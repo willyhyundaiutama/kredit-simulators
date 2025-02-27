@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
               <img 
-                src="/lovable-uploads/11c9e2e8-b8bb-42c4-b1c4-b104261848b1.png" 
+                src="https://hyundaiutama.com/wp-content/uploads/2025/02/logo-hyundai-gowa-new-01-2.png" 
                 alt="Hyundai Gowa" 
                 className="h-5 sm:h-7 w-auto" 
               />
