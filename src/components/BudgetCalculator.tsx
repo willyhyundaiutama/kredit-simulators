@@ -6,6 +6,7 @@ import { formatRupiah } from "@/lib/calculations";
 import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
 import { useSettings } from "@/context/SettingsContext";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface BudgetCalculatorProps {
   defaultOtr?: number;
@@ -34,13 +35,8 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     }
   };
 
-  const handleTenorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = parseInt(e.target.value, 10);
-    if (isNaN(value)) {
-      setTenor(1);
-    } else {
-      setTenor(Math.min(Math.max(value, 1), 7));
-    }
+  const handleTenorChange = (value: string) => {
+    setTenor(parseInt(value, 10));
   };
 
   const handleBudgetAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -190,16 +186,27 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           description="Harga On The Road kendaraan"
         />
 
-        <FormInput
-          label="Tenor"
-          type="number"
-          min={1}
-          max={7}
-          value={tenor}
-          onChange={handleTenorChange}
-          suffix="tahun"
-          description="Jangka waktu kredit (1-7 tahun)"
-        />
+        <div className="space-y-1.5">
+          <label className="input-label block">Tenor</label>
+          <Select 
+            value={tenor.toString()} 
+            onValueChange={handleTenorChange}
+          >
+            <SelectTrigger className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md">
+              <SelectValue placeholder="Pilih tenor" />
+            </SelectTrigger>
+            <SelectContent className="bg-white dark:bg-gray-800">
+              <SelectItem value="1">1 tahun</SelectItem>
+              <SelectItem value="2">2 tahun</SelectItem>
+              <SelectItem value="3">3 tahun</SelectItem>
+              <SelectItem value="4">4 tahun</SelectItem>
+              <SelectItem value="5">5 tahun</SelectItem>
+              <SelectItem value="6">6 tahun</SelectItem>
+              <SelectItem value="7">7 tahun</SelectItem>
+            </SelectContent>
+          </Select>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Jangka waktu kredit (1-7 tahun)</p>
+        </div>
 
         <div className="space-y-1.5">
           <label className="input-label block">Jenis Asuransi</label>

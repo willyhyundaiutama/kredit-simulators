@@ -7,6 +7,7 @@ import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee 
 import ResultsTable from "./ResultsTable";
 import CreditComparisonTable from "./CreditComparisonTable";
 import { useSettings } from "@/context/SettingsContext";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface LoanCalculatorProps {
   defaultOtr?: number;
@@ -65,13 +66,8 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
     }
   };
 
-  const handleTenorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = parseInt(e.target.value, 10);
-    if (isNaN(value)) {
-      setTenor(1);
-    } else {
-      setTenor(Math.min(Math.max(value, 1), 7)); // Clamp between 1 and 7 years
-    }
+  const handleTenorChange = (value: string) => {
+    setTenor(parseInt(value, 10));
   };
 
   const calculateLoan = () => {
@@ -174,16 +170,27 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             description="Minimal 20% dari harga OTR"
           />
           
-          <FormInput
-            label="Tenor"
-            type="number"
-            min={1}
-            max={7}
-            value={tenor}
-            onChange={handleTenorChange}
-            suffix="tahun"
-            description="Jangka waktu kredit (1-7 tahun)"
-          />
+          <div className="space-y-1.5">
+            <label className="input-label block">Tenor</label>
+            <Select 
+              value={tenor.toString()} 
+              onValueChange={handleTenorChange}
+            >
+              <SelectTrigger className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md">
+                <SelectValue placeholder="Pilih tenor" />
+              </SelectTrigger>
+              <SelectContent className="bg-white dark:bg-gray-800">
+                <SelectItem value="1">1 tahun</SelectItem>
+                <SelectItem value="2">2 tahun</SelectItem>
+                <SelectItem value="3">3 tahun</SelectItem>
+                <SelectItem value="4">4 tahun</SelectItem>
+                <SelectItem value="5">5 tahun</SelectItem>
+                <SelectItem value="6">6 tahun</SelectItem>
+                <SelectItem value="7">7 tahun</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Jangka waktu kredit (1-7 tahun)</p>
+          </div>
           
           <div className="space-y-1.5">
             <label className="input-label block">Jenis Asuransi</label>
