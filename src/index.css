@@ -239,33 +239,3 @@
   background: linear-gradient(135deg, #002c5f 0%, #00aad2 100%);
   color: white;
 }
-
-/* Tab Switch Styles */
-.tabs-switch {
-  position: relative;
-  overflow: hidden;
-}
-
-.tabs-switch-slider {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  bottom: 4px;
-  width: calc(50% - 8px);
-  background-color: hsl(var(--primary));
-  border-radius: var(--radius);
-  transition: transform 0.3s ease;
-}
-
-.tabs-switch [data-state="active"] {
-  color: hsl(var(--primary-foreground));
-  font-weight: 600;
-}
-
-.tabs-switch [data-state="inactive"] {
-  color: hsl(var(--foreground));
-}
-
-.tabs-switch [data-state="active"][data-value="budget"] ~ .tabs-switch-slider {
-  transform: translateX(calc(100% + 8px));
-}
