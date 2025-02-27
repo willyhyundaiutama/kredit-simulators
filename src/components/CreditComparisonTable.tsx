@@ -78,59 +78,57 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
     <div className="my-6">
       <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">Perbandingan Tenor</h3>
       
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-4">
         {/* Tabel Perbandingan - 50% width pada desktop */}
-        <div className="lg:w-1/2">
-          <div className="overflow-x-auto rounded-xl">
-            <div className="min-w-[400px]">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="border-b border-gray-200 dark:border-gray-700">
-                    <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-left text-xs">
-                      TENOR
-                    </th>
-                    <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-center text-xs">
-                      TOTAL DP
-                    </th>
-                    <th className="text-gray-600 dark:text-gray-300 font-medium px-4 py-3 text-right text-xs">
-                      ANGSURAN
-                    </th>
+        <div className="lg:w-1/2 w-full">
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b border-gray-200 dark:border-gray-700">
+                  <th className="text-gray-600 dark:text-gray-300 font-medium py-3 text-left text-xs pl-4 w-[25%]">
+                    TENOR
+                  </th>
+                  <th className="text-gray-600 dark:text-gray-300 font-medium py-3 text-center text-xs w-[37.5%]">
+                    TOTAL DP
+                  </th>
+                  <th className="text-gray-600 dark:text-gray-300 font-medium py-3 text-right text-xs pr-4 w-[37.5%]">
+                    ANGSURAN
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {tenorData.map((data, index) => (
+                  <tr 
+                    key={data.tenor}
+                    className="border-b border-gray-100 dark:border-gray-800 transition-all duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
+                  >
+                    <td className="py-3 pl-4">
+                      <span className="font-medium text-sm text-gray-800 dark:text-gray-200">
+                        {data.tenor} thn
+                      </span>
+                    </td>
+                    <td className="py-3 text-center">
+                      <span className="text-blue-600 dark:text-blue-400 font-medium text-sm">
+                        {formatRupiah(data.totalDp)}
+                      </span>
+                    </td>
+                    <td className="py-3 text-right pr-4">
+                      <span className="text-green-600 dark:text-green-400 font-medium text-sm">
+                        {formatRupiah(data.monthlyInstallment)}
+                      </span>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {tenorData.map((data, index) => (
-                    <tr 
-                      key={data.tenor}
-                      className="border-b border-gray-100 dark:border-gray-800 transition-all duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
-                    >
-                      <td className="px-4 py-3">
-                        <span className="font-medium text-sm text-gray-800 dark:text-gray-200">
-                          {data.tenor} thn
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-center">
-                        <span className="text-blue-600 dark:text-blue-400 font-medium text-sm">
-                          {formatRupiah(data.totalDp)}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-right">
-                        <span className="text-green-600 dark:text-green-400 font-medium text-sm">
-                          {formatRupiah(data.monthlyInstallment)}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 
         {/* Info cards di sebelah kanan - 50% width pada desktop */}
-        <div className="lg:w-1/2">
+        <div className="lg:w-1/2 w-full">
           <div className="space-y-3">
             {/* Harga OTR Card */}
-            <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4">
+            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-lg p-4 shadow-sm">
               <div className="flex justify-between items-center">
                 <div className="text-sm text-gray-500 dark:text-gray-400">Harga OTR</div>
                 <div className="text-base font-bold text-primary">{formatRupiah(otrPrice)}</div>
@@ -138,7 +136,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
             
             {/* Asuransi Card */}
-            <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4">
+            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-lg p-4 shadow-sm">
               <div className="flex justify-between items-center">
                 <div className="text-sm text-gray-500 dark:text-gray-400">Jenis Asuransi</div>
                 <div className="text-base font-bold text-blue-600 dark:text-blue-400">{insuranceTypeDisplay}</div>
@@ -146,7 +144,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
             
             {/* DP Percentage Card */}
-            <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4">
+            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-lg p-4 shadow-sm">
               <div className="flex justify-between items-center">
                 <div className="text-sm text-gray-500 dark:text-gray-400">DP Calculated</div>
                 <div className="text-base font-bold text-green-600 dark:text-green-400">{dpPercent}%</div>
