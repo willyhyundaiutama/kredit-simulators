@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Calendar, Shield } from "lucide-react";
 import FormInput from "./FormInput";
@@ -194,39 +193,66 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
           
           <div className="space-y-1.5">
             <label className="input-label block">Jenis Asuransi</label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl">
               <button
                 type="button"
                 onClick={() => setInsuranceType('kombinasi')}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${
                   insuranceType === 'kombinasi'
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    ? 'bg-primary text-white shadow-lg scale-[1.02]'
+                    : 'hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
               >
-                Kombinasi
+                <span className={`relative z-10 ${
+                  insuranceType === 'kombinasi'
+                    ? 'text-white'
+                    : 'text-gray-700 dark:text-gray-300'
+                }`}>
+                  Kombinasi
+                </span>
+                {insuranceType === 'kombinasi' && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/90 rounded-lg" />
+                )}
               </button>
               <button
                 type="button"
                 onClick={() => setInsuranceType('allrisk')}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${
                   insuranceType === 'allrisk'
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    ? 'bg-primary text-white shadow-lg scale-[1.02]'
+                    : 'hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
               >
-                All Risk
+                <span className={`relative z-10 ${
+                  insuranceType === 'allrisk'
+                    ? 'text-white'
+                    : 'text-gray-700 dark:text-gray-300'
+                }`}>
+                  All Risk
+                </span>
+                {insuranceType === 'allrisk' && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/90 rounded-lg" />
+                )}
               </button>
               <button
                 type="button"
                 onClick={() => setInsuranceType('allriskPerluasan')}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${
                   insuranceType === 'allriskPerluasan'
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    ? 'bg-primary text-white shadow-lg scale-[1.02]'
+                    : 'hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
               >
-                AR Perluasan
+                <span className={`relative z-10 ${
+                  insuranceType === 'allriskPerluasan'
+                    ? 'text-white'
+                    : 'text-gray-700 dark:text-gray-300'
+                }`}>
+                  AR Perluasan
+                </span>
+                {insuranceType === 'allriskPerluasan' && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/90 rounded-lg" />
+                )}
               </button>
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400">Pilih jenis asuransi kendaraan</p>
@@ -243,7 +269,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
         </div>
       </div>
       
-      {/* Hasil Simulasi dipindahkan ke atas */}
+      {/* Hasil Simulasi */}
       {results && (
         <div className="mt-8 results-appear">
           <ResultsTable 
