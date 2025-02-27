@@ -15,6 +15,9 @@ interface TenorData {
   tenor: number;
   totalDp: number;
   monthlyInstallment: number;
+  interestRate: number;
+  insuranceRate: number;
+  adminFee: number;
 }
 
 const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
@@ -57,19 +60,48 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
     tenorData.push({
       tenor,
       totalDp,
-      monthlyInstallment
+      monthlyInstallment,
+      interestRate,
+      insuranceRate,
+      adminFee: totalAdminFee
     });
   }
+
+  // Transform insurance type for display
+  const insuranceTypeDisplay = {
+    'kombinasi': 'Kombinasi',
+    'allrisk': 'All Risk',
+    'allriskPerluasan': 'All Risk Perluasan'
+  }[insuranceType];
   
   return (
     <div className="my-8">
       <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Perbandingan Tenor</h3>
       
-      {/* Harga OTR Box di atas tabel */}
-      <div className="mb-4 bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4 inline-block">
-        <div className="text-center">
-          <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Harga OTR</div>
-          <div className="text-lg font-bold text-primary">{formatRupiah(otrPrice)}</div>
+      {/* Info cards di atas tabel */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        {/* Harga OTR Card */}
+        <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4">
+          <div className="text-center">
+            <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Harga OTR</div>
+            <div className="text-lg font-bold text-primary">{formatRupiah(otrPrice)}</div>
+          </div>
+        </div>
+        
+        {/* Asuransi Card */}
+        <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4">
+          <div className="text-center">
+            <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Jenis Asuransi</div>
+            <div className="text-lg font-bold text-blue-600 dark:text-blue-400">{insuranceTypeDisplay}</div>
+          </div>
+        </div>
+        
+        {/* DP Percentage Card */}
+        <div className="bg-white dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 rounded-lg p-4">
+          <div className="text-center">
+            <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">DP Minimum</div>
+            <div className="text-lg font-bold text-green-600 dark:text-green-400">{dpPercent}%</div>
+          </div>
         </div>
       </div>
       
@@ -99,19 +131,32 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                     <span className="inline-flex items-center justify-center px-2 sm:px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-xs sm:text-sm font-medium">
                       {data.tenor * 12} bulan
                     </span>
+                    <span className="block text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-2">
+                      Bunga: {data.interestRate.toFixed(2)}%
+                    </span>
                   </td>
                   <td className="px-4 sm:px-6 py-4 text-center border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900/80">
                     <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm sm:text-base">{formatRupiah(data.totalDp)}</span>
-                    <span className="block text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      {dpPercent}% + biaya lainnya
-                    </span>
+                    <div className="flex flex-col gap-1 mt-2">
+                      <span className="block text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">
+                        DP Murni: {dpPercent}% ({formatRupiah(otrPrice * dpPercent / 100)})
+                      </span>
+                      <span className="block text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">
+                        Asuransi: {data.insuranceRate.toFixed(2)}%
+                      </span>
+                    </div>
                   </td>
                   <td className={`px-4 sm:px-6 py-4 text-center border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900/80 ${index === 6 && 'rounded-br-xl'}`}>
                     <div className="flex flex-col items-center justify-center">
                       <span className="text-green-600 dark:text-green-400 font-semibold text-sm sm:text-base">{formatRupiah(data.monthlyInstallment)}</span>
-                      <span className="block text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        per bulan
-                      </span>
+                      <div className="flex flex-col gap-1 mt-2">
+                        <span className="block text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">
+                          Admin: {formatRupiah(data.adminFee)}
+                        </span>
+                        <span className="block text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">
+                          Provisi: {provisionRate}%
+                        </span>
+                      </div>
                     </div>
                   </td>
                 </tr>
