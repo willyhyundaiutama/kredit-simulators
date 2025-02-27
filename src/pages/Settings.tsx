@@ -3,7 +3,8 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import FormInput from "@/components/FormInput";
 import { useSettings } from "@/context/SettingsContext";
-import { Sliders, Save } from "lucide-react";
+import { Sliders, Save, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Settings = () => {
   const { provisionRate, setProvisionRate, additionalAdminFee, setAdditionalAdminFee } = useSettings();
@@ -32,6 +33,13 @@ const Settings = () => {
       
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-3xl mx-auto">
+          <div className="mb-6">
+            <Link to="/" className="inline-flex items-center text-primary hover:text-primary/80 transition-colors">
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              <span>Kembali ke Halaman Utama</span>
+            </Link>
+          </div>
+          
           <div className="text-center mb-8 animate-fade-up">
             <span className="inline-block bg-primary/10 text-primary text-xs font-medium px-2.5 py-0.5 rounded-full mb-3">
               Konfigurasi
