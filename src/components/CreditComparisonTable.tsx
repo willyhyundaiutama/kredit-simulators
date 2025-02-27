@@ -153,18 +153,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
               <div className="text-lg font-bold">Rp {otrPrice.toLocaleString('id-ID')}</div>
             </div>
             
-            {/* DP Calculated Card - KEDUA */}
-            <div className="bg-emerald-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
-              <div className="flex items-center">
-                <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                  <Percent className="h-5 w-5" />
-                </div>
-                <div className="text-sm font-medium">DP Calculated</div>
-              </div>
-              <div className="text-lg font-bold">{dpPercent}%</div>
-            </div>
-            
-            {/* Total DP Card - KETIGA */}
+            {/* Total DP Card - KEDUA */}
             <div className="bg-gradient-to-r from-amber-400 to-orange-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
@@ -177,7 +166,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
               </div>
             </div>
             
-            {/* Angsuran Bulanan Card - KEEMPAT */}
+            {/* Angsuran Bulanan Card - KETIGA */}
             <div className="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
@@ -188,6 +177,17 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
               <div className="text-lg font-bold">
                 {formatRupiah(selectedTenorData.monthlyInstallment)}
               </div>
+            </div>
+            
+            {/* Tenor Card - KEEMPAT (ganti DP Calculated) */}
+            <div className="bg-emerald-500 rounded-xl p-4 flex justify-between items-center text-white shadow-xl">
+              <div className="flex items-center">
+                <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                  <Calendar className="h-5 w-5" />
+                </div>
+                <div className="text-sm font-medium">Tenor</div>
+              </div>
+              <div className="text-lg font-bold">{selectedTenorData.tenor} tahun</div>
             </div>
             
             {/* Jenis Asuransi Card - KELIMA */}
