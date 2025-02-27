@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { formatRupiah } from "@/lib/calculations";
 import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
 
@@ -27,6 +27,9 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
   provisionRate,
   additionalAdminFee
 }) => {
+  // State untuk menyimpan tenor yang dipilih
+  const [selectedTenor, setSelectedTenor] = useState<number>(1);
+  
   // Calculate data for each tenor
   const tenorData: TenorData[] = [];
   
@@ -74,6 +77,14 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
     'allriskPerluasan': 'All Risk Perluasan'
   }[insuranceType];
   
+  // Handler saat baris di tabel diklik
+  const handleRowClick = (tenor: number) => {
+    setSelectedTenor(tenor);
+  };
+  
+  // Temukan data untuk tenor yang dipilih
+  const selectedTenorData = tenorData.find(data => data.tenor === selectedTenor) || tenorData[0];
+  
   return (
     <div className="my-6">
       <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Perbandingan Tenor</h3>
@@ -97,10 +108,13 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {tenorData.map((data, index) => (
+                {tenorData.map((data) => (
                   <tr 
                     key={data.tenor}
-                    className="border-b border-gray-100 dark:border-gray-800 transition-all duration-200 hover:bg-primary/5"
+                    className={`border-b border-gray-100 dark:border-gray-800 transition-all duration-200 hover:bg-primary/5 cursor-pointer ${
+                      selectedTenor === data.tenor ? 'bg-primary/10' : ''
+                    }`}
+                    onClick={() => handleRowClick(data.tenor)}
                   >
                     <td className="py-3.5 pl-4">
                       <div className="font-medium text-sm">
@@ -169,6 +183,36 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                   <div className="text-sm font-medium">DP Calculated</div>
                 </div>
                 <div className="text-lg font-bold">{dpPercent}%</div>
+              </div>
+            </div>
+            
+            {/* Tambahan: Info Tenor Terpilih */}
+            <div className="gradient-card-info card-shine rounded-xl p-5">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="text-sm font-medium">Tenor Terpilih</div>
+                </div>
+                <div className="text-lg font-bold">{selectedTenor} tahun</div>
+              </div>
+            </div>
+            
+            {/* Tambahan: Info Angsuran Terpilih */}
+            <div className="gradient-card-warning card-shine rounded-xl p-5">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="text-sm font-medium">Angsuran Bulanan</div>
+                </div>
+                <div className="text-lg font-bold">{formatRupiah(selectedTenorData.monthlyInstallment)}</div>
               </div>
             </div>
           </div>
