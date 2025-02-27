@@ -12,6 +12,9 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
   ({ className, label, prefix, suffix, description, error, ...props }, ref) => {
+    // Determine if this should use numeric keyboard
+    const isNumericInput = props.type === 'number' || props.type === 'text' && (prefix === 'Rp' || suffix === '%');
+    
     return (
       <div className="animate-fade-in space-y-1.5 w-full">
         <label className="input-label block">{label}</label>
@@ -33,6 +36,7 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
               error && "border-red-500 focus:ring-red-500/20 focus:border-red-500",
               className
             )}
+            inputMode={isNumericInput ? "numeric" : undefined}
             {...props}
           />
           
