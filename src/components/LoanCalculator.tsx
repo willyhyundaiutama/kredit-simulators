@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Calendar, Shield } from "lucide-react";
 import FormInput from "./FormInput";
@@ -50,11 +49,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
 
   const handleOtrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, "");
-    if (value === "") {
-      setOtrPrice(0);
-    } else {
-      setOtrPrice(parseInt(value, 10));
-    }
+    setOtrPrice(value === "" ? 0 : parseInt(value, 10));
   };
 
   const handleDpPercentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
