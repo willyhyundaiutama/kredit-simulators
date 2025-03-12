@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Calculator, Wallet, CreditCard, Calendar, Shield, Car } from "lucide-react";
 import FormInput from "./FormInput";
@@ -25,14 +24,12 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
   const [budgetAmount, setBudgetAmount] = useState<string>("");
   const [calculatedDpPercent, setCalculatedDpPercent] = useState<number | null>(null);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
+  const [otrInputValue, setOtrInputValue] = useState<string>(defaultOtr ? defaultOtr.toLocaleString('id-ID') : "");
 
   const handleOtrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, "");
-    if (value === "") {
-      setOtrPrice(0);
-    } else {
-      setOtrPrice(parseInt(value, 10));
-    }
+    const value = e.target.value.replace(/\D/g, "");
+    setOtrInputValue(value === "" ? "" : parseInt(value, 10).toLocaleString('id-ID'));
+    setOtrPrice(value === "" ? 0 : parseInt(value, 10));
   };
 
   const handleTenorChange = (value: string) => {
@@ -92,7 +89,6 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     return Number(closestDp.toFixed(5)); // Mengembalikan dengan 5 angka di belakang koma
   };
 
-  // Fungsi untuk menghitung simulasi ketika tombol Calculate diklik
   const handleCalculate = () => {
     if (!budgetAmount || budgetAmount === "" || otrPrice <= 0) {
       setCalculatedDpPercent(null);
@@ -168,6 +164,13 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     }
   };
 
+  useEffect(() => {
+    // Set initial value if defaultOtr is provided
+    if (defaultOtr) {
+      setOtrInputValue(defaultOtr.toLocaleString('id-ID'));
+    }
+  }, [defaultOtr]);
+
   return (
     <div className="glass-card dark:glass-card-dark p-4 sm:p-6 rounded-2xl animate-fade-in">
       <div className="flex items-center mb-4 sm:mb-5">
@@ -180,7 +183,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
           label="Harga OTR"
           type="text"
           prefix="Rp"
-          value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
+          value={otrInputValue}
           onChange={handleOtrChange}
           placeholder="Masukkan harga OTR"
           description="Harga On The Road kendaraan"

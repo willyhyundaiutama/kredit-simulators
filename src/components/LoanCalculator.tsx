@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Calendar, Shield } from "lucide-react";
 import FormInput from "./FormInput";
@@ -46,9 +47,11 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   const [insuranceType, setInsuranceType] = useState<'kombinasi' | 'allrisk' | 'allriskPerluasan'>('kombinasi');
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
+  const [otrInputValue, setOtrInputValue] = useState<string>(defaultOtr ? defaultOtr.toLocaleString('id-ID') : "");
 
   const handleOtrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, "");
+    const value = e.target.value.replace(/\D/g, "");
+    setOtrInputValue(value === "" ? "" : parseInt(value, 10).toLocaleString('id-ID'));
     setOtrPrice(value === "" ? 0 : parseInt(value, 10));
   };
 
@@ -140,6 +143,13 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
     calculateLoan();
   }, [otrPrice, dpPercent, tenor, insuranceType, provisionRate, additionalAdminFee]);
 
+  useEffect(() => {
+    // Set initial value if defaultOtr is provided
+    if (defaultOtr) {
+      setOtrInputValue(defaultOtr.toLocaleString('id-ID'));
+    }
+  }, [defaultOtr]);
+
   return (
     <div className="w-full animate-fade-in">
       <div className="glass-card dark:glass-card-dark p-6 rounded-2xl">
@@ -153,7 +163,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             label="Harga OTR"
             type="text"
             prefix="Rp"
-            value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
+            value={otrInputValue}
             onChange={handleOtrChange}
             placeholder="Masukkan harga OTR"
             description="Harga On The Road kendaraan"
