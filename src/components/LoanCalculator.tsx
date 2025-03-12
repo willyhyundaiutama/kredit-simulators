@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Calendar, Shield } from "lucide-react";
 import FormInput from "./FormInput";
@@ -50,9 +49,9 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   const [otrInputValue, setOtrInputValue] = useState<string>(defaultOtr ? defaultOtr.toLocaleString('id-ID') : "");
 
   const handleOtrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, "");
-    setOtrInputValue(value === "" ? "" : parseInt(value, 10).toLocaleString('id-ID'));
-    setOtrPrice(value === "" ? 0 : parseInt(value, 10));
+    const rawValue = e.target.value.replace(/\D/g, "");
+    setOtrInputValue(rawValue === "" ? "" : parseInt(rawValue, 10).toLocaleString('id-ID'));
+    setOtrPrice(rawValue === "" ? 0 : parseInt(rawValue, 10));
   };
 
   const handleDpPercentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,9 +137,13 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
     }, 600); // Add a slight delay for better UX
   };
 
-  // Calculate on initial render and when inputs change
+  // Only calculate when otrPrice is greater than 0
   useEffect(() => {
-    calculateLoan();
+    if (otrPrice > 0) {
+      calculateLoan();
+    } else {
+      setResults(null);
+    }
   }, [otrPrice, dpPercent, tenor, insuranceType, provisionRate, additionalAdminFee]);
 
   useEffect(() => {
